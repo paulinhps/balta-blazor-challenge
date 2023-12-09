@@ -1,2 +1,128 @@
 # balta-blazor-challenge
 Desafio Brazor do Balta.io
+
+
+## Exoequeleto do Projeto (Clean Aarch) 
+
+/IbgeBlazor.Core
+    /Common
+        /Commands
+            ICommandResults
+            ICommand
+        /Entities
+            Entity
+        /ValueObjects
+            ValueObject
+        /UseCases
+            IUserCase
+    /LocalityContext
+        /Commands
+        /Entities
+            /Contracts
+                CityContract
+                StateContract
+            City
+            State
+        /ValueObjects
+            /Contracts
+                IbgeCodeContract
+            IbgeCode
+        /Repositories
+            ICityRepository
+            IStateRepository
+        /Services
+            ILocalityService
+        /UseCases
+            /CityUseCases
+                /Commands
+                    CreateCityCommand
+                    UpdateCityCommand
+                    UserCommandResult
+                /Queries
+                    LocalityQueries
+                CreateCityUseCase
+                ReadCityUseCase
+                UpdateCityUseCase
+                DeleteCityUseCase
+            /StateUseCases
+                /Command
+                    CreateStateCommand
+                    UpdateStateCommand
+                /Queries
+                    StateQueries
+                CreateStateUseCase
+                ReadStateUseCase
+                UpdateStateUseCase
+                DeleteStateUseCase      
+    /AuthContext
+        /Entities
+            /Contract
+                IdentityUserValidation
+            IdentityUser
+        /Repositories
+            IUserRepository
+        /Services
+            IAuthService
+        /UseCases
+            /Commands
+                CreateUserCommand
+                UpdateUserCommand
+                LoginCommand
+                AuthResult
+            /Queries
+                UserQueries
+            CreateUserUseCase
+            UpdateUserUseCase
+            ReadUserUseCase
+            LogInUserUseCase
+            DeleteUserUseCase
+/IbgeBlazor.Application
+    /UseCases
+        /CityUseCases
+            CreateCityUseCase
+            ReadCityUseCase
+            UpdateCityUseCase
+            DeleteCityUseCase
+        /StateUseCases
+            CreateStateUseCase
+            ReadStateUseCase
+            UpdateStateUseCase
+            DeleteStateUseCase
+        /AuthUseCases
+            CreateUserUseCase
+            UpdateUserUseCase
+            ReadUserUseCase
+            LogInUserUseCase                 
+/IbgeBlazor.Infrastruture
+    /Data
+        DbContext
+    /Repositories
+        /LocalityContext
+            CityRepository
+            StateRepository
+    /Services
+        LocalityService
+        AuthService
+    /CrossCutting
+        /Ioc
+            Bootstrap
+/IbgeBlazor.Api
+    /LocalityContext
+        /DataModels
+            CityDataModel
+            StateDataMOdel
+    /AuthContext
+        /DataModels
+            UserDataModel
+            TokenDataModel    
+    /Dtos
+                ReadCityUseCase
+                UpdateCityUseCase
+                DeleteCityUseCase
+
+/IbgeBlazor.Web
+
+/IbgeBlazor.Web.Client
+    /ViewModels
+    /Models
+    -- Demais estrutura de front end
