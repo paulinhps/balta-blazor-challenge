@@ -1,0 +1,42 @@
+﻿@page "/cities"
+@using IbgeBlazor.Front.Model
+@using IbgeBlazor.Front.Service
+<h3>Cities</h3>
+
+@if (CitiesList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cidade</th>
+                <th>UF</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var city in CitiesList)
+            {
+                <tr>
+                    <td>@city.Id</td>
+                    <td>@city.City</td>
+                    <td>@city.Uf</td>
+                    <td>@city.State</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private CityModel[]? CitiesList;
+    protected override async Task OnInitializedAsync()
+    {
+        CitiesList = new CitiesService().GetCityList().ToArray();
+    }
+
+}
