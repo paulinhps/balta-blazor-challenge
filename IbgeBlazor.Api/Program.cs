@@ -18,7 +18,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/cities", () =>
+app.MapGet("/cities", (string? uf) =>
 {
     var list = new List<CitiesViewModel>() {
                 new CitiesViewModel() {
@@ -46,6 +46,8 @@ app.MapGet("/cities", () =>
                     State = "Paraná",
                 },
             };
+    if(!string.IsNullOrEmpty(uf))
+        return list.Where(x=> x.Uf == uf).ToList();
     return list;
 });
 
