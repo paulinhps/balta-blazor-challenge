@@ -47,7 +47,7 @@ app.MapGet("/cities", (string? uf) =>
                 },
             };
     if(!string.IsNullOrEmpty(uf))
-        return list.Where(x=> x.Uf == uf).ToList();
+        return list.Where(x=> x.Uf.ToUpper() == uf.ToUpper()).ToList();
     return list;
 });
 
