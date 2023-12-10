@@ -1,6 +1,7 @@
 ﻿@page "/cities"
 @using IbgeBlazor.Front.Model
 @using IbgeBlazor.Front.Service
+@inject ICitiesService _citiesService;
 <h3>Cities</h3>
 
 @if (CitiesList == null)
@@ -33,10 +34,10 @@ else
 }
 
 @code {
-    private CityModel[]? CitiesList;
+    private IEnumerable<CityModel>? CitiesList;
     protected override async Task OnInitializedAsync()
     {
-        CitiesList = new CitiesService().GetCityList().ToArray();
+        CitiesList = await _citiesService.GetCityList();
     }
 
 }

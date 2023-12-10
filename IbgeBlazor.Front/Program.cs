@@ -5,6 +5,7 @@ using IbgeBlazor.Front.Client.Pages;
 using IbgeBlazor.Front.Components;
 using IbgeBlazor.Front.Components.Account;
 using IbgeBlazor.Front.Data;
+using IbgeBlazor.Front.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddScoped<ICitiesService, CitiesService>();
+builder.Services.AddHttpClient("IbgeApi", options =>
+{
+    options.BaseAddress = new Uri("http://localhost:5214/");
+});
 
 var app = builder.Build();
 
