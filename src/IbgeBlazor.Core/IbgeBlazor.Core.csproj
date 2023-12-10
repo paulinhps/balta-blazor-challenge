@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Shared\Extensions\" />
+    <PackageReference Include="Flunt" Version="2.0.5" />
   </ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-	</ItemGroup>
 
 </Project>
