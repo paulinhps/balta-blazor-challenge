@@ -5,17 +5,17 @@ namespace IbgeBlazor.Core.LocalityContext.ValueObjects;
 
 public class StateCode : ValueObject
 {
+    public string CodeNumber { get; set; }
+
     public StateCode(string code)
     {
-        Code = code;
+        CodeNumber = code;
         Validate();
     }
 
-    public string Code { get; set; }
-
     protected override IEnumerable<object> GetEqualityComponents()
     {
-       yield return Code;
+       yield return CodeNumber;
     }
 
     protected override void Validate()
@@ -24,5 +24,5 @@ public class StateCode : ValueObject
     }
 
     public static implicit operator StateCode(string code) => new StateCode(code);
-    public static implicit operator string(StateCode code) => code.Code;
+    public static implicit operator string(StateCode code) => code.CodeNumber;
 }

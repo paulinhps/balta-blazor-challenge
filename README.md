@@ -1,8 +1,8 @@
 # balta-blazor-challenge
+
 Desafio Brazor do Balta.io
 
-
-## Exoequeleto do Projeto (Clean Aarch) 
+## Exoequeleto do Projeto (Clean Aarch)
 
 /src
     /IbgeBlazor.Core
@@ -59,7 +59,7 @@ Desafio Brazor do Balta.io
                     CreateStateUseCase
                     ReadStateUseCase
                     UpdateStateUseCase
-                    DeleteStateUseCase      
+                    DeleteStateUseCase
         /AuthContext
             /Entities
                 /Contract

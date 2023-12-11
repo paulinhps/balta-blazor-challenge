@@ -5,7 +5,6 @@ using IbgeBlazor.Core.LocalityContext.UseCases.States.Commands;
 
 namespace IbgeBlazor.Core.LocalityContext.UseCases.States.Handlers;
 
-//TODO: Move this implementation to Application Layer
 public class StateHandler : 
 Notifiable<Notification>, 
 ICreateStateHandler,

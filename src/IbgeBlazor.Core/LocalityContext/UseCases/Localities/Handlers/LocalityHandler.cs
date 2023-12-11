@@ -5,7 +5,6 @@ using IbgeBlazor.Core.LocalityContext.UseCases.Localities.Commands;
 
 namespace IbgeBlazor.Core.LocalityContext.UseCases.Localities.Handlers;
 
-//TODO: Move this implementation to Application Layer
 public class LocalityHandler :
 Notifiable<Notification>,
 ICreateLocalityHandler,

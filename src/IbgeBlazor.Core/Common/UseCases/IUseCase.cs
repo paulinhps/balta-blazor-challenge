@@ -1,8 +1,11 @@
+
 using IbgeBlazor.Core.Common.Commands;
 
 namespace IbgeBlazor.Core.Common.UseCases;
 
-public interface IUseCase
+public interface IUseCase<TCommand, TCommandResult> 
+ where TCommand : ICommand
+ where TCommandResult : ICommandResult
 {
-    ICommandResult Execute(ICommand command);
+    TCommandResult Execute(TCommand command);
 }
