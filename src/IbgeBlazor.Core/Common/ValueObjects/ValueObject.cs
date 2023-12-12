@@ -20,8 +20,7 @@ public abstract class ValueObject : Notifiable<Notification>
         return !EqualOperator(left, right);
     }
 
-    protected abstract IEnumerable<object> GetEqualityComponents();
-
+    
     public override bool Equals(object? obj)
     {
         if (obj == null || obj!.GetType() != GetType())
@@ -40,6 +39,8 @@ public abstract class ValueObject : Notifiable<Notification>
             .Select(x => x != null ? x.GetHashCode() : 0)
             .Aggregate((x, y) => x ^ y);
     }
+
+    protected abstract IEnumerable<object> GetEqualityComponents();
 
     protected abstract void Validate();
 

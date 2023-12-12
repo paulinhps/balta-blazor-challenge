@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-using Flunt.Notifications;
-using IbgeBlazor.Core.Common.ValueObjects;
+﻿using IbgeBlazor.Core.Common.ValueObjects;
 using IbgeBlazor.Core.LocalityContext.ValueObjects.Contracts;
 
 namespace IbgeBlazor.Core.LocalityContext.ValueObjects;
@@ -26,9 +24,9 @@ public class IbgeCode : ValueObject
         AddNotifications(new IbgeCodeContract(this));
     }
 
-    internal IbgeCode AssertContaisStateId(int id)
+    internal IbgeCode AssertContaisStateId(int stateCode)
     {
-        var stateIdAsString = id.ToString("00");
+        var stateIdAsString = stateCode.ToString("00");
 
         if(Code?.StartsWith(stateIdAsString) is false) 
             AddNotification("IbgeCode.State", "Code require starts with state id");

@@ -2,7 +2,7 @@ using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.UseCases;
 using IbgeBlazor.Core.LocalityContext.UseCases.States.Commands;
 
-namespace IbgeBlazor.Application.States.Delete;
+namespace IbgeBlazor.Application.LocalityContext.States.Delete;
 
 public class DeleteStateUseCase : IUseCase<DeleteStateCommand, CommandResult>
 {

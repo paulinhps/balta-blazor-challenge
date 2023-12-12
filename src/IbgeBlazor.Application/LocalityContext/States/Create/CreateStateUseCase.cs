@@ -1,7 +1,7 @@
 using IbgeBlazor.Core.Common.UseCases;
 using IbgeBlazor.Core.LocalityContext.UseCases.States.Commands;
 
-namespace IbgeBlazor.Application.States.Create;
+namespace IbgeBlazor.Application.LocalityContext.States.Create;
 
 public class CreateStateUseCase : IUseCase<CreateStateCommand, StateCommandResult>
 {

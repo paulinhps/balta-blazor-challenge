@@ -15,7 +15,7 @@ public class StateCode : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-       yield return CodeNumber;
+        yield return CodeNumber;
     }
 
     protected override void Validate()

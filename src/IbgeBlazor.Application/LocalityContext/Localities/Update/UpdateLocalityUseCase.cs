@@ -1,7 +1,7 @@
 using IbgeBlazor.Core.Common.UseCases;
 using IbgeBlazor.Core.LocalityContext.UseCases.Localities.Commands;
 
-namespace IbgeBlazor.Application.Localities.Update;
+namespace IbgeBlazor.Application.LocalityContext.Localities.Update;
 
 public class UpdateLocalityUseCase : IUseCase<UpdateLocalityCommand, LocalityCommandResult>
 {

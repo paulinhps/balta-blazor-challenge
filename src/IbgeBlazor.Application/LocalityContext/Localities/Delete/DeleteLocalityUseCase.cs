@@ -2,7 +2,7 @@ using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.UseCases;
 using IbgeBlazor.Core.LocalityContext.UseCases.Localities.Commands;
 
-namespace IbgeBlazor.Application.Localities.Delete;
+namespace IbgeBlazor.Application.LocalityContext.Localities.Delete;
 
 public class DeleteLocalityUseCase : IUseCase<DeleteLocalityCommand, CommandResult>
 {
