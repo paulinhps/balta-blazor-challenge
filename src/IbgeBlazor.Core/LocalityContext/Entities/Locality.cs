@@ -8,11 +8,11 @@ public class Locality : GenericEntity<IbgeCode>
     public string City { get; private set; }
 
     public int StateId { get; set; }
-    public State State { get; set; }
-    public Locality(IbgeCode id, string city, State state) : base(id)
+    public State State { get; set; } = null!;
+    public Locality(IbgeCode id, string city, int stateId) : base(id)
     {
         City = city;
-        State = state;
+        StateId = stateId;
 
         Validate();
         

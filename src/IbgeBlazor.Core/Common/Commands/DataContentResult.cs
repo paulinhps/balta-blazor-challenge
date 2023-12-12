@@ -1,9 +1,9 @@
 namespace IbgeBlazor.Core.Common.Commands;
 
-public class DataContentResult<TData> : CommandResult
+public class DataCommandResult<TData> : CommandResult
 {
     public TData Data { get; set; }
-    public DataContentResult(TData data, bool success, string message) : base(success, message)
+    public DataCommandResult(TData data, bool success, string message) : base(success, message)
     {
         Data = data;
     }

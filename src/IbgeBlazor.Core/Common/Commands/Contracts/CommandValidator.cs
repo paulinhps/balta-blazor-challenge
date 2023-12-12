@@ -2,7 +2,7 @@ using Flunt.Validations;
 
 namespace IbgeBlazor.Core.Common.Commands.Contracts
 {
-    internal class CommandValidator 
+    public class CommandValidator 
     {
 
         public static Contract<T> Validate<T>(Action<StandardCommandContract<T>> delegateValidations) where T: CommandBase {
@@ -13,7 +13,7 @@ namespace IbgeBlazor.Core.Common.Commands.Contracts
             return contract;
         }
 
-        internal class StandardCommandContract<T>: Contract<T> {
+        public class StandardCommandContract<T>: Contract<T> {
             
         }
 

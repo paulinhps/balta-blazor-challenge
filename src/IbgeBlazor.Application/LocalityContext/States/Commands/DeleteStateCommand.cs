@@ -1,9 +1,11 @@
+using IbgeBlazor.Application.LocalityContext.Localities.Commands;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
+using MediatR;
 
-namespace IbgeBlazor.Core.LocalityContext.UseCases.States.Commands;
+namespace IbgeBlazor.Application.LocalityContext.States.Commands;
 
-public class DeleteStateCommand : CommandBase, ICommand
+public class DeleteStateCommand : CommandBase, IRequest<CommandResult>
 {
     public int Id { get; set; } = 0;
 

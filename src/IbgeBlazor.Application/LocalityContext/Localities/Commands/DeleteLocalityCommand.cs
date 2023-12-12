@@ -1,16 +1,16 @@
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
-using IbgeBlazor.Core.LocalityContext.UseCases.States.Commands;
+using MediatR;
 
-namespace IbgeBlazor.Core.LocalityContext.UseCases.Localities.Commands;
+namespace IbgeBlazor.Application.LocalityContext.Localities.Commands;
 
-public class DeleteLocalityCommand : CommandBase, ICommand
+public class DeleteLocalityCommand : CommandBase, IRequest<CommandResult>
 {
     public string IbgeCode { get; set; } = null!;
 
     public override void Validate()
     {
-        AddNotifications(CommandValidator.Validate<CreateStateCommand>(contract =>
+        AddNotifications(CommandValidator.Validate<DeleteLocalityCommand>(contract =>
         {
 
             contract.Requires()

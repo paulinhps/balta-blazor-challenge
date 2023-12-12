@@ -33,4 +33,7 @@ public class IbgeCode : ValueObject
 
             return this;
     }
+
+    public static implicit operator IbgeCode(string code) => new IbgeCode(code);
+    public static implicit operator string(IbgeCode ibgeCode) => ibgeCode.Code;
 }

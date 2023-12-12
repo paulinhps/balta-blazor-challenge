@@ -10,7 +10,7 @@ public class LocalityContract : Contract<Locality>
     {
         Requires()
         .IsNotNullOrWhiteSpace(locality.City, "Locality.City", "City is required")
-        .IsNotNull(locality.State, "Locality.State", "State is required");
+        .IsGreaterThan(locality.StateId, 0, "Locality.State", "State is required");
 
         if(locality?.State is not null)
             AddNotifications(locality.State);
