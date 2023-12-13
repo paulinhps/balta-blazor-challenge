@@ -8,7 +8,7 @@ namespace IbgeBlazor.Api.DependencyInjection.Commons
         {
             builder.Services.AddMediatR(cfg =>
             {
-                cfg.RegisterServicesFromAssembly(typeof(Usings).Assembly);
+                cfg.RegisterServicesFromAssembly(typeof(ApplicationAssembly).Assembly);
                 
             });
         }

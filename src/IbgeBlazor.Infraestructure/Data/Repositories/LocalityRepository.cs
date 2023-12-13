@@ -1,7 +1,8 @@
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
-using IbgeBlazor.Infraestructure.Data;
 using Microsoft.Extensions.Logging;
+
+namespace IbgeBlazor.Infraestructure.Data.Repositories;
 
 public class LocalityRepository : ILocalityRepository
 {

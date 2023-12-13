@@ -1,6 +1,7 @@
 ﻿using IbgeBlazor.Application;
 using IbgeBlazor.Core.LocalityContext.Repositories;
 using IbgeBlazor.Infraestructure.Data;
+using IbgeBlazor.Infraestructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ public static class DependencyInjection
         
         services.AddMediatR(cfg =>
             {
-                cfg.RegisterServicesFromAssembly(typeof(Usings).Assembly);
+                cfg.RegisterServicesFromAssembly(ApplicationAssembly.Assembly);
                 
             });
 
