@@ -26,6 +26,8 @@ public static class DependencyInjection
             opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
         );
 
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<AppDbContext>());
+
         services.AddTransient<ILocalityRepository, LocalityRepository>();
 
         return services;
