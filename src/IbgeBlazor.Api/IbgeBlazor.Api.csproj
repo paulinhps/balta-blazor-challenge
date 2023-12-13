@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IbgeBlazor.Core\IbgeBlazor.Core.csproj" />
     <ProjectReference Include="..\IbgeBlazor.Application\IbgeBlazor.Application.csproj" />
+    <ProjectReference Include="..\IbgeBlazor.Infraestructure.CrossCutting\IbgeBlazor.Infraestructure.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

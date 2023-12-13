@@ -1,6 +1,5 @@
 
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 public static class LocalityEndPoints
 {
@@ -22,7 +21,9 @@ public static class LocalityEndPoints
             else 
                 return Results.UnprocessableEntity(result.Data);
                 
-        });
+        })
+        .WithName("CrateLocality")
+        .WithOpenApi();
         return app;
     }
 }
