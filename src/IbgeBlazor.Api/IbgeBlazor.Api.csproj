@@ -14,6 +14,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\IbgeBlazor.Core\IbgeBlazor.Core.csproj" />
+    <ProjectReference Include="..\IbgeBlazor.Application\IbgeBlazor.Application.csproj" />
   </ItemGroup>
 
 </Project>

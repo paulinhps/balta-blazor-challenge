@@ -1,14 +1,13 @@
-using IbgeBlazor.Application.LocalityContext.Localities.Create;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
 using IbgeBlazor.Core.Common.Commands.Entities;
 using MediatR;
 
-namespace IbgeBlazor.Application.LocalityContext.Localities.Update;
+namespace IbgeBlazor.Application.LocalityContext.Localities.Commands;
 
 public class UpdateLocalityCommand : CommandBase, IRequest<DataCommandResult<Entity>>
 {
-   public string IbgeCode { get; set; } = null!;
+    public string IbgeCode { get; set; } = null!;
     public string City { get; set; } = null!;
 
     public override void Validate()
