@@ -12,9 +12,9 @@ public class Handler :
 Notifiable<Notification>,
 IRequestHandler<UpdateLocalityCommand, DataCommandResult<Entity>>
 {
-    private readonly ILocalityRepository _repository;
+    private readonly ILocalitiesRepository _repository;
 
-    public Handler(ILocalityRepository repository)
+    public Handler(ILocalitiesRepository repository)
     {
         _repository = repository;
     }

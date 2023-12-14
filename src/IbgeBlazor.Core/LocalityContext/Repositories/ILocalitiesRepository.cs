@@ -2,9 +2,9 @@ using IbgeBlazor.Core.LocalityContext.Entities;
 
 namespace IbgeBlazor.Core.LocalityContext.Repositories;
 
-public interface ILocalityRepository
+public interface ILocalitiesRepository
 {
     Task<Locality> Create(Locality locality);
-    Task<bool> StateIsExists(int stateId);
+    Task<bool> IsExistsStateWithId(int stateId);
     Task<bool> IbgeCodIsExists(string ibgeCode);
 }

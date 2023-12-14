@@ -29,7 +29,8 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<AppDbContext>());
 
-        services.AddTransient<ILocalityRepository, LocalityRepository>();
+        services.AddTransient<ILocalitiesRepository, LocalitiesRepository>(); 
+        services.AddTransient<IStatesRepository, StatesRepository>(); 
 
         return services;
         
