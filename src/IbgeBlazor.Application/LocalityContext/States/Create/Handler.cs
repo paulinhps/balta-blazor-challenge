@@ -34,45 +34,47 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
             return dataResult;
         }
         //2. Checar se estado já exite.
-            try
-            {
-                
-                bool stateExists = await _repository.IsExistsStateWithIdOrUf(command.Id, command.Code);
+        try
+        {
 
-                if(stateExists) {
-                    AddNotification("State.Founded", "O Estado já está cadastrado");
-                }
-            }
-            catch (Exception ex)
+            bool stateExists = await _repository.IsExistsStateWithIdOrUf(command.Id, command.Code);
+
+            if (stateExists)
             {
-                var errorMessage = "Houve um erro ao tentar verificar se o estado existe";
-                _logger.LogCritical(ex, errorMessage);
-                AddNotification("CheckState", errorMessage);
+                AddNotification("State.Founded", "O Estado já está cadastrado");
             }
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = "Houve um erro ao tentar verificar se o estado existe";
+            _logger.LogCritical(ex, errorMessage);
+            AddNotification("CheckState", errorMessage);
+        }
         //3. Contruir os objetos.
 
         State state = new State(command.Id, command.Code, command.Description);
 
         //4. Validar o domínio.
 
-            AddNotifications(state);
+        AddNotifications(state);
 
         //5. Salvar o estado na base.
 
-            if(IsValid) {
-                try
-                {
-                    _ = _repository.CreateState(state);
+        if (IsValid)
+        {
+            try
+            {
+                _ = _repository.CreateState(state);
 
-                    dataResult.Data = state;
+                dataResult.Data = state;
 
-                }
-                catch
-                {
-                
-                    AddNotification("CreateState", "Não foi possível salvar o estado");
-                }
             }
+            catch
+            {
+
+                AddNotification("CreateState", "Não foi possível salvar o estado");
+            }
+        }
         //adicionando notificações se existir
         dataResult.AddNotifications(this);
 

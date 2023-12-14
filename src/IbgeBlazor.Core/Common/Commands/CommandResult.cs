@@ -19,7 +19,7 @@ public class CommandResult : Notifiable<Notification>, ICommandResult
 
     public CommandResult()
     {
-        
+
     }
 
     public void AddErrors(params Notifiable<Notification>[] items)

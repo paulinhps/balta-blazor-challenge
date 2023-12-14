@@ -1,6 +1,7 @@
-public interface IHttpService<TRequest, TResponse> 
+public interface IHttpService<TRequest, TResponse>
 where TRequest : Request
-where TResponse : Response {
+where TResponse : Response
+{
 
 }
 

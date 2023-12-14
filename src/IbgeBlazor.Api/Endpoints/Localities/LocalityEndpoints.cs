@@ -5,25 +5,28 @@ using MediatR;
 public static class LocalityEndpoints
 {
     private static string[] Tags = ["Localities"];
-    public static WebApplication MapLocalityEndpoints(this WebApplication app) {
+    public static WebApplication MapLocalityEndpoints(this WebApplication app)
+    {
 
-        app.MapPost(ApiEndpointsPaths.Localities, async(CreateLocality model,  IMediator mediator) => {
+        app.MapPost(ApiEndpointsPaths.Localities, async (CreateLocality model, IMediator mediator) =>
+        {
 
-            LocalityContext.Commands.CreateLocalityCommand command = new() {
+            LocalityContext.Commands.CreateLocalityCommand command = new()
+            {
                 IbgeCode = model.IbgeCode,
                 City = model.City,
                 StateId = model.StateId
             };
 
 
-           var result = await mediator.Send(command);
+            var result = await mediator.Send(command);
 
-            if(result.Success)
+            if (result.Success)
                 return Results.Created($"{ApiEndpointsPaths.Localities}/{result.Data!.Id}", result);
-            
-            else 
+
+            else
                 return Results.UnprocessableEntity(result.Data);
-                
+
         })
         .WithTags(Tags)
         .WithName("CrateLocality")

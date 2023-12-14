@@ -17,10 +17,11 @@ public static class StatesDataModelsExtensions
     };
     public static ModelResult<StateModel> FromModel(this ICommandResult<State> commandResult)
     {
-        if(!commandResult.Success)
+        if (!commandResult.Success)
             return new("Não foi possível criar o estado", commandResult.Errors.ToArray());
 
-        StateModel model = new() {
+        StateModel model = new()
+        {
             Id = commandResult.Data!.Id,
             Description = commandResult.Data.Description,
             Uf = commandResult.Data.Code

@@ -4,11 +4,11 @@ using IbgeBlazor.Core.LocalityContext.ValueObjects;
 
 namespace IbgeBlazor.Core.LocalityContext.Entities;
 
-public class State  : Entity
+public class State : Entity
 {
     public StateCode Code { get; set; }
     public string Description { get; set; }
-    public State(int id, StateCode code, string description ) : base(id)
+    public State(int id, StateCode code, string description) : base(id)
     {
         Code = code;
         Description = description;

@@ -9,7 +9,7 @@ namespace IbgeBlazor.Core.Common.DataModels
         public TData? Data { get; set; }
         public ModelResult(string message, params IErrorModel[] errors) : base(message, errors)
         {
-            
+
         }
 
         public ModelResult(TData data, string message, params IErrorModel[] errors) : base(message, errors)

@@ -33,7 +33,8 @@ app.UseHttpsRedirection();
 
 app.MapGet("/", () =>
 {
-    return new {
+    return new
+    {
         state = "Alive"
     };
 })

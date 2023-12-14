@@ -24,34 +24,36 @@ IRequestHandler<CreateLocalityCommand, ICommandResult<Locality>>
         //1. Validar se o cammando está valido.
         command.Validate();
 
-        if(!command.IsValid)
+        if (!command.IsValid)
             //Montar o retorno invalido
-        
-        //2. Checar se estado já exite.
-            if(await _repository.IsExistsStateWithId(command.StateId)) {
+
+            //2. Checar se estado já exite.
+            if (await _repository.IsExistsStateWithId(command.StateId))
+            {
 
             }
         //3. Checar se localidade já existe.
-            if(await _repository.IbgeCodIsExists(command.IbgeCode)) {
+        if (await _repository.IbgeCodIsExists(command.IbgeCode))
+        {
 
-            }
-            // retorna erro
+        }
+        // retorna erro
         //3. Contruir os objetos.
 
-        Locality locality = new(command.IbgeCode, command.City,  command.StateId);
+        Locality locality = new(command.IbgeCode, command.City, command.StateId);
         //4. Validar o domínio.
-            if(!locality.IsValid)
-            {
-                // Montar o retorno de erros
-            }
+        if (!locality.IsValid)
+        {
+            // Montar o retorno de erros
+        }
 
         //5. Salvar a localidade na base.
 
         _ = await _repository.Create(locality);
         //6. Montar e retornar o resultado.
-       throw new NotImplementedException();
+        throw new NotImplementedException();
     }
 
 
-    
+
 }

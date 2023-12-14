@@ -1,5 +1,6 @@
 
 [Obsolete("Utilizar DataModel")]
-public abstract record RequestModel {
-    
+public abstract record RequestModel
+{
+
 }

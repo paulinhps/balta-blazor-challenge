@@ -16,9 +16,9 @@ public class LocalityApiService : ILocalityService
     {
         var responseMessage = await _client.PostAsJsonAsync(ApiEndpointsPaths.Localities, request);
 
-      var content = await responseMessage.Content.ReadAsStringAsync();
+        var content = await responseMessage.Content.ReadAsStringAsync();
 
-      return JsonSerializer.Deserialize<LocalityResponse>(content);
+        return JsonSerializer.Deserialize<LocalityResponse>(content);
     }
 }
 

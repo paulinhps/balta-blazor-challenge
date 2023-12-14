@@ -15,9 +15,9 @@ public class Locality : GenericEntity<IbgeCode>
         StateId = stateId;
 
         Validate();
-        
+
     }
 
     protected override void Validate() => AddNotifications(new LocalityContract(this));
-    
+
 }
