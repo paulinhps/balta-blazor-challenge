@@ -1,4 +1,5 @@
-﻿using IbgeBlazor.Core.Common.DataModels;
+﻿using IbgeBlazor.Application.LocalityContext.Cities.Extensions;
+using IbgeBlazor.Core.Common.DataModels;
 using IbgeBlazor.Core.Constants;
 using IbgeBlazor.Core.LocalityContext.DataModels;
 using MediatR;
