@@ -21,7 +21,7 @@ public class UpdateCityCommand : CommandBase, IRequest<ICommandResult<State>>
 
     public override void Validate()
     {
-        AddNotifications(CommandValidator.Validate<CreateStateCommand>(contract =>
+        AddNotifications(CommandValidator.Validate<UpdateStateCommand>(contract =>
         {
 
             contract.Requires()
