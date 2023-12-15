@@ -10,7 +10,7 @@ namespace IbgeBlazor.Core.LocalityContext.Entities
         public string CityName { get; set; }
         public string UfCode { get; set; }
 
-        public City(int id, string ibgeCode, string cityName, string ufCode) : base(id)
+        public City(int id, int ibgeCode, string cityName, int ufCode) : base(id)
         {
             IbgeCode = ibgeCode;
             CityName = cityName;
