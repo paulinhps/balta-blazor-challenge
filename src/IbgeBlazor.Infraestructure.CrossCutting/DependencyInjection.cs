@@ -33,6 +33,7 @@ public static class DependencyInjection
 
         services.AddTransient<ILocalitiesRepository, LocalitiesRepository>();
         services.AddTransient<IStatesRepository, StatesRepository>();
+        services.AddTransient<ICitiesRepository, CityRepository>();
 
         return services;
 

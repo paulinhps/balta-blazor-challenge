@@ -8,9 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace IbgeBlazor.Application.LocalityContext.States.Update;
 
-public class Handler :
-Notifiable<Notification>,
-IRequestHandler<UpdateStateCommand, ICommandResult<State>>
+public class Handler : Notifiable<Notification>, IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 {
     private readonly IStatesRepository _repository;
 
@@ -88,4 +86,10 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
         return dataResult;
     }
 
+<<<<<<< HEAD
 }
+=======
+
+
+}
+>>>>>>> aa301f6 (Implementação do Caso de Uso (Criar Cidade))
