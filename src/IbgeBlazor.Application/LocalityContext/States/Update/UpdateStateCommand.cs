@@ -1,9 +1,10 @@
+using IbgeBlazor.Application.LocalityContext.States.Create;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using MediatR;
 
-namespace IbgeBlazor.Application.LocalityContext.States.Commands;
+namespace IbgeBlazor.Application.LocalityContext.States.Update;
 
 public class UpdateStateCommand : CommandBase, IRequest<ICommandResult<State>>
 {

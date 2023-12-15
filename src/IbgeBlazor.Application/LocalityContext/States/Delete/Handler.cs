@@ -1,5 +1,4 @@
 using Flunt.Notifications;
-using IbgeBlazor.Application.LocalityContext.States.Commands;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Enumerators;
 using IbgeBlazor.Core.LocalityContext.Entities;

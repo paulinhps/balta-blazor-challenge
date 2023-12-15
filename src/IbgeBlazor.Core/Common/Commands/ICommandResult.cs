@@ -1,5 +1,6 @@
 using Flunt.Notifications;
 using IbgeBlazor.Core.Common.DataModels;
+using IbgeBlazor.Core.Enumerators;
 
 namespace IbgeBlazor.Core.Common.Commands;
 

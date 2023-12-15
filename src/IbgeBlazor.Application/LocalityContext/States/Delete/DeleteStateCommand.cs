@@ -1,8 +1,9 @@
+using IbgeBlazor.Application.LocalityContext.States.Create;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
 using MediatR;
 
-namespace IbgeBlazor.Application.LocalityContext.States.Commands;
+namespace IbgeBlazor.Application.LocalityContext.States.Delete;
 
 public class DeleteStateCommand : CommandBase, IRequest<ICommandResult>
 {
