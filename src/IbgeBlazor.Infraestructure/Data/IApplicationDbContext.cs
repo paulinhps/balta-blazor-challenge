@@ -8,6 +8,7 @@ namespace IbgeBlazor.Infraestructure.Data
         //DbSet<Locality> Localities { get; }
 
         DbSet<State> States { get; }
+        DbSet<City> Cities { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

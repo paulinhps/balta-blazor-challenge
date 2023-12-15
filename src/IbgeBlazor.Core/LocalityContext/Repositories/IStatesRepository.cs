@@ -1,4 +1,3 @@
-
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.ValueObjects;
 

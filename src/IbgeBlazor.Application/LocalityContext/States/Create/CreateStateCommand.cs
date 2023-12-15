@@ -1,8 +1,8 @@
-using System.Text.RegularExpressions;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using MediatR;
+using System.Text.RegularExpressions;
 
 namespace IbgeBlazor.Application.LocalityContext.States.Create;
 

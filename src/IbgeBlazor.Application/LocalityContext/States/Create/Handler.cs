@@ -8,9 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace IbgeBlazor.Application.LocalityContext.States.Create;
 
-public class Handler :
-Notifiable<Notification>,
-IRequestHandler<CreateStateCommand, ICommandResult<State>>
+public class Handler : Notifiable<Notification>, IRequestHandler<CreateStateCommand, ICommandResult<State>>
 {
     private readonly IStatesRepository _repository;
     private readonly ILogger<Handler> _logger;
@@ -85,7 +83,4 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
         //6. Montar e retornar o resultado.
         return dataResult;
     }
-
-
-
 }

@@ -12,6 +12,7 @@ namespace IbgeBlazor.Infraestructure.Data
         //public DbSet<Locality> Localities => Set<Locality>();
 
         public DbSet<State> States => Set<State>();
+        public DbSet<City> Cities => Set<City>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

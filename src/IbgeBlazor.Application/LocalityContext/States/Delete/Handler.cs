@@ -86,7 +86,4 @@ IRequestHandler<DeleteStateCommand, ICommandResult>
         //5. Montar e retornar o resultado.
         return result;
     }
-
-
-
 }
