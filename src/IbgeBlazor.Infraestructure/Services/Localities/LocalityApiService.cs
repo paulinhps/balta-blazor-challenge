@@ -1,6 +1,7 @@
 
 using System.Net.Http.Json;
 using System.Text.Json;
+using IbgeBlazor.Core.Constants;
 
 public class LocalityApiService : ILocalityService
 {
@@ -13,11 +14,11 @@ public class LocalityApiService : ILocalityService
 
     public async Task<LocalityResponse?> PostCreateLocality(CreateLocalityRequest? request)
     {
-        var responseMessage = await _client.PostAsJsonAsync("/api/v1/localities", request);
+        var responseMessage = await _client.PostAsJsonAsync(ApiEndpointsPaths.Localities, request);
 
-      var content = await responseMessage.Content.ReadAsStringAsync();
+        var content = await responseMessage.Content.ReadAsStringAsync();
 
-      return JsonSerializer.Deserialize<LocalityResponse>(content);
+        return JsonSerializer.Deserialize<LocalityResponse>(content);
     }
 }
 

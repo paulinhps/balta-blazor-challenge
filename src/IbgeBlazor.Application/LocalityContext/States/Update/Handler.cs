@@ -10,16 +10,16 @@ namespace IbgeBlazor.Application.LocalityContext.States.Update;
 
 public class Handler :
 Notifiable<Notification>,
-IRequestHandler<UpdateStateCommand, DataCommandResult<State>>
+IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 {
-    private readonly ILocalityRepository _repository;
+    private readonly ILocalitiesRepository _repository;
 
-    public Handler(ILocalityRepository repository)
+    public Handler(ILocalitiesRepository repository)
     {
         _repository = repository;
     }
 
-    public Task<DataCommandResult<State>> Handle(UpdateStateCommand command, CancellationToken cancellationToken)
+    public Task<ICommandResult<State>> Handle(UpdateStateCommand command, CancellationToken cancellationToken)
     {
         //1. Validar se o cammando está valido.
         //2. Reidratar o estado da base. 

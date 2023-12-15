@@ -28,10 +28,10 @@ public class IbgeCode : ValueObject
     {
         var stateIdAsString = stateCode.ToString("00");
 
-        if(Code?.StartsWith(stateIdAsString) is false) 
+        if (Code?.StartsWith(stateIdAsString) is false)
             AddNotification("IbgeCode.State", "Code require starts with state id");
 
-            return this;
+        return this;
     }
 
     public static implicit operator IbgeCode(string code) => new IbgeCode(code);

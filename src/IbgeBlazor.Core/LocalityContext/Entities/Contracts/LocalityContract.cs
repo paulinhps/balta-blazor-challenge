@@ -12,15 +12,16 @@ public class LocalityContract : Contract<Locality>
         .IsNotNullOrWhiteSpace(locality.City, "Locality.City", "City is required")
         .IsGreaterThan(locality.StateId, 0, "Locality.State", "State is required");
 
-        if(locality?.State is not null)
+        if (locality?.State is not null)
             AddNotifications(locality.State);
 
-        if(locality?.Id is not null) {
+        if (locality?.Id is not null)
+        {
             AddNotifications(locality.Id.AssertContaisStateId(locality.State.Id));
 
         }
-        
 
-        
+
+
     }
 }

@@ -4,12 +4,12 @@ using Microsoft.Extensions.Logging;
 
 namespace IbgeBlazor.Infraestructure.Data.Repositories;
 
-public class LocalityRepository : ILocalityRepository
+public class LocalitiesRepository : ILocalitiesRepository
 {
     private readonly IApplicationDbContext _context;
-    private readonly ILogger<LocalityRepository> _logger;
+    private readonly ILogger<LocalitiesRepository> _logger;
 
-    public LocalityRepository(IApplicationDbContext context, ILogger<LocalityRepository> logger)
+    public LocalitiesRepository(IApplicationDbContext context, ILogger<LocalitiesRepository> logger)
     {
         _context = context;
         _logger = logger;
@@ -24,7 +24,7 @@ public class LocalityRepository : ILocalityRepository
         throw new NotImplementedException();
     }
 
-    public Task<bool> StateIsExists(int stateId)
+    public Task<bool> IsExistsStateWithId(int stateId)
     {
         throw new NotImplementedException();
     }

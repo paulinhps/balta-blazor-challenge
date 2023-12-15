@@ -30,7 +30,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasConversion(code => code.CodeNumber, str => str);
 
             builder.Ignore(state => state.Notifications);
-                
+
             builder.Property(state => state.Description)
                 .IsRequired()
                 .HasColumnName("NOME_ESTADO")
@@ -38,7 +38,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasMaxLength(80);
 
             builder.HasIndex(state => state.Code, "IX_ESTATDOS_CODIGO_ESTADO");
-                
+
         }
     }
 }

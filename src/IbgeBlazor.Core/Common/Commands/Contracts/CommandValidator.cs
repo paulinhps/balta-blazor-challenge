@@ -2,10 +2,11 @@ using Flunt.Validations;
 
 namespace IbgeBlazor.Core.Common.Commands.Contracts
 {
-    public class CommandValidator 
+    public class CommandValidator
     {
 
-        public static Contract<T> Validate<T>(Action<StandardCommandContract<T>> delegateValidations) where T: CommandBase {
+        public static Contract<T> Validate<T>(Action<StandardCommandContract<T>> delegateValidations) where T : CommandBase
+        {
             var contract = new StandardCommandContract<T>();
 
             delegateValidations?.Invoke(contract);
@@ -13,8 +14,9 @@ namespace IbgeBlazor.Core.Common.Commands.Contracts
             return contract;
         }
 
-        public class StandardCommandContract<T>: Contract<T> {
-            
+        public class StandardCommandContract<T> : Contract<T>
+        {
+
         }
 
     }

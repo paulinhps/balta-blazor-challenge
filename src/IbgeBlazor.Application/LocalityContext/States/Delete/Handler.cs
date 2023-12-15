@@ -10,9 +10,9 @@ public class Handler :
 Notifiable<Notification>,
 IRequestHandler<DeleteStateCommand, CommandResult>
 {
-    private readonly ILocalityRepository _repository;
+    private readonly ILocalitiesRepository _repository;
 
-    public Handler(ILocalityRepository repository)
+    public Handler(ILocalitiesRepository repository)
     {
         _repository = repository;
     }

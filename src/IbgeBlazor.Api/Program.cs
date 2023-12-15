@@ -1,4 +1,7 @@
+using System.Text.Json.Serialization;
+using IbgeBlazor.Api.DependencyInjection;
 using IbgeBlazor.Infraestructure.CrossCutting;
+using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    options.SerializerOptions.WriteIndented = false;
+});
 
 builder.Services.AddInfraestructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
@@ -24,12 +33,14 @@ app.UseHttpsRedirection();
 
 app.MapGet("/", () =>
 {
-    return "Alive";
+    return new
+    {
+        state = "Alive"
+    };
 })
-.WithName("HelthCheck")
-.WithOpenApi();
+.ExcludeFromDescription();
 
-app.MapLocalityEndpoints();
+app.MapApiEndPoints();
 
 
 app.Run();
