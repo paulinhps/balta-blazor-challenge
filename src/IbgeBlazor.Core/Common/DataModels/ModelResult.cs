@@ -25,7 +25,7 @@ namespace IbgeBlazor.Core.Common.DataModels
         {
 
         }
-        
+
 
     }
 }

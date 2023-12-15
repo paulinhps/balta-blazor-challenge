@@ -20,8 +20,8 @@ public static class StateEndpoints
 
             ModelResult<StateModel> response = result.FromModel();
 
-            return result.CreateResult(response, status201CreatedPath : $"{ApiEndpointsPaths.States}/{result.Data?.Id}");
-            
+            return result.CreateResult(response, status201CreatedPath: $"{ApiEndpointsPaths.States}/{result.Data?.Id}");
+
 
         })
         .WithName("CreateState")
@@ -51,7 +51,7 @@ public static class StateEndpoints
             var result = await mediator.Send(new DeleteStateCommand(id));
 
             ModelResultBase response = result.FromModel();
-            
+
             return result.CreateResult(response);
 
         })

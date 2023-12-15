@@ -9,16 +9,16 @@ namespace IbgeBlazor.Application.LocalityContext.States.Extensions;
 public static class StatesDataModelsExtensions
 {
     public static CreateStateCommand FromCommand(this CreateStateModel model)
-    => new(model.IbgeUfId,model.Uf, model.Description)
+    => new(model.IbgeUfId, model.Uf, model.Description)
     {
         Id = model.IbgeUfId,
         Code = model.Uf,
         Description = model.Description
     };
-    
+
     public static ModelResult<StateModel> FromModel(this ICommandResult<State> commandResult)
     {
-        
+
 
         StateModel? model = commandResult.Data is not null ? new()
         {
@@ -32,11 +32,11 @@ public static class StatesDataModelsExtensions
     }
     public static ModelResultBase FromModel(this ICommandResult commandResult)
     {
-       
+
         return new ModelResult(commandResult.Message, commandResult.Errors.ToArray());
 
     }
     public static UpdateStateCommand FromCommand(this UpdateStateModel model, int stateId)
     => new(stateId, model.Description);
-    
+
 }
