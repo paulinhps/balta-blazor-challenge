@@ -21,10 +21,23 @@ public sealed class StatesRepository : IStatesRepository
         return result.Entity;
     }
 
+    public async Task<State?> GetStateById(int id)
+    => await _applicationDbContext.States.FirstOrDefaultAsync(state => state.Id == id);
+
     public async Task<bool> IsExistsStateWithIdOrUf(int stateId, string ufCode)
     => await _applicationDbContext.States
         .AsNoTracking()
         .AnyAsync(state =>
             state.Id == stateId
             || state.Code == ufCode);
+
+    public async Task<bool> UpdateState(State state)
+    {
+        
+        _applicationDbContext.States.Update(state);
+
+        await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
+
+        return true;
+    }
 }

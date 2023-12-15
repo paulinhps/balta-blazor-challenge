@@ -12,6 +12,15 @@ public class CreateStateCommand : CommandBase, IRequest<ICommandResult<State>>
     public string Code { get; set; } = null!;
     public string Description { get; set; } = null!;
 
+    public CreateStateCommand(int id, string code, string description)
+    {
+        Id = id;
+        Code = code;
+        Description = description;
+
+        Validate();
+    }
+
     public override void Validate()
     {
         AddNotifications(CommandValidator.Validate<CreateStateCommand>(contract =>

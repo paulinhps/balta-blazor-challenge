@@ -26,7 +26,6 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
         var dataResult = new DataCommandResult<State>();
 
         //1. Validar se o cammando está valido.
-        command.Validate();
         if (!command.IsValid)
         {
             dataResult.AddNotifications(command);

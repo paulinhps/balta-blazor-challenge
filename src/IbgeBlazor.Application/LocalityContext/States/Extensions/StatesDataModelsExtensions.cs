@@ -9,16 +9,17 @@ namespace IbgeBlazor.Application.LocalityContext.States.Extensions;
 public static class StatesDataModelsExtensions
 {
     public static CreateStateCommand FromCommand(this CreateStateModel model)
-    => new()
+    => new(model.IbgeUfId,model.Uf, model.Description)
     {
         Id = model.IbgeUfId,
         Code = model.Uf,
         Description = model.Description
     };
-    public static ModelResult<StateModel> FromModel(this ICommandResult<State> commandResult)
+    
+    public static ModelResult<StateModel> FromModel(this ICommandResult<State> commandResult, string? successMessage = null, string? failureMessage = null)
     {
         if (!commandResult.Success)
-            return new("Não foi possível criar o estado", commandResult.Errors.ToArray());
+            return new(failureMessage!, commandResult.Errors.ToArray());
 
         StateModel model = new()
         {
@@ -28,6 +29,9 @@ public static class StatesDataModelsExtensions
         };
 
 
-        return new(model, "Estado criado com sucesso");
+        return new(model, successMessage!);
     }
+    public static UpdateStateCommand FromCommand(this UpdateStateModel model, int stateId)
+    => new(stateId, model.Description);
+    
 }
