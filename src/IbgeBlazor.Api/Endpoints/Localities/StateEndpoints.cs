@@ -1,3 +1,5 @@
+using IbgeBlazor.Api.Extensions;
+using IbgeBlazor.Application.LocalityContext.States.Commands;
 using IbgeBlazor.Application.LocalityContext.States.Extensions;
 using IbgeBlazor.Core.Common.DataModels;
 using IbgeBlazor.Core.Constants;
@@ -16,12 +18,10 @@ public static class StateEndpoints
 
             var result = await mediator.Send(model.FromCommand());
 
-            ModelResult<StateModel> response = result.FromModel("Estado criado com sucesso!", "Falha ao criar o estado!");
-            if (response.Success)
-                return Results.Created($"{ApiEndpointsPaths.States}/{result.Data!.Id}", response);
+            ModelResult<StateModel> response = result.FromModel();
 
-            else
-                return Results.UnprocessableEntity(response);
+            return result.CreateResult(response, status201CreatedPath : $"{ApiEndpointsPaths.States}/{result.Data?.Id}");
+            
 
         })
         .WithName("CreateState")
@@ -34,17 +34,30 @@ public static class StateEndpoints
 
             var result = await mediator.Send(model.FromCommand(id));
 
-            ModelResult<StateModel> response = result.FromModel("Estado foi atualizado com sucesso!", "Falha ao atualizar estado!");
-            if (response.Success)
-                return Results.Ok(response);
+            ModelResult<StateModel> response = result.FromModel();
 
-            else
-                return Results.UnprocessableEntity(response);
+            return result.CreateResult(response);
 
         })
         .WithName("UpdateState")
         .WithTags(Tags)
         .Produces<ModelResult<StateModel>>(StatusCodes.Status200OK)
+        .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
+
+
+        app.MapDelete($"{ApiEndpointsPaths.States}/{{id:int}}", async (int id, IMediator mediator) =>
+        {
+
+            var result = await mediator.Send(new DeleteStateCommand(id));
+
+            ModelResultBase response = result.FromModel();
+            
+            return result.CreateResult(response);
+
+        })
+        .WithName("DeleteState")
+        .WithTags(Tags)
+        .Produces<ModelResultBase>(StatusCodes.Status200OK)
         .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
 
         return app;

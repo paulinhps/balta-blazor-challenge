@@ -13,8 +13,8 @@ Notifiable<Notification>,
 IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 {
     private readonly IStatesRepository _repository;
-    private readonly ILogger<Handler> _logger;
 
+    private readonly ILogger<Handler> _logger;
     public Handler(IStatesRepository repository, ILogger<Handler> logger)
     {
         _repository = repository;
@@ -23,16 +23,19 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 
     public async Task<ICommandResult<State>> Handle(UpdateStateCommand command, CancellationToken cancellationToken)
     {
-        var dataResult = new DataCommandResult<State>();
+        ICommandResult<State> dataResult = new DataCommandResult<State>();
+        
 
         if (!command.IsValid)
         {
-            dataResult.AddNotifications(command);
+            dataResult.AddErrors(command)
+            .WithStatus(400)
+            .WithMessage("Entrada de dados inválida");
 
             return dataResult;
         }
 
-        State state = null!;
+        State? state = null!;
 
         try
         {
@@ -48,12 +51,12 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
         }
         
         if(state is null) {
+            
             AddNotification("StateNotFound", "Estado não encontrado!");
 
-            return dataResult;
         }
 
-        state.ChangeDescription(command.Description);
+        state?.ChangeDescription(command.Description);
 
         AddNotifications(state);
 
@@ -61,24 +64,27 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
         {
             try
             {
-                _ = _repository.UpdateState(state);
+                _ = await _repository.UpdateState(state!);
 
-                dataResult.Data = state;
+                dataResult
+                .WithData(state)
+                .WithStatus(200)
+                .WithMessage("Estado atulizado com sucesso!");
 
             }
             catch
             {
-
-                AddNotification("UpdateState", "Não foi possível salvar o estado");
+                AddNotification("DataBaseUpdate", "Não foi possível salvar o estado");
             }
         }
-        //adicionando notificações se existir
-        dataResult.AddNotifications(this);
+
+        //adicionando errors caso exista
+        dataResult.AddErrors(this)
+        .AddStateWhenInvalid(422)
+        .AddMessageWhenInvalid("Não foi possível atualizar o estado!");
 
         //6. Montar e retornar o resultado.
         return dataResult;
     }
-
-
 
 }

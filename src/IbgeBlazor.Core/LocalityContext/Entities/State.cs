@@ -8,6 +8,8 @@ public class State : Entity
 {
     public StateCode Code { get; private set; }
     public string Description { get; private set; }
+    //TODO: Precisa mapear Locality para podemos ter acesso.
+    // public IReadOnlyList<Locality> Localities {get;} = [];
     public State(int id, StateCode code, string description) : base(id)
     {
         Code = code;

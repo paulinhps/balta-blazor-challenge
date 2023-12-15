@@ -5,7 +5,7 @@ namespace IbgeBlazor.Core.Common.DataModels
 {
     public abstract class ModelResultBase
     {
-
+        
         private List<IErrorModel> _errors = [];
 
         public IReadOnlyCollection<IErrorModel>? Errors => _errors.Any() ? _errors : null;

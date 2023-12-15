@@ -12,22 +12,62 @@ public class CommandResult : Notifiable<Notification>, ICommandResult
 
     public IEnumerable<IErrorModel> Errors => this.GetErrors();
 
-    public CommandResult(string message)
+    public int ResultCode { get; protected set; } = 400;
+    public CommandResult(string message) : this()
     {
         Message = message;
     }
 
     public CommandResult()
     {
-
     }
 
-    public void AddErrors(params Notifiable<Notification>[] items)
-    => AddNotifications(items);
 
-    public void AddErrors(string message, params Notifiable<Notification>[] items)
+    public ICommandResult AddErrors(params Notifiable<Notification>[] items)
+    {
+        AddNotifications(items);
+
+        return this;
+    }
+
+    public ICommandResult WithMessage(string message)
     {
         Message = message;
-        AddErrors(items);
+
+        return this;
     }
+
+    public virtual ICommandResult WithStatus(int resultStatus)
+    {
+        ResultCode = resultStatus;
+
+        return this;
+    }
+
+    public ICommandResult AddMessageWhenInvalid(string message)
+    {
+        if(!Success)
+         {
+            return WithMessage(message);
+         }
+
+         return this;
+    }
+
+    public ICommandResult AddStateWhenInvalid(int resultStatus)
+    {
+        if(!Success)
+         {
+            return WithStatus(resultStatus);
+         }
+
+         return this;
+    }
+}
+
+public enum CommandResultTypes {
+    Success = 200,
+    Created = 201,
+    InputedError = 400,
+    ProccessErro = 422,
 }
