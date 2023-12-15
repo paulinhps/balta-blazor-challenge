@@ -1,4 +1,3 @@
-using IbgeBlazor.Application.LocalityContext.Localities.Create;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
 using IbgeBlazor.Core.LocalityContext.Entities;
@@ -10,6 +9,14 @@ public class UpdateStateCommand : CommandBase, IRequest<ICommandResult<State>>
 {
     public int Id { get; set; } = 0;
     public string Description { get; set; } = null!;
+
+    public UpdateStateCommand(int id, string description)
+    {
+        Id = id;
+        Description = description;
+        
+        Validate();
+    }
 
     public override void Validate()
     {
