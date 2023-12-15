@@ -26,9 +26,9 @@ where TData : class
     public ICommandResult<TData> WithData(TData? data)
     {
         Data = data;
-        
+
         return this;
     }
 
- 
+
 }

@@ -14,7 +14,7 @@ public class UpdateStateCommand : CommandBase, IRequest<ICommandResult<State>>
     {
         Id = id;
         Description = description;
-        
+
         Validate();
     }
 

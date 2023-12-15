@@ -1,6 +1,7 @@
 using Flunt.Notifications;
 using IbgeBlazor.Application.LocalityContext.States.Commands;
 using IbgeBlazor.Core.Common.Commands;
+using IbgeBlazor.Core.Enumerators;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
 using MediatR;
@@ -24,12 +25,12 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
     public async Task<ICommandResult<State>> Handle(UpdateStateCommand command, CancellationToken cancellationToken)
     {
         ICommandResult<State> dataResult = new DataCommandResult<State>();
-        
+
 
         if (!command.IsValid)
         {
             dataResult.AddErrors(command)
-            .WithStatus(400)
+            .WithStatus(CommandResultType.InputedError)
             .WithMessage("Entrada de dados inválida");
 
             return dataResult;
@@ -41,7 +42,7 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
         {
 
             state = await _repository.GetStateById(command.Id);
-            
+
         }
         catch (Exception ex)
         {
@@ -49,9 +50,10 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
             _logger.LogCritical(ex, errorMessage);
             AddNotification("CheckState", errorMessage);
         }
-        
-        if(state is null) {
-            
+
+        if (state is null)
+        {
+
             AddNotification("StateNotFound", "Estado não encontrado!");
 
         }
@@ -68,7 +70,7 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 
                 dataResult
                 .WithData(state)
-                .WithStatus(200)
+                .WithStatus(CommandResultType.Success)
                 .WithMessage("Estado atulizado com sucesso!");
 
             }
@@ -80,7 +82,7 @@ IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 
         //adicionando errors caso exista
         dataResult.AddErrors(this)
-        .AddStateWhenInvalid(422)
+        .AddStateWhenInvalid(CommandResultType.ProccessError)
         .AddMessageWhenInvalid("Não foi possível atualizar o estado!");
 
         //6. Montar e retornar o resultado.

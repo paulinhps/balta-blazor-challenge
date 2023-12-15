@@ -1,6 +1,7 @@
 using Flunt.Notifications;
 using IbgeBlazor.Application.LocalityContext.States.Commands;
 using IbgeBlazor.Core.Common.Commands;
+using IbgeBlazor.Core.Enumerators;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
 using MediatR;
@@ -29,7 +30,7 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
         if (!command.IsValid)
         {
             dataResult.AddErrors(command)
-            .WithStatus(400)
+            .WithStatus(CommandResultType.InputedError)
             .WithMessage("Dados para Criar Estado estão inválidos");
             return dataResult;
         }
@@ -67,7 +68,7 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
                 _ = await _repository.CreateState(state);
 
                 dataResult.WithData(state)
-                .WithStatus(201)
+                .WithStatus(CommandResultType.Created)
                 .WithMessage("Estado cadastrado com sucesso");
 
             }
@@ -79,7 +80,7 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
         }
         //adicionando notificações se existir
         dataResult.AddErrors(this)
-        .AddStateWhenInvalid(422)
+        .AddStateWhenInvalid(CommandResultType.ProccessError)
         .AddMessageWhenInvalid("Não foi possível criar um estado!");
 
         //6. Montar e retornar o resultado.
