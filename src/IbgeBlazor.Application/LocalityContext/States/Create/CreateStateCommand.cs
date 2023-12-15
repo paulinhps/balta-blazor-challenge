@@ -4,7 +4,7 @@ using IbgeBlazor.Core.Common.Commands.Contracts;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using MediatR;
 
-namespace IbgeBlazor.Application.LocalityContext.States.Commands;
+namespace IbgeBlazor.Application.LocalityContext.States.Create;
 
 public class CreateStateCommand : CommandBase, IRequest<ICommandResult<State>>
 {

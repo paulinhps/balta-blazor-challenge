@@ -54,4 +54,16 @@ public sealed class StatesRepository : IStatesRepository
 
         return true;
     }
+
+    public async Task<IEnumerable<State>> ListStates(int pageNumber, int pageSize)
+    {
+        var take = pageSize;
+        var skip = pageNumber > 1 ? take * (pageNumber - 1) : 0;
+        
+        return await _applicationDbContext.States
+            .AsNoTracking()
+            .Skip(skip)
+            .Take(take)
+            .ToListAsync();
+    }
 }

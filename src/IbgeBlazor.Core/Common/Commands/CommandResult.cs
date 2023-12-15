@@ -1,6 +1,7 @@
 using Flunt.Notifications;
 using IbgeBlazor.Core.Common.DataModels;
 using IbgeBlazor.Core.Common.Extensions;
+using IbgeBlazor.Core.Enumerators;
 
 namespace IbgeBlazor.Core.Common.Commands;
 
@@ -65,10 +66,3 @@ public class CommandResult : Notifiable<Notification>, ICommandResult
     }
 }
 
-public enum CommandResultType
-{
-    Success = 200,
-    Created = 201,
-    InputedError = 400,
-    ProccessError = 422,
-}

@@ -1,5 +1,4 @@
 
-using Flunt.Notifications;
 
 namespace IbgeBlazor.Core.Common.DataModels
 {
@@ -10,7 +9,7 @@ namespace IbgeBlazor.Core.Common.DataModels
 
         public IReadOnlyCollection<IErrorModel>? Errors => _errors.Any() ? _errors : null;
         public string? Message { get; set; }
-        public bool Success => _errors.Count == 0;
+        public virtual bool? Success => _errors.Count == 0;
 
         protected ModelResultBase(string message, params IErrorModel[] errors)
         {

@@ -1,10 +1,11 @@
-using IbgeBlazor.Application.LocalityContext.States.Commands;
+using IbgeBlazor.Application.LocalityContext.States.Create;
+using IbgeBlazor.Application.LocalityContext.States.Update;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.DataModels;
 using IbgeBlazor.Core.LocalityContext.DataModels;
 using IbgeBlazor.Core.LocalityContext.Entities;
 
-namespace IbgeBlazor.Application.LocalityContext.States.Extensions;
+namespace IbgeBlazor.Application.LocalityContext.Extensions;
 
 public static class StatesDataModelsExtensions
 {
