@@ -28,6 +28,7 @@ public class CreateStateCommand : CommandBase, IRequest<ICommandResult<State>>
 
             contract.Requires()
             .IsGreaterThan(Id, 0, nameof(Id), $"{nameof(Id)} is Required")
+            .IsTrue(Regex.IsMatch(Id.ToString(), @"^\d{2}$"), nameof(Code), $"{nameof(Code)} is required with two numerics digits!")
             .IsNotNullOrWhiteSpace(Code, nameof(Code), $"{nameof(Code)} is Required")
             .IsTrue(Regex.IsMatch(Code, @"^[A-Z]{2}$"), nameof(Code), $"{nameof(Code)} two upper case letters.")
             .IsNotNullOrWhiteSpace(Description, nameof(Description), $"{nameof(Description)} is Required");

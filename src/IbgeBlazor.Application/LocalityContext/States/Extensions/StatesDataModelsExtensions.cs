@@ -16,20 +16,25 @@ public static class StatesDataModelsExtensions
         Description = model.Description
     };
     
-    public static ModelResult<StateModel> FromModel(this ICommandResult<State> commandResult, string? successMessage = null, string? failureMessage = null)
+    public static ModelResult<StateModel> FromModel(this ICommandResult<State> commandResult)
     {
-        if (!commandResult.Success)
-            return new(failureMessage!, commandResult.Errors.ToArray());
+        
 
-        StateModel model = new()
+        StateModel? model = commandResult.Data is not null ? new()
         {
             Id = commandResult.Data!.Id,
             Description = commandResult.Data.Description,
             Uf = commandResult.Data.Code
-        };
+        } : null;
 
 
-        return new(model, successMessage!);
+        return new(model, commandResult.Message, commandResult.Errors.ToArray());
+    }
+    public static ModelResultBase FromModel(this ICommandResult commandResult)
+    {
+       
+        return new ModelResult(commandResult.Message, commandResult.Errors.ToArray());
+
     }
     public static UpdateStateCommand FromCommand(this UpdateStateModel model, int stateId)
     => new(stateId, model.Description);
