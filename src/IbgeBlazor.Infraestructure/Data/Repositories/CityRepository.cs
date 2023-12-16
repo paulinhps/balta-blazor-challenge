@@ -22,7 +22,7 @@ public sealed class CityRepository : ICitiesRepository
         return result.Entity;
     }
 
-    public async Task<bool> IsExistsCityWithIdOrUf(string ibgeCode, string cityName) => await _applicationDbContext.Cities
+    public async Task<bool> IsExistsCityWithIdOrUf(string ibgeCode, string cityName, string ) => await _applicationDbContext.Cities
             .AsNoTracking()
             .AnyAsync(city => city.IbgeCode == ibgeCode || city.CityName == cityName);
 }
