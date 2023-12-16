@@ -7,13 +7,13 @@ namespace IbgeBlazor.Core.LocalityContext.Entities
     public class City : GenericEntity<IbgeCode>
     {
       public string CityName { get; set; } = null!;
-        public int StateCode { get; set; }
+        public int StateId { get; set; }
         public State State { get; set; } = null!;
 
-        public City(IbgeCode ibgeCode, string cityName, int stateCode) : base(ibgeCode)
+        public City(IbgeCode id, string cityName, int stateId) : base(id)
         {
             CityName = cityName;
-            StateCode = stateCode;
+            StateId = stateId;
             Validate();
         }
 

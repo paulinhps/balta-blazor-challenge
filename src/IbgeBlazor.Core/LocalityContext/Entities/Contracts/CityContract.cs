@@ -8,7 +8,7 @@ namespace IbgeBlazor.Core.LocalityContext.Entities.Contracts
         {
             Requires()
                 .IsNotNull(cities.CityName, "City.CityName", "Name City IBGE is required")
-                .IsGreaterThan(cities.StateCode,0, "City.UfCode", "UF is required");
+                .IsGreaterThan(cities.StateId,0, "City.UfCode", "UF is required");
 
 
             //Code Rules Notifications
@@ -16,7 +16,7 @@ namespace IbgeBlazor.Core.LocalityContext.Entities.Contracts
                 AddNotifications(cities.State);
             
             if (cities.Id != null)
-                AddNotifications(cities.Id.AssertContaisStateId(cities.StateCode));
+                AddNotifications(cities.Id.AssertContaisStateId(cities.StateId));
         }
     }
 }
