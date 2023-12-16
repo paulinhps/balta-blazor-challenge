@@ -7,13 +7,15 @@ namespace IbgeBlazor.Core.LocalityContext.Entities.Contracts
         public CityContract(City cities)
         {
             Requires()
-                .IsNotNull(cities.IbgeCode, "Ibge.Code", "Code IBGE is required")
-                .IsNotNull(cities.CityName, "Ibge.Code", "Name City IBGE is required")
-                .IsNotNull(cities.UfCode, "Uf.Code", "UF is required");
-                
+                .IsNotNull(cities.IbgeCode, "City.IbgeCode", "Code IBGE is required")
+                .IsNotNull(cities.CityName, "City.CityName", "Name City IBGE is required")
+                .IsNotNull(cities.UfCode, "City.UfCode", "UF is required");
+
 
             //Code Rules Notifications
-            //AddNotifications(cities);
+            //AddNotifications(cities.IbgeCode);
+            //AddNotifications(cities.CityName);
+            //AddNotifications(cities.UfCode);
 
         }
     }
