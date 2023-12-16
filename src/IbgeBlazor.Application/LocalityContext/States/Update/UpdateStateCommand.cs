@@ -6,7 +6,7 @@ using MediatR;
 
 namespace IbgeBlazor.Application.LocalityContext.States.Update;
 
-public class UpdateCityCommand : CommandBase, IRequest<ICommandResult<State>>
+public class UpdateStateCommand : CommandBase, IRequest<ICommandResult<State>>
 {
     public int Id { get; set; } = 0;
     public string Description { get; set; } = null!;

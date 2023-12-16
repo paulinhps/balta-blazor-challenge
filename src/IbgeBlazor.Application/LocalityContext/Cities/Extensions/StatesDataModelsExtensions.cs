@@ -8,13 +8,8 @@ namespace IbgeBlazor.Application.LocalityContext.Cities.Extensions;
 
 public static class StatesDataModelsExtensions
 {
-    public static CreateCityCommand FromCommand(this CreateCityModel model) => new()
-    {
-        Id = model.IbgeCode,
-        UfCode = model.UfCode,
-        CityName = model.CityName,
-        IbgeCode = model.IbgeCode
-    };
+    public static CreateCityCommand FromCommand(this CreateCityModel model)
+        => new(model.IbgeCode, model.CityName, model.StateId);
     public static ModelResult<CityModel> FromModel(this ICommandResult<City> commandResult)
     {
         if (!commandResult.Success)
@@ -22,9 +17,14 @@ public static class StatesDataModelsExtensions
 
         CityModel model = new()
         {
-            UfCode = commandResult.Data!.UfCode,
+            State = new StateModel
+            {
+                Id = commandResult.Data!.State.Id,
+                Description = commandResult.Data!.State.Description,
+                Uf = commandResult.Data!.State.Code
+            },
             CityName = commandResult.Data.CityName,
-            IbgeCode = commandResult.Data.IbgeCode
+            IbgeCode = commandResult.Data.Id
         };
 
         return new(model, "Cidade criado com sucesso");

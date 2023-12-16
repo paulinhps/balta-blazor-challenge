@@ -8,9 +8,9 @@ namespace IbgeBlazor.Api.Endpoints.Localities
 {
     public static class CityEndpoints
     {
-        private static string[] Tags = ["City"];
+        private static string[] Tags = ["Cities"];
 
-        public static WebApplication MapStatesEndpoints(this WebApplication app)
+        public static WebApplication MapCitiesEndpoints(this WebApplication app)
         {
 
             app.MapPost(ApiEndpointsPaths.Cities, async (CreateCityModel model, IMediator mediator) =>

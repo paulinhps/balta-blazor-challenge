@@ -1,5 +1,6 @@
 ﻿using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
+using IbgeBlazor.Core.LocalityContext.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace IbgeBlazor.Infraestructure.Data.Repositories;
@@ -22,7 +23,7 @@ public sealed class CityRepository : ICitiesRepository
         return result.Entity;
     }
 
-    public async Task<bool> IsExistsCityWithIdOrUf(string ibgeCode, string cityName, string ) => await _applicationDbContext.Cities
+    public async Task<bool> IsExistsCityWithIdOrUf(IbgeCode ibgeCode) => await _applicationDbContext.Cities
             .AsNoTracking()
-            .AnyAsync(city => city.IbgeCode == ibgeCode || city.CityName == cityName);
+            .AnyAsync(city => city.Id.Equals(ibgeCode));
 }

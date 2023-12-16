@@ -86,10 +86,4 @@ public class Handler : Notifiable<Notification>, IRequestHandler<UpdateStateComm
         return dataResult;
     }
 
-<<<<<<< HEAD
 }
-=======
-
-
-}
->>>>>>> aa301f6 (Implementação do Caso de Uso (Criar Cidade))
