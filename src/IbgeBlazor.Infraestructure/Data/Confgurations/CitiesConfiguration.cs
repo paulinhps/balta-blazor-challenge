@@ -27,18 +27,18 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasColumnType(nameof(SqlDbType.VarChar))
                 .HasMaxLength(80);
 
-            builder.Property(city => city.StateCode)
+            builder.Property(city => city.StateId)
                 .IsRequired()
                 .HasColumnName("CODIGO_UF")
-                .HasColumnType(nameof(SqlDbType.TinyInt));
+                .HasColumnType(nameof(SqlDbType.Int));
 
             // 1 Municipio (City) está em 1 Estado (State)
             // 1 Estado (State) possui Muitos (N) Municípios (City)
 
-            builder.HasOne(city => city.State)
-                .WithMany(state => state.Cities)
-                .HasForeignKey(e => e.StateCode)
-                .IsRequired();
+            // builder.HasOne(city => city.State)
+            //     .WithMany(state => state.Cities)
+            //     .HasForeignKey(e => e.StateId)
+            //     .IsRequired();
 
             builder.HasIndex(state => state.CityName, "IX_MUNICIPIOS_NOME_MUNICIPIO");
 

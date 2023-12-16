@@ -12,11 +12,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
         {
             builder.ToTable("ESTADOS");
 
-            builder.HasKey(state => new
-            {
-                state.Id,
-                state.Code
-            });
+            builder.HasKey(state => state.Id);
 
             builder.Property(state => state.Id)
                 .IsRequired()
@@ -39,7 +35,9 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
 
 
             builder.HasMany(state => state.Cities)
-                .WithOne(city => city.State);
+                .WithOne(city => city.State)
+                .HasForeignKey(c => c.StateId)
+                .IsRequired();
 
             builder.HasIndex(state => state.Code, "IX_ESTADOS_CODIGO_ESTADO");
 

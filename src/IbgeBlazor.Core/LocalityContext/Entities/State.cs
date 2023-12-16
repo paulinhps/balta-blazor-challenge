@@ -8,7 +8,9 @@ public class State : Entity
 {
     public StateCode Code { get; set; }
     public string Description { get; set; }
-    public IEnumerable<City> Cities { get; set; }
+
+    public int CityId { get; }
+    public IEnumerable<City> Cities { get;}
 
     public State(int id, StateCode code, string description) : base(id)
     {
