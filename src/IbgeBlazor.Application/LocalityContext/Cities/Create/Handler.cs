@@ -24,17 +24,15 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
         var dataResult = new DataCommandResult<City>();
 
         //1. Validar se o cammando está valido.
-        command.Validate();
         if (!command.IsValid)
         {
             dataResult.AddNotifications(command);
-
             return dataResult;
         }
         //2. Checar se estado já exite.
         try
         {
-            bool cityExists = await _repository.IsExistsCityWithIdOrUf(command.IbgeCode,command.CityName);
+            bool cityExists = await _repository.IsExistsCityWithIdOrUf(command.IbgeCode);
 
             if (cityExists)
             {
