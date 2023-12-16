@@ -36,7 +36,7 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
 
             if (cityExists)
             {
-                AddNotification("City.Founded", "A Cidade já está cadastrado");
+                AddNotification("City.Founded", "A Cidade já está cadastrada");
             }
         }
         catch (Exception ex)
@@ -47,7 +47,7 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
         }
         //3. Contruir os objetos.
 
-        City city = new City(command.Id, command.IbgeCode, command.CityName, command.UfCode);
+        City city = new City(command.IbgeCode, command.CityName, command.StateId);
 
         //4. Validar o domínio.
 

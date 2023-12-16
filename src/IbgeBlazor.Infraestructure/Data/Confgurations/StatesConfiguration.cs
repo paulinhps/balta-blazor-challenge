@@ -37,7 +37,11 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasColumnType(nameof(SqlDbType.VarChar))
                 .HasMaxLength(80);
 
-            builder.HasIndex(state => state.Code, "IX_ESTATDOS_CODIGO_ESTADO");
+
+            builder.HasMany(state => state.Cities)
+                .WithOne(city => city.State);
+
+            builder.HasIndex(state => state.Code, "IX_ESTADOS_CODIGO_ESTADO");
 
         }
     }

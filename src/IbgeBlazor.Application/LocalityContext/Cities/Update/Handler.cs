@@ -9,9 +9,9 @@ namespace IbgeBlazor.Application.LocalityContext.Cities.Update;
 
 public class Handler : Notifiable<Notification>, IRequestHandler<UpdateCityCommand, ICommandResult<City>>
 {
-    private readonly ILocalitiesRepository _repository;
+    private readonly ICitiesRepository _repository;
 
-    public Handler(ILocalitiesRepository repository)
+    public Handler(ICitiesRepository repository)
     {
         _repository = repository;
     }

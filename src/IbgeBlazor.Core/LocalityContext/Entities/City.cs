@@ -6,9 +6,9 @@ namespace IbgeBlazor.Core.LocalityContext.Entities
 {
     public class City : GenericEntity<IbgeCode>
     {
-      public string CityName { get; set; }
+      public string CityName { get; set; } = null!;
         public int StateCode { get; set; }
-        public State State { get; set; }
+        public State State { get; set; } = null!;
 
         public City(IbgeCode ibgeCode, string cityName, int stateCode) : base(ibgeCode)
         {
