@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Data;
 
-
 namespace IbgeBlazor.Infraestructure.Data.Confgurations
 {
     internal class CitiesConfiguration : IEntityTypeConfiguration<City>
@@ -12,15 +11,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
         {
             builder.ToTable("CIDADE");
 
-            builder.HasKey(city => new
-            {
-                city.IbgeCode,
-                city.UfCode,
-                city.CityName
-
-            });
-
-            builder.Property(city => city.Id)
+            builder.Property(city => city.IbgeCode)
                 .IsRequired()
                 .HasColumnName("ID");
 
@@ -29,7 +20,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasColumnName("CODIGO_ESTADO")
                 .HasColumnType(nameof(SqlDbType.Char))
                 .HasMaxLength(2);
-            //.HasConversion(code => code.CodeNumber, str => str);
+
             builder.Ignore(city => city.Notifications);
 
             builder.Property(city => city.UfCode)
@@ -45,10 +36,6 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasColumnName("NOME_CIDADE")
                 .HasColumnType(nameof(SqlDbType.VarChar))
                 .HasMaxLength(80);
-
-           // builder.HasIndex(city => city.Code, "IX_ESTATDOS_CODIGO_ESTADO");
-
-
         }
     }
 }
