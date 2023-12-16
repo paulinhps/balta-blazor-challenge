@@ -9,7 +9,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
     {
         public void Configure(EntityTypeBuilder<City> builder)
         {
-            builder.ToTable("CIDADE");
+            builder.ToTable("CIDADES");
 
             builder.HasKey(city => new
             {
