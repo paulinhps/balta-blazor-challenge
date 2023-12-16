@@ -1,20 +1,19 @@
 ﻿using IbgeBlazor.Core.Common.Commands.Entities;
 using IbgeBlazor.Core.LocalityContext.Entities.Contracts;
+using IbgeBlazor.Core.LocalityContext.ValueObjects;
 
 namespace IbgeBlazor.Core.LocalityContext.Entities
 {
-    public class City : Entity
+    public class City : GenericEntity<IbgeCode>
     {
+      public string CityName { get; set; }
+        public int StateCode { get; set; }
+        public State State { get; set; }
 
-        public string IbgeCode { get; set; }
-        public string CityName { get; set; }
-        public string UfCode { get; set; }
-
-        public City(int id, string ibgeCode, string cityName, string ufCode) : base(id)
+        public City(IbgeCode ibgeCode, string cityName, int stateCode) : base(ibgeCode)
         {
-            IbgeCode = ibgeCode;
             CityName = cityName;
-            UfCode = ufCode;
+            StateCode = stateCode;
             Validate();
         }
 
