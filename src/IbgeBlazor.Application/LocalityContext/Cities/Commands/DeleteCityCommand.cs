@@ -8,6 +8,12 @@ public class DeleteCityCommand : CommandBase, IRequest<CommandResult>
 {
     public int Id { get; set; } = 0;
 
+    public DeleteCityCommand(int id)
+    {
+        Id= id;
+        Validate();
+    }
+
     public override void Validate()
     {
         AddNotifications(CommandValidator.Validate<CreateCityCommand>(contract =>

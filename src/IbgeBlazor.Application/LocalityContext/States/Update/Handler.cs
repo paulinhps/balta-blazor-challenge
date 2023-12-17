@@ -8,9 +8,11 @@ using Microsoft.Extensions.Logging;
 
 namespace IbgeBlazor.Application.LocalityContext.States.Update;
 
-public class Handler : Notifiable<Notification>, IRequestHandler<UpdateStateCommand, ICommandResult<State>>
+public class Handler : 
+    Notifiable<Notification>, IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 {
     private readonly IStatesRepository _repository;
+    private readonly ILogger<Handler> _logger;
 
     private readonly ILogger<Handler> _logger;
     public Handler(IStatesRepository repository, ILogger<Handler> logger)
