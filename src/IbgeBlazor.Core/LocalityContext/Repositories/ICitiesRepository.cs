@@ -7,4 +7,9 @@ public  interface ICitiesRepository
 {
     Task<City> CreateCity(City city);
     Task<bool> IsExistsCityWithIdOrUf(IbgeCode ibgeCode);
+    
+    Task<bool> IsExistsStateLinkedCity(int Id);
+    void DeleteCity(int cityId);
+    Task<City> UpdateCity(City city);
+
 }

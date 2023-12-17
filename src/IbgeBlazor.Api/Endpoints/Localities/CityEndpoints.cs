@@ -31,6 +31,67 @@ namespace IbgeBlazor.Api.Endpoints.Localities
                 .Produces<ModelResult<CityModel>>(StatusCodes.Status201Created)
                 .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
 
+
+
+            //Regupera todas as cidades
+            app.MapGet(ApiEndpointsPaths.Cities, async (AllCityModel model, IMediator mediator) =>
+                {
+                    var result = await mediator.Send(model.FromCommand());
+
+                    ModelResult<CityModel> response = result.FromModel();
+                    if (response.Success)
+                        return Results.Created($"{ApiEndpointsPaths.Cities}/{result.Data!.Id}", response);
+
+                    else
+                        return Results.UnprocessableEntity(response);
+
+                })
+                .WithName("GetCity")
+                .WithTags(Tags)
+                .Produces<ModelResult<CityModel>>(StatusCodes.Status201Created)
+                .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
+
+
+            //Regupera todas as cidades
+            app.MapDelete(ApiEndpointsPaths.Cities, async (DeleteCityModel model, IMediator mediator) =>
+                {
+                    var result = await mediator.Send(model.FromCommand());
+
+                    ModelResult<CityModel> response = result.FromModel();
+                    if (response.Success)
+                        return Results.Created($"{ApiEndpointsPaths.Cities}/{result.Data!.Id}", response);
+
+                    else
+                        return Results.UnprocessableEntity(response);
+
+                })
+                .WithName("GetCity")
+                .WithTags(Tags)
+                .Produces<ModelResult<CityModel>>(StatusCodes.Status201Created)
+                .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
+
+
+            //Regupera todas as cidades
+            app.MapPatch(ApiEndpointsPaths.Cities, async (UpdateCityModel model, IMediator mediator) =>
+                {
+                    var result = await mediator.Send(model.FromCommand());
+
+                    ModelResult<CityModel> response = result.FromModel();
+                    if (response.Success)
+                        return Results.Created($"{ApiEndpointsPaths.Cities}/{result.Data!.Id}", response);
+
+                    else
+                        return Results.UnprocessableEntity(response);
+
+                })
+                .WithName("GetCity")
+                .WithTags(Tags)
+                .Produces<ModelResult<CityModel>>(StatusCodes.Status201Created)
+                .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
+
+
+
+
             return app;
         }
     }

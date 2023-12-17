@@ -16,6 +16,12 @@ public class DeleteStateCommand : CommandBase, IRequest<ICommandResult>
 
     public int Id { get; set; } = 0;
 
+    public DeleteStateCommand( int id)
+    {
+        Id = id;
+    }
+
+
     public override void Validate()
     {
         AddNotifications(CommandValidator.Validate<CreateStateCommand>(contract =>

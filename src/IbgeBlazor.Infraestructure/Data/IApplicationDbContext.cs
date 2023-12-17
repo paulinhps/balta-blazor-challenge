@@ -11,6 +11,7 @@ namespace IbgeBlazor.Infraestructure.Data
         DbSet<City> Cities { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
     }
 
 }

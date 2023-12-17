@@ -23,7 +23,32 @@ public sealed class CityRepository : ICitiesRepository
         return result.Entity;
     }
 
-    public async Task<bool> IsExistsCityWithIdOrUf(IbgeCode ibgeCode) => await _applicationDbContext.Cities
+    public async Task<bool> IsExistsCityWithIdOrUf(IbgeCode ibgeCode) 
+        => await _applicationDbContext.Cities
             .AsNoTracking()
             .AnyAsync(city => city.Id.Equals(ibgeCode));
+
+
+    public async Task<bool> IsExistsStateLinkedCity(int Id) 
+        => await _applicationDbContext.Cities
+        .AsNoTracking()
+        .AnyAsync(city => city.StateId.Equals(Id));
+
+
+    public void DeleteCity(int cityId)
+    {
+        var city = _applicationDbContext.Cities.AsNoTracking().First(city => city.Id.Equals(cityId));
+        if (city != null)
+        {
+            _applicationDbContext.Cities.Remove(city);
+            _applicationDbContext.SaveChangesAsync(CancellationToken.None);
+        }
+    }
+
+    public async Task<City> UpdateCity(City city)
+    {
+        var result = _applicationDbContext.Cities.Update(city);
+        await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
+        return result.Entity;
+    }
 }

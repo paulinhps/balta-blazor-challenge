@@ -8,9 +8,9 @@ public class State : Entity
 {
     public StateCode Code { get; set; }
     public string Description { get; set; }
-
     public int CityId { get; }
     public IEnumerable<City> Cities { get;}
+
 
     public State(int id, StateCode code, string description) : base(id)
     {
@@ -18,7 +18,7 @@ public class State : Entity
         Description = description;
         Validate();
     }
-
+    
     protected override void Validate()
     {
         AddNotifications(new StateContract(this));
