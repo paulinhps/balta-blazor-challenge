@@ -1,6 +1,7 @@
 using Flunt.Notifications;
 using IbgeBlazor.Application.LocalityContext.Cities.Commands;
 using IbgeBlazor.Core.Common.Commands;
+using IbgeBlazor.Core.Enumerators;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
 using MediatR;
@@ -21,18 +22,20 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
 
     public async Task<ICommandResult<City>> Handle(CreateCityCommand command, CancellationToken cancellationToken)
     {
-        var dataResult = new DataCommandResult<City>();
+        var dataResult = CommandResult.CreateCommandResult<City>();
 
         //1. Validar se o cammando está valido.
         if (!command.IsValid)
         {
-            dataResult.AddNotifications(command);
+            dataResult.AddErrors(command)
+            .WithStatus(CommandResultType.InputedError)
+            .WithMessage("Dados para Criar Estado estão inválidos");
             return dataResult;
         }
         //2. Checar se estado já exite.
         try
         {
-            bool cityExists = await _repository.IsExistsCityWithIdOrUf(command.IbgeCode);
+            bool cityExists = await _repository.IsExistsCityWithIbgeCode(command.IbgeCode);
 
             if (cityExists)
             {
@@ -61,7 +64,9 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
             {
                 _ = _repository.CreateCity(city);
 
-                dataResult.Data = city;
+                dataResult.WithData(city)
+                .WithStatus(CommandResultType.Created)
+                .WithMessage("Estado cadastrado com sucesso");
             }
             catch
             {
@@ -69,8 +74,9 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
             }
         }
         //adicionando notificações se existir
-        dataResult.AddNotifications(this);
-
+        dataResult.AddErrors(this)
+        .AddStateWhenInvalid(CommandResultType.ProccessError)
+        .AddMessageWhenInvalid("Não foi possível criar a cidade!");
         //6. Montar e retornar o resultado.
         return dataResult;
     }

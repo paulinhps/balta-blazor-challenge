@@ -7,16 +7,13 @@ namespace IbgeBlazor.Application.LocalityContext.Cities.Commands;
 
 public class UpdateCityCommand : CommandBase, IRequest<ICommandResult<City>>
 {
-    public int Id { get; set; } = 0;
-    public string IbgeCode { get; set; } = null;
-    public string CityName { get; set; } = null;
-    public int StateId { get; set; }
+    public string IbgeCode { get; set; } = null!;
+    public string CityName { get; set; } = null!;
 
-    public UpdateCityCommand(string ibgeCode, string cityName, int stateId)
+    public UpdateCityCommand(string ibgeCode, string cityName)
     {
         IbgeCode = ibgeCode;
         CityName = cityName;
-        StateId = stateId;
         Validate();
     }
 
@@ -26,8 +23,7 @@ public class UpdateCityCommand : CommandBase, IRequest<ICommandResult<City>>
         {
             contract.Requires()
                 .IsGreaterThan(IbgeCode, 0, nameof(IbgeCode), $"{nameof(IbgeCode)} is Required")
-                .IsNotNullOrWhiteSpace(CityName, nameof(CityName), $"{nameof(CityName)} is Required")
-                .IsGreaterThan(StateId, 0, nameof(StateId), $"{nameof(StateId)} is Required");
+                .IsNotNullOrWhiteSpace(CityName, nameof(CityName), $"{nameof(CityName)} is Required");
         }));
     }
 }

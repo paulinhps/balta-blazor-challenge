@@ -5,7 +5,7 @@ using MediatR;
 
 namespace IbgeBlazor.Application.LocalityContext.States.GetStateDetails;
 
-public class Handler : 
+public class Handler :
 IRequestHandler<GetStateDetailByIdQuery, IQueryResult<State>>
 {
     private readonly IStatesRepository _statesRepository;
@@ -18,7 +18,7 @@ IRequestHandler<GetStateDetailByIdQuery, IQueryResult<State>>
 
     public async Task<IQueryResult<State>> Handle(GetStateDetailByIdQuery request, CancellationToken cancellationToken)
     {
-        
+
         if (request is null)
             return new QueryResult<State>(null!);
 

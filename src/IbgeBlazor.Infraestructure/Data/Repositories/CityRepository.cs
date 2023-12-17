@@ -18,31 +18,28 @@ public sealed class CityRepository : ICitiesRepository
     {
         var result = await _applicationDbContext.Cities.AddAsync(city);
 
-        _applicationDbContext.SaveChangesAsync(CancellationToken.None);
+        await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
 
         return result.Entity;
     }
 
-    public async Task<bool> IsExistsCityWithIdOrUf(IbgeCode ibgeCode) 
+    public async Task<bool> IsExistsCityWithIbgeCode(IbgeCode ibgeCode)
         => await _applicationDbContext.Cities
             .AsNoTracking()
             .AnyAsync(city => city.Id.Equals(ibgeCode));
 
 
-    public async Task<bool> IsExistsStateLinkedCity(int Id) 
-        => await _applicationDbContext.Cities
-        .AsNoTracking()
-        .AnyAsync(city => city.StateId.Equals(Id));
 
-
-    public void DeleteCity(int cityId)
+    public async Task<bool> DeleteCity(IbgeCode cityId)
     {
-        var city = _applicationDbContext.Cities.AsNoTracking().First(city => city.Id.Equals(cityId));
-        if (city != null)
-        {
-            _applicationDbContext.Cities.Remove(city);
-            _applicationDbContext.SaveChangesAsync(CancellationToken.None);
-        }
+        var city = _applicationDbContext.Cities.First(city => city.Id.Equals(cityId));
+
+        if (city == null) return false;
+
+        _applicationDbContext.Cities.Remove(city);
+        await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
+
+        return true;
     }
 
     public async Task<City> UpdateCity(City city)
@@ -51,4 +48,19 @@ public sealed class CityRepository : ICitiesRepository
         await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
         return result.Entity;
     }
+
+
+    public Task<bool> IsExistsStateLinkedCity(int Id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<City?> GetCityByIbeCode(IbgeCode ibgeCode)
+    => await _applicationDbContext.Cities.FirstOrDefaultAsync(city => city.Id.Equals(ibgeCode));
+
+    public async Task<IEnumerable<City>> ListCities(int pageNumber, int pageSize)
+    => await _applicationDbContext.Cities
+        .AsNoTracking()
+        .Include(c => c.State)
+        .ToListAsync();
 }

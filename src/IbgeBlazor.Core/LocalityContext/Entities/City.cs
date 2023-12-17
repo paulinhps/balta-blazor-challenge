@@ -6,9 +6,9 @@ namespace IbgeBlazor.Core.LocalityContext.Entities
 {
     public class City : GenericEntity<IbgeCode>
     {
-      public string CityName { get; set; } = null!;
-        public int StateId { get; set; }
-        public State State { get; set; } = null!;
+        public string CityName { get; private set; } = null!;
+        public int StateId { get; private set; }
+        public State State { get; } = null!;
 
         public City(IbgeCode id, string cityName, int stateId) : base(id)
         {
@@ -19,7 +19,16 @@ namespace IbgeBlazor.Core.LocalityContext.Entities
 
         protected override void Validate()
         {
+            Clear();
+
             AddNotifications(new CityContract(this));
+        }
+
+        public void ChangeCityName(string cityName)
+        {
+            CityName = cityName;
+
+            Validate();
         }
     }
 }

@@ -13,10 +13,10 @@ public class CreateCityCommand : CommandBase, IRequest<ICommandResult<City>>
 
     public CreateCityCommand(string ibgeCode, string cityName, int stateId)
     {
-         IbgeCode = ibgeCode;
-         CityName= cityName;
-         StateId= stateId;
-         Validate();
+        IbgeCode = ibgeCode;
+        CityName = cityName;
+        StateId = stateId;
+        Validate();
     }
 
     public override void Validate()

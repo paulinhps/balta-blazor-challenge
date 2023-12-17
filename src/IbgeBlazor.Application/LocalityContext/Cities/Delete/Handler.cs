@@ -8,20 +8,18 @@ using Microsoft.Extensions.Logging;
 
 namespace IbgeBlazor.Application.LocalityContext.Cities.Delete;
 
-public class Handler : Notifiable<Notification>, IRequestHandler<DeleteCityCommand, CommandResult>
+public class Handler : Notifiable<Notification>, IRequestHandler<DeleteCityCommand, ICommandResult>
 {
-    private readonly ICitiesRepository _repository;
-    private readonly IStatesRepository _statesRepository;
+    private readonly ICitiesRepository _citiesRepository;
     private readonly ILogger<Handler> _logger;
 
-    public Handler(ICitiesRepository repository, ILogger<Handler> logger, IStatesRepository statesRepository)
+    public Handler(ICitiesRepository citiesRepository, ILogger<Handler> logger)
     {
-        _repository = repository;
         _logger = logger;
-        _statesRepository = statesRepository;
+        _citiesRepository = citiesRepository;
     }
 
-    public async Task<CommandResult> Handle(DeleteCityCommand command, CancellationToken cancellationToken)
+    public async Task<ICommandResult> Handle(DeleteCityCommand command, CancellationToken cancellationToken)
     {
         var dataResult = new DataCommandResult<City>();
 
@@ -34,7 +32,7 @@ public class Handler : Notifiable<Notification>, IRequestHandler<DeleteCityComma
         //2. Checar se estado já exite.
         try
         {
-            bool cityExists = await _statesRepository.IsExistsState(command.Id);
+            bool cityExists = await _citiesRepository.IsExistsCityWithIbgeCode(command.IbgeCode);
 
             if (!cityExists)
             {
@@ -53,8 +51,10 @@ public class Handler : Notifiable<Notification>, IRequestHandler<DeleteCityComma
         if (IsValid)
         {
             try
-            { 
-                _repository.DeleteCity(command.Id);
+            {
+                var success = await _citiesRepository.DeleteCity(command.IbgeCode);
+
+
             }
             catch
             {

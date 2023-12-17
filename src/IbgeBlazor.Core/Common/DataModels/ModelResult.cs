@@ -17,6 +17,11 @@ namespace IbgeBlazor.Core.Common.DataModels
             Data = data;
         }
 
+        public ModelResult(TData? data) : this(data, null!, [])
+        {
+            Data = data;
+        }
+
     }
     public class ModelResult : ModelResultBase
     {

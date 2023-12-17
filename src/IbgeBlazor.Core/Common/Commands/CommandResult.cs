@@ -64,5 +64,9 @@ public class CommandResult : Notifiable<Notification>, ICommandResult
 
         return this;
     }
+
+    public static ICommandResult CreateCommandResult() => new CommandResult();
+    public static ICommandResult<TData> CreateCommandResult<TData>() where TData : class => new DataCommandResult<TData>();
+
 }
 

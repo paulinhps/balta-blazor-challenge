@@ -23,7 +23,7 @@ IRequestHandler<DeleteStateCommand, ICommandResult>
 
     public async Task<ICommandResult> Handle(DeleteStateCommand command, CancellationToken cancellationToken)
     {
-        ICommandResult result = new CommandResult();
+        ICommandResult result = CommandResult.CreateCommandResult();
         //1. Validar se o cammando está valido.
 
         if (!command.IsValid)

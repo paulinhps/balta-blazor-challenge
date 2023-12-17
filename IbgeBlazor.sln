@@ -15,9 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeBlazor.Infraestructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeBlazor.Infraestructure.CrossCutting", "src\IbgeBlazor.Infraestructure.CrossCutting\IbgeBlazor.Infraestructure.CrossCutting.csproj", "{25E848DE-DF70-4F5A-B8AF-A9ED9283BBEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbgeBlazor.Web", "src\IbgeBlazor.Web\IbgeBlazor.Web\IbgeBlazor.Web.csproj", "{700DD24F-7C77-44F4-8F77-22FF9DAE9C05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeBlazor.Web", "src\IbgeBlazor.Web\IbgeBlazor.Web\IbgeBlazor.Web.csproj", "{700DD24F-7C77-44F4-8F77-22FF9DAE9C05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbgeBlazor.Web.Client", "src\IbgeBlazor.Web\IbgeBlazor.Web.Client\IbgeBlazor.Web.Client.csproj", "{C00B7628-65B1-44D7-86F5-000B75C407EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeBlazor.Web.Client", "src\IbgeBlazor.Web\IbgeBlazor.Web.Client\IbgeBlazor.Web.Client.csproj", "{C00B7628-65B1-44D7-86F5-000B75C407EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{A19899C3-FDAD-490C-B2DB-72F270F50F82}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
