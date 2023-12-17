@@ -7,15 +7,14 @@ namespace IbgeBlazor.Core.LocalityContext.Entities;
 public class State : Entity
 {
     public StateCode Code { get; set; } = null!;
-    public string Description { get; set; } = null!;
-    public int CityId { get; }
-    public IEnumerable<City> Cities { get; } = null!;
+    public string Name { get; set; } = null!;
+    public virtual int CityId { get; }
+    public virtual IEnumerable<City> Cities { get; } = null!;
 
-
-    public State(int id, StateCode code, string description) : base(id)
+    public State(int id, StateCode code, string name) : base(id)
     {
         Code = code;
-        Description = description;
+        Name = name;
         Validate();
     }
 
@@ -26,6 +25,6 @@ public class State : Entity
 
     public void ChangeDescription(string description)
     {
-        Description = description;
+        Name = description;
     }
 }

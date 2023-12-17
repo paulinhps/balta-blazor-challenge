@@ -8,7 +8,7 @@ internal class StateContract : Contract<State>
     {
         Requires()
         .IsNotNull(state.Code, "State.Code", "State Code is required")
-        .IsNotNullOrWhiteSpace(state.Description, "State.Description", "Description is required");
+        .IsNotNullOrWhiteSpace(state.Name, "State.Description", "Description is required");
 
         //Code Rules Notifications
         AddNotifications(state.Code);

@@ -21,7 +21,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasMaxLength(7)
                 .HasConversion(code => code.Code, str => new IbgeCode(str));
 
-            builder.Property(city => city.CityName)
+            builder.Property(city => city.Name)
                 .IsRequired()
                 .HasColumnName("NOME_MUNICIPIO")
                 .HasColumnType(nameof(SqlDbType.VarChar))
@@ -40,7 +40,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
             //     .HasForeignKey(e => e.StateId)
             //     .IsRequired();
 
-            builder.HasIndex(state => state.CityName, "IX_MUNICIPIOS_NOME_MUNICIPIO");
+            builder.HasIndex(state => state.Name, "IX_MUNICIPIOS_NOME_MUNICIPIO");
 
             builder.Ignore(city => city.Notifications);
             builder.Ignore(city => city.IsValid);

@@ -26,7 +26,7 @@ public static class StatesDataModelsExtensions
         return new()
         {
             Id = state.Id,
-            Description = state.Description,
+            Description = state.Name,
             Uf = state.Code
         };
     }

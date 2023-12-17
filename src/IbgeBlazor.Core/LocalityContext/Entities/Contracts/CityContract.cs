@@ -7,7 +7,7 @@ namespace IbgeBlazor.Core.LocalityContext.Entities.Contracts
         public CityContract(City cities)
         {
             Requires()
-                .IsNotNull(cities.CityName, "City.CityName", "Name City IBGE is required")
+                .IsNotNull(cities.Name, "City.CityName", "Name City IBGE is required")
                 .IsGreaterThan(cities.StateId, 0, "City.UfCode", "UF is required");
 
 

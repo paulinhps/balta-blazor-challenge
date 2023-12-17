@@ -35,7 +35,7 @@ public class Handler : Notifiable<Notification>, IRequestHandler<UpdateCityComma
         }
         //2. Checar se cidade já exite.
 
-        City city = null!;
+        City? city = null!;
         try
         {
             city = await _repository.GetCityByIbeCode(command.IbgeCode);
@@ -77,8 +77,6 @@ public class Handler : Notifiable<Notification>, IRequestHandler<UpdateCityComma
                 AddNotification("UpdateCity", "Não foi possível salvar a cidade");
             }
         }
-
-
 
         //adicionando notificações se existir
         dataResult.AddErrors(this)

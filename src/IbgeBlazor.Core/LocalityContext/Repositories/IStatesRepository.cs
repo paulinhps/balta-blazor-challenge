@@ -7,6 +7,7 @@ public interface IStatesRepository
 {
     Task<State?> GetStateById(int id);
     Task<bool> IsExistsStateWithIdOrUf(int stateId, StateCode ufCode);
+    Task<bool> IsExistsStateLinkedCity(int Id);
     Task<State> CreateState(State state);
     Task<bool> UpdateState(State state);
     Task<bool> RemoveState(State state);

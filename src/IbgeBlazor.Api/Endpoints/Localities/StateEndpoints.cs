@@ -65,7 +65,7 @@ public static class StateEndpoints
 
             var response = new ModelResult<StateModel>(result.Results is not null ? new StateModel()
             {
-                Description = result.Results!.Description,
+                Description = result.Results!.Name,
                 Id = result.Results!.Id,
                 Uf = result.Results!.Code
             } : null, message: result.Results is null ? "Estado não encontrado" : null!);
@@ -80,7 +80,7 @@ public static class StateEndpoints
         .Produces<ModelResultBase>(StatusCodes.Status404NotFound)
         .Produces<ModelResultBase>(StatusCodes.Status500InternalServerError);
 
-        app.MapPut($"{ApiEndpointsPaths.States}/{{id:int}}", async (int id, UpdateStateModel model, IMediator mediator) =>
+        app.MapPatch($"{ApiEndpointsPaths.States}/{{id:int}}", async (int id, UpdateStateModel model, IMediator mediator) =>
         {
 
             var result = await mediator.Send(model.FromCommand(id));

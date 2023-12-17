@@ -6,13 +6,13 @@ namespace IbgeBlazor.Core.LocalityContext.Entities
 {
     public class City : GenericEntity<IbgeCode>
     {
-        public string CityName { get; private set; } = null!;
+        public string Name { get; private set; } = null!;
         public int StateId { get; private set; }
         public State State { get; } = null!;
 
-        public City(IbgeCode id, string cityName, int stateId) : base(id)
+        public City(IbgeCode id, string name, int stateId) : base(id)
         {
-            CityName = cityName;
+            Name = name;
             StateId = stateId;
             Validate();
         }
@@ -26,7 +26,7 @@ namespace IbgeBlazor.Core.LocalityContext.Entities
 
         public void ChangeCityName(string cityName)
         {
-            CityName = cityName;
+            Name = cityName;
 
             Validate();
         }

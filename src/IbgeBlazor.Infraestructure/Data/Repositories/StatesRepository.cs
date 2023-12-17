@@ -61,4 +61,10 @@ public sealed class StatesRepository : IStatesRepository
             .Take(take)
             .ToListAsync();
     }
+
+    public async Task<bool> IsExistsStateLinkedCity(int Id)
+    => await _applicationDbContext.States
+    .AsNoTracking()
+    .Include(c => c.Cities)
+    .AnyAsync(state => state.Cities.Any());
 }

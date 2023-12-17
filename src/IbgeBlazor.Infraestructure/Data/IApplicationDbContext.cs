@@ -5,8 +5,6 @@ namespace IbgeBlazor.Infraestructure.Data
 {
     public interface IApplicationDbContext
     {
-        //DbSet<Locality> Localities { get; }
-
         DbSet<State> States { get; }
         DbSet<City> Cities { get; }
 

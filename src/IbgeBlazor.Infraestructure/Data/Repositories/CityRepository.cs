@@ -32,11 +32,12 @@ public sealed class CityRepository : ICitiesRepository
 
     public async Task<bool> DeleteCity(IbgeCode cityId)
     {
-        var city = _applicationDbContext.Cities.First(city => city.Id.Equals(cityId));
+        var city = await _applicationDbContext.Cities.FirstAsync(city => city.Id.Equals(cityId));
 
         if (city == null) return false;
 
         _applicationDbContext.Cities.Remove(city);
+        
         await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
 
         return true;
@@ -48,13 +49,6 @@ public sealed class CityRepository : ICitiesRepository
         await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
         return result.Entity;
     }
-
-
-    public Task<bool> IsExistsStateLinkedCity(int Id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<City?> GetCityByIbeCode(IbgeCode ibgeCode)
     => await _applicationDbContext.Cities.FirstOrDefaultAsync(city => city.Id.Equals(ibgeCode));
 

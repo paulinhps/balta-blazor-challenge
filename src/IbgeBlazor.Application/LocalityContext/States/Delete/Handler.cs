@@ -53,12 +53,21 @@ IRequestHandler<DeleteStateCommand, ICommandResult>
 
         }
 
-        // //3. Verificar se o estado não tem relacionamento.
-        // if(state?.Localities?.Count > 0)
-        //  {
-        //     AddNotification("StateWithLocaties", "Estado possui relação com Cidades");
-        //     return result;
-        //  }
+        //3. Verificar se o estado não tem relacionamento.
+        try
+        {
+            if(await _repository.IsExistsStateLinkedCity(command.Id))
+            {
+                AddNotification("StateWithLocaties", "Estado possui relação com Cidades");
+                return result;
+            }
+            
+        }
+        catch
+        {
+            
+            AddNotification("RemoveState", "Houve erro ao tentar verificar se estado possui cidades");
+        }
 
         //4. Deletar estado
         if (IsValid)

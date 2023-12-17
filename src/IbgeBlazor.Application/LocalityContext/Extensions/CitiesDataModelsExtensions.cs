@@ -38,7 +38,7 @@ public static class CitiesDataModelsExtensions
 
         return new CityModel
         {
-            CityName = city.CityName,
+            Name = city.Name,
             IbgeCode = city.Id,
             State = city.State.FromStateModel()
         };

@@ -27,7 +27,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
 
             builder.Ignore(state => state.Notifications);
 
-            builder.Property(state => state.Description)
+            builder.Property(state => state.Name)
                 .IsRequired()
                 .HasColumnName("NOME_ESTADO")
                 .HasColumnType(nameof(SqlDbType.VarChar))
@@ -39,7 +39,9 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
                 .HasForeignKey(c => c.StateId)
                 .IsRequired();
 
-            builder.HasIndex(state => state.Code, "IX_ESTADOS_CODIGO_ESTADO");
+            builder
+            .HasIndex(state => state.Code, "IX_ESTADOS_CODIGO_ESTADO")
+            .IsUnique();
 
         }
     }
