@@ -8,13 +8,12 @@ using Microsoft.Extensions.Logging;
 
 namespace IbgeBlazor.Application.LocalityContext.States.Update;
 
-public class Handler : 
+public class Handler :
     Notifiable<Notification>, IRequestHandler<UpdateStateCommand, ICommandResult<State>>
 {
     private readonly IStatesRepository _repository;
     private readonly ILogger<Handler> _logger;
 
-    private readonly ILogger<Handler> _logger;
     public Handler(IStatesRepository repository, ILogger<Handler> logger)
     {
         _repository = repository;
@@ -23,7 +22,7 @@ public class Handler :
 
     public async Task<ICommandResult<State>> Handle(UpdateStateCommand command, CancellationToken cancellationToken)
     {
-        ICommandResult<State> dataResult = new DataCommandResult<State>();
+        ICommandResult<State> dataResult = CommandResult.CreateCommandResult<State>();
 
 
         if (!command.IsValid)

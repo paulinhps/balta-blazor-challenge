@@ -6,10 +6,10 @@ namespace IbgeBlazor.Core.LocalityContext.Entities;
 
 public class State : Entity
 {
-    public StateCode Code { get; set; }
-    public string Description { get; set; }
+    public StateCode Code { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public int CityId { get; }
-    public IEnumerable<City> Cities { get;}
+    public IEnumerable<City> Cities { get; } = null!;
 
 
     public State(int id, StateCode code, string description) : base(id)
@@ -18,7 +18,7 @@ public class State : Entity
         Description = description;
         Validate();
     }
-    
+
     protected override void Validate()
     {
         AddNotifications(new StateContract(this));

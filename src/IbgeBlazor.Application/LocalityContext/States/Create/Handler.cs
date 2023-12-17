@@ -21,7 +21,7 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateStateComm
 
     public async Task<ICommandResult<State>> Handle(CreateStateCommand command, CancellationToken cancellationToken)
     {
-        ICommandResult<State> dataResult = new DataCommandResult<State>();
+        var dataResult = CommandResult.CreateCommandResult<State>();
 
         //1. Validar se o cammando está valido.
         if (!command.IsValid)

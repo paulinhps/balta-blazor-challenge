@@ -34,10 +34,6 @@ public sealed class StatesRepository : IStatesRepository
     => await _applicationDbContext.States
     .FirstOrDefaultAsync(state => state.Id == id);
 
-    public async Task<bool> IsExistsStateWithId(int id)
-    => await _applicationDbContext.States.AsNoTracking()
-    .AnyAsync(state => state.Id == state.Id);
-
     public async Task<bool> IsExistsStateWithIdOrUf(int stateId, StateCode ufCode)
     => await _applicationDbContext.States
         .AsNoTracking()
@@ -58,7 +54,7 @@ public sealed class StatesRepository : IStatesRepository
     {
         var take = pageSize;
         var skip = pageNumber > 1 ? take * (pageNumber - 1) : 0;
-        
+
         return await _applicationDbContext.States
             .AsNoTracking()
             .Skip(skip)

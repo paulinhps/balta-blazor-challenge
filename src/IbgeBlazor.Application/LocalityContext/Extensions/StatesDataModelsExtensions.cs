@@ -1,8 +1,7 @@
 using IbgeBlazor.Application.LocalityContext.States.Create;
-using IbgeBlazor.Application.LocalityContext.States.Update;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.DataModels;
-using IbgeBlazor.Core.LocalityContext.DataModels;
+using IbgeBlazor.Core.LocalityContext.DataModels.States;
 using IbgeBlazor.Core.LocalityContext.Entities;
 
 namespace IbgeBlazor.Application.LocalityContext.Extensions;
@@ -10,34 +9,25 @@ namespace IbgeBlazor.Application.LocalityContext.Extensions;
 public static class StatesDataModelsExtensions
 {
     public static CreateStateCommand FromCommand(this CreateStateModel model)
-    => new(model.IbgeUfId, model.Uf, model.Description)
-    {
-        Id = model.IbgeUfId,
-        Code = model.Uf,
-        Description = model.Description
-    };
-
+    => new(model.IbgeUfId, model.Uf, model.Description);
     public static ModelResult<StateModel> FromModel(this ICommandResult<State> commandResult)
     {
+        if (!commandResult.Success)
+            return new("Não foi possível criar o estado", commandResult.Errors.ToArray());
+        StateModel? model = commandResult.Data?.FromStateModel();
 
-
-        StateModel? model = commandResult.Data is not null ? new()
-        {
-            Id = commandResult.Data!.Id,
-            Description = commandResult.Data.Description,
-            Uf = commandResult.Data.Code
-        } : null;
-
-
-        return new(model, commandResult.Message, commandResult.Errors.ToArray());
+        return new(model, "Estado criado com sucesso");
     }
-    public static ModelResultBase FromModel(this ICommandResult commandResult)
+
+    public static StateModel? FromStateModel(this State? state)
     {
+        if (state == null) return null;
 
-        return new ModelResult(commandResult.Message, commandResult.Errors.ToArray());
-
+        return new()
+        {
+            Id = state.Id,
+            Description = state.Description,
+            Uf = state.Code
+        };
     }
-    public static UpdateStateCommand FromCommand(this UpdateStateModel model, int stateId)
-    => new(stateId, model.Description);
-
 }

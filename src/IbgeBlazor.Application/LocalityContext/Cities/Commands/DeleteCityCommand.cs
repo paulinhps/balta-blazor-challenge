@@ -4,13 +4,13 @@ using MediatR;
 
 namespace IbgeBlazor.Application.LocalityContext.Cities.Commands;
 
-public class DeleteCityCommand : CommandBase, IRequest<CommandResult>
+public class DeleteCityCommand : CommandBase, IRequest<ICommandResult>
 {
-    public int Id { get; set; } = 0;
+    public string IbgeCode { get; set; } = null!;
 
-    public DeleteCityCommand(int id)
+    public DeleteCityCommand(string ibgeCode)
     {
-        Id= id;
+        IbgeCode = ibgeCode;
         Validate();
     }
 
@@ -20,7 +20,7 @@ public class DeleteCityCommand : CommandBase, IRequest<CommandResult>
         {
 
             contract.Requires()
-                    .IsGreaterThan(Id, 0, nameof(Id), $"{nameof(Id)} is Required");
+                    .IsNotNullOrWhiteSpace(IbgeCode, nameof(IbgeCode), $"{nameof(IbgeCode)} is Required");
 
         }));
     }

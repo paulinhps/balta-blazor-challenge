@@ -1,6 +1,7 @@
 using Flunt.Notifications;
 using IbgeBlazor.Application.LocalityContext.Cities.Commands;
 using IbgeBlazor.Core.Common.Commands;
+using IbgeBlazor.Core.Enumerators;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
 using MediatR;
@@ -22,23 +23,24 @@ public class Handler : Notifiable<Notification>, IRequestHandler<UpdateCityComma
     public async Task<ICommandResult<City>> Handle(UpdateCityCommand command, CancellationToken cancellationToken)
     {
         //1. Validar se o cammando está valido.
-        var dataResult = new DataCommandResult<City>();
+        ICommandResult<City> dataResult = CommandResult.CreateCommandResult<City>();
 
         //1. Validar se o cammando está valido.
         if (!command.IsValid)
         {
-            dataResult.AddNotifications(command);
+            dataResult.AddErrors(command)
+            .WithStatus(CommandResultType.InputedError)
+            .WithMessage("Entrada de dados inválida");
             return dataResult;
         }
-        //2. Checar se estado já exite.
+        //2. Checar se cidade já exite.
+
+        City city = null!;
         try
         {
-            bool cityExists = await _repository.IsExistsCityWithIdOrUf(command.IbgeCode);
+            city = await _repository.GetCityByIbeCode(command.IbgeCode);
 
-            if (!cityExists)
-            {
-                AddNotification("City.Founded", "A Cidade não está cadastrada");
-            }
+
         }
         catch (Exception ex)
         {
@@ -48,7 +50,13 @@ public class Handler : Notifiable<Notification>, IRequestHandler<UpdateCityComma
         }
 
         //3. Contruir os objetos.
-        City city = new City(command.IbgeCode, command.CityName, command.StateId);
+
+        if (city is null)
+        {
+            AddNotification("City.Founded", "A Cidade não está cadastrada");
+        }
+
+        city?.ChangeCityName(command.CityName);
 
         //4. Validar o domínio.
         AddNotifications(city);
@@ -58,9 +66,11 @@ public class Handler : Notifiable<Notification>, IRequestHandler<UpdateCityComma
         {
             try
             {
-                _ = _repository.UpdateCity(city);
+                _ = _repository.UpdateCity(city!);
 
-                dataResult.Data = city;
+                dataResult.WithData(city)
+                .WithStatus(CommandResultType.Success)
+                .WithMessage("Cidae atulizada com sucesso!");
             }
             catch
             {
@@ -68,8 +78,12 @@ public class Handler : Notifiable<Notification>, IRequestHandler<UpdateCityComma
             }
         }
 
+
+
         //adicionando notificações se existir
-        dataResult.AddNotifications(this);
+        dataResult.AddErrors(this)
+        .AddStateWhenInvalid(CommandResultType.ProccessError)
+        .AddMessageWhenInvalid("Não foi possível atualizar a cidade!");
 
         //6. Montar e retornar o resultado.
         return dataResult;
