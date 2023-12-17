@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using IbgeBlazor.Api.DependencyInjection;
+using IbgeBlazor.Api.Extensions;
 using IbgeBlazor.Infraestructure.CrossCutting;
 using Microsoft.AspNetCore.Http.Json;
 
@@ -28,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseGlobalExceptionHandler();
 
 app.UseHttpsRedirection();
 

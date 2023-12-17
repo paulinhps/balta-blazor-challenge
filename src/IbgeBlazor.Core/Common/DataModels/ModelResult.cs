@@ -3,7 +3,7 @@
 namespace IbgeBlazor.Core.Common.DataModels
 {
 
-    public class ModelResult<TData> : ModelResultBase
+    public class ModelResult<TData> : ModelResult
     {
 
         public TData? Data { get; set; }
@@ -12,10 +12,20 @@ namespace IbgeBlazor.Core.Common.DataModels
 
         }
 
-        public ModelResult(TData data, string message, params IErrorModel[] errors) : base(message, errors)
+        public ModelResult(TData? data, string message, params IErrorModel[] errors) : base(message, errors)
         {
             Data = data;
         }
+
+    }
+    public class ModelResult : ModelResultBase
+    {
+
+        public ModelResult(string message, params IErrorModel[] errors) : base(message, errors)
+        {
+
+        }
+
 
     }
 }

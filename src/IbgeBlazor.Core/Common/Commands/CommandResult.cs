@@ -1,6 +1,7 @@
 using Flunt.Notifications;
 using IbgeBlazor.Core.Common.DataModels;
 using IbgeBlazor.Core.Common.Extensions;
+using IbgeBlazor.Core.Enumerators;
 
 namespace IbgeBlazor.Core.Common.Commands;
 
@@ -12,22 +13,56 @@ public class CommandResult : Notifiable<Notification>, ICommandResult
 
     public IEnumerable<IErrorModel> Errors => this.GetErrors();
 
-    public CommandResult(string message)
+    public CommandResultType ResultCode { get; protected set; } = CommandResultType.InputedError;
+    public CommandResult(string message) : this()
     {
         Message = message;
     }
 
     public CommandResult()
     {
-
     }
 
-    public void AddErrors(params Notifiable<Notification>[] items)
-    => AddNotifications(items);
 
-    public void AddErrors(string message, params Notifiable<Notification>[] items)
+    public ICommandResult AddErrors(params Notifiable<Notification>[] items)
+    {
+        AddNotifications(items);
+
+        return this;
+    }
+
+    public ICommandResult WithMessage(string message)
     {
         Message = message;
-        AddErrors(items);
+
+        return this;
+    }
+
+    public virtual ICommandResult WithStatus(CommandResultType resultStatus)
+    {
+        ResultCode = resultStatus;
+
+        return this;
+    }
+
+    public ICommandResult AddMessageWhenInvalid(string message)
+    {
+        if (!Success)
+        {
+            return WithMessage(message);
+        }
+
+        return this;
+    }
+
+    public ICommandResult AddStateWhenInvalid(CommandResultType resultStatus)
+    {
+        if (!Success)
+        {
+            return WithStatus(resultStatus);
+        }
+
+        return this;
     }
 }
+

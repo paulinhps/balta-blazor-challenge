@@ -1,6 +1,6 @@
 using Flunt.Notifications;
-using IbgeBlazor.Application.LocalityContext.States.Commands;
 using IbgeBlazor.Core.Common.Commands;
+using IbgeBlazor.Core.Enumerators;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
 using MediatR;
@@ -23,14 +23,14 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
 
     public async Task<ICommandResult<State>> Handle(CreateStateCommand command, CancellationToken cancellationToken)
     {
-        var dataResult = new DataCommandResult<State>();
+        ICommandResult<State> dataResult = new DataCommandResult<State>();
 
         //1. Validar se o cammando está valido.
-        command.Validate();
         if (!command.IsValid)
         {
-            dataResult.AddNotifications(command);
-
+            dataResult.AddErrors(command)
+            .WithStatus(CommandResultType.InputedError)
+            .WithMessage("Dados para Criar Estado estão inválidos");
             return dataResult;
         }
         //2. Checar se estado já exite.
@@ -64,19 +64,23 @@ IRequestHandler<CreateStateCommand, ICommandResult<State>>
         {
             try
             {
-                _ = _repository.CreateState(state);
+                _ = await _repository.CreateState(state);
 
-                dataResult.Data = state;
+                dataResult.WithData(state)
+                .WithStatus(CommandResultType.Created)
+                .WithMessage("Estado cadastrado com sucesso");
 
             }
             catch
             {
 
-                AddNotification("CreateState", "Não foi possível salvar o estado");
+                AddNotification("RemoveState", "Houve erro ao tentar criar o estado");
             }
         }
         //adicionando notificações se existir
-        dataResult.AddNotifications(this);
+        dataResult.AddErrors(this)
+        .AddStateWhenInvalid(CommandResultType.ProccessError)
+        .AddMessageWhenInvalid("Não foi possível criar um estado!");
 
         //6. Montar e retornar o resultado.
         return dataResult;

@@ -1,12 +1,19 @@
-using IbgeBlazor.Application.LocalityContext.Localities.Commands;
+using IbgeBlazor.Application.LocalityContext.States.Create;
 using IbgeBlazor.Core.Common.Commands;
 using IbgeBlazor.Core.Common.Commands.Contracts;
 using MediatR;
 
-namespace IbgeBlazor.Application.LocalityContext.States.Commands;
+namespace IbgeBlazor.Application.LocalityContext.States.Delete;
 
-public class DeleteStateCommand : CommandBase, IRequest<CommandResult>
+public class DeleteStateCommand : CommandBase, IRequest<ICommandResult>
 {
+    public DeleteStateCommand(int id)
+    {
+        Id = id;
+
+        Validate();
+    }
+
     public int Id { get; set; } = 0;
 
     public override void Validate()
