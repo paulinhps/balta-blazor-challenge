@@ -11,13 +11,18 @@ namespace IbgeBlazor.Application.LocalityContext.Cities.Create;
 
 public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityCommand, ICommandResult<City>>
 {
-    private readonly ICitiesRepository _repository;
+    private readonly ICitiesRepository _citiesRepository;
+    private readonly IStatesRepository _stateRepository;
     private readonly ILogger<Handler> _logger;
 
-    public Handler(ICitiesRepository repository, ILogger<Handler> logger)
+    public Handler(
+        ICitiesRepository citiesRepository, 
+        IStatesRepository stateRepository, 
+        ILogger<Handler> logger)
     {
-        _repository = repository;
+        _citiesRepository = citiesRepository;
         _logger = logger;
+        _stateRepository = stateRepository;
     }
 
     public async Task<ICommandResult<City>> Handle(CreateCityCommand command, CancellationToken cancellationToken)
@@ -33,9 +38,25 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
             return dataResult;
         }
         //2. Checar se estado já exite.
+         try
+        {
+
+            if (!await _stateRepository.IsExistsStateById(command.StateId))
+            {
+                AddNotification("State.NotFound", "O estado relacionado a cadastro não existe");
+            }
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = "Houve um erro ao tentar verificar se a cidade já existe";
+            _logger.LogCritical(ex, errorMessage);
+            AddNotification("CheckCity", errorMessage);
+        }
+
+        //3. Checar se a cidade já existe.
         try
         {
-            bool cityExists = await _repository.IsExistsCityWithIbgeCode(command.IbgeCode);
+            bool cityExists = await _citiesRepository.IsExistsCityWithIbgeCode(command.IbgeCode);
 
             if (cityExists)
             {
@@ -62,7 +83,7 @@ public class Handler : Notifiable<Notification>, IRequestHandler<CreateCityComma
         {
             try
             {
-                _ = _repository.CreateCity(city);
+                _ = await _citiesRepository.CreateCity(city);
 
                 dataResult.WithData(city)
                 .WithStatus(CommandResultType.Created)
