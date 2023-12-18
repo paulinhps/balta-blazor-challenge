@@ -2,7 +2,6 @@ using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
 using IbgeBlazor.Core.LocalityContext.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace IbgeBlazor.Infraestructure.Data.Repositories;
 
@@ -17,7 +16,15 @@ public sealed class StatesRepository : IStatesRepository
     public async Task<State> CreateState(State state)
     {
         var result = await _applicationDbContext.States.AddAsync(state);
-        await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
+
+        using(var transaction = await _applicationDbContext.Database.BeginTransactionAsync()) {
+            _ = await _applicationDbContext.Database.ExecuteSqlAsync($"SET IDENTITY_INSERT [dbo].[ESTADOS] ON");
+
+            await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
+
+            _ = await _applicationDbContext.Database.ExecuteSqlAsync($"SET IDENTITY_INSERT [dbo].[ESTADOS]  OFF");
+        }
+
         return result.Entity;
     }
 
