@@ -1,7 +1,5 @@
 using IbgeBlazor.Core.LocalityContext.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 using System.Reflection;
 
 namespace IbgeBlazor.Infraestructure.Data

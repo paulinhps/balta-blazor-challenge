@@ -16,11 +16,14 @@ public sealed class CityRepository : ICitiesRepository
 
     public async Task<City> CreateCity(City city)
     {
+       
         var result = await _applicationDbContext.Cities.AddAsync(city);
 
         await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
 
         return result.Entity;
+            
+       
     }
 
     public async Task<bool> IsExistsCityWithIbgeCode(IbgeCode ibgeCode)

@@ -23,6 +23,8 @@ public sealed class StatesRepository : IStatesRepository
             await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
 
             _ = await _applicationDbContext.Database.ExecuteSqlAsync($"SET IDENTITY_INSERT [dbo].[ESTADOS]  OFF");
+        
+            transaction.Commit();
         }
 
         return result.Entity;
@@ -69,9 +71,15 @@ public sealed class StatesRepository : IStatesRepository
             .ToListAsync();
     }
 
-    public async Task<bool> IsExistsStateLinkedCity(int Id)
+    public async Task<bool> IsExistsStateLinkedCity(int id)
     => await _applicationDbContext.States
     .AsNoTracking()
     .Include(c => c.Cities)
-    .AnyAsync(state => state.Cities.Any());
+    .AnyAsync(state => state.Id == id && state.Cities.Any());
+    
+    public async Task<bool> IsExistsStateById(int id)
+    => await _applicationDbContext.States
+    .AsNoTracking()
+    .Include(c => c.Cities)
+    .AnyAsync(state => state.Id == id && state.Cities.Any());
 }
