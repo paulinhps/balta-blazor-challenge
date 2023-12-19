@@ -1,0 +1,76 @@
+﻿@page "/states"
+@attribute [StreamRendering]
+
+<PageTitle>Estado</PageTitle>
+
+<h1>Estados</h1>
+
+
+
+@if (states == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a class="btn btn-primary float-end" href="/states/create" style="">Nova Estado</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Estadir UF</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var state in states)
+        {
+            <tr>
+                <td>@state.StateCode</td>
+                <td>@state.Descriptions</td>
+                <td>
+                    <a class="btn btn-info" href="/states/details/@state.Id">Visualizar</a>
+                    <a class="btn btn-warning" href="/states/edit/@state.Id">Editar</a>
+                    <button class="btn btn-danger" @onclick="() => DeleteCity(state.Id)">Deletar</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<StateData> states;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        states = new List<StateData>
+        {
+            new StateData {Id=1, StateCode = "MT", Descriptions = "Estado A" },
+            new StateData {Id=1, StateCode = "MT", Descriptions = "Estado A" },
+            new StateData {Id=1, StateCode = "MS", Descriptions = "Estado B" },
+            new StateData {Id=1, StateCode = "MG", Descriptions = "Estado C" },
+            new StateData {Id=1, StateCode = "PR", Descriptions = "Estado D" },
+            new StateData {Id=1, StateCode = "PR", Descriptions = "Estado D" },
+            new StateData {Id=1, StateCode = "RO", Descriptions = "Estado E" },
+            new StateData {Id=1, StateCode = "RO", Descriptions = "Estado E" },
+            new StateData {Id=1, StateCode = "AM", Descriptions = "Estado F" },
+        };
+    }
+
+    private class StateData
+    {
+        public int Id { get; set; }
+        public string StateCode { get; set; }
+        public string Descriptions { get; set; }
+    }
+
+    private void DeleteCity(int stateId)
+    {
+        var cityToRemove = states.FirstOrDefault(c => c.Id == stateId);
+        if (cityToRemove != null)
+        {
+            states.Remove(cityToRemove);
+        }
+    }
+}
