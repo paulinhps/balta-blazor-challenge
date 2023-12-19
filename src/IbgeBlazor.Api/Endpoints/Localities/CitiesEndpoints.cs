@@ -77,7 +77,7 @@ public static class CitiesEndpoints
             .Produces<ModelResultBase>(StatusCodes.Status404NotFound)
             .Produces<ModelResultBase>(StatusCodes.Status500InternalServerError);
 
-        app.MapPatch($"{ApiEndpointsPaths.Cities}/{{ibgeCode}}", async (string ibgeCode, UpdateCityModel model, IMediator mediator) =>
+        app.MapPut($"{ApiEndpointsPaths.Cities}/{{ibgeCode}}", async (string ibgeCode, UpdateCityModel model, IMediator mediator) =>
            {
                var result = await mediator.Send(model.FromCommand(ibgeCode));
 
