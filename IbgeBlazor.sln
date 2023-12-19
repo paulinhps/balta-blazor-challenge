@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution 
 		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FCB1B278-440F-4068-8C09-DC4149FEFE99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -119,6 +120,18 @@ Global
 		{C00B7628-65B1-44D7-86F5-000B75C407EA}.Release|x64.Build.0 = Release|Any CPU
 		{C00B7628-65B1-44D7-86F5-000B75C407EA}.Release|x86.ActiveCfg = Release|Any CPU
 		{C00B7628-65B1-44D7-86F5-000B75C407EA}.Release|x86.Build.0 = Release|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Debug|x64.Build.0 = Debug|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Debug|x86.Build.0 = Debug|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Release|x64.ActiveCfg = Release|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Release|x64.Build.0 = Release|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Release|x86.ActiveCfg = Release|Any CPU
+		{FCB1B278-440F-4068-8C09-DC4149FEFE99}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
