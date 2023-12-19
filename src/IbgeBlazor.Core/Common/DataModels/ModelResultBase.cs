@@ -12,6 +12,7 @@ namespace IbgeBlazor.Core.Common.DataModels
         protected ModelResultBase(string message, params IErrorModel[] errors)
         {
             Message = message;
+            Errors.AddRange(errors);
         }
 
         public ModelResultBase()
