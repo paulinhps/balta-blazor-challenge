@@ -38,10 +38,10 @@ jobs:
       uses: actions/setup-dotnet@v3
 
     - name: Restore solution
-      run: dotnet restore
+      run: dotnet restore IbgeBlazor.sln
 
     - name: Build solution
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build --no-restore --configuration Release IbgeBlazor.sln
       
     - name: Test solution
-      run: dotnet test --no-build --configuration Release --filter "FullyQualifiedName!~AcceptanceTests"
+      run: dotnet test --no-build --configuration Release --filter "FullyQualifiedName!~AcceptanceTests" IbgeBlazor.sln
