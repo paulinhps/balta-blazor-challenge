@@ -10,7 +10,7 @@ services:
       context: .
       dockerfile: src/IbgeBlazor.Web/IbgeBlazor.Web/Dockerfile
     ports:
-        - "8085:8080"
+        - "8085:80"
     depends_on:
         - ibgeblazor.api
   ibgeblazor.api:
