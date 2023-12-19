@@ -2,50 +2,47 @@
 using IbgeBlazor.Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace IbgeBlazor.Infraestructure.Data.Migrations
+namespace IbgeBlazor.Infraestructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231216223700_MapCities")]
-    partial class MapCities
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("IbgeBlazor.Core.LocalityContext.Entities.City", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(7)
-                        .HasColumnType("Char")
+                        .HasColumnType("jsonb")
                         .HasColumnName("CODIGO_MUNICIPIO");
 
-                    b.Property<string>("CityName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(80)
-                        .HasColumnType("VarChar")
+                        .HasColumnType("character varying(80)")
                         .HasColumnName("NOME_MUNICIPIO");
 
                     b.Property<int>("StateId")
-                        .HasColumnType("Int")
+                        .HasColumnType("integer")
                         .HasColumnName("CODIGO_UF");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StateId");
 
-                    b.HasIndex(new[] { "CityName" }, "IX_MUNICIPIOS_NOME_MUNICIPIO");
+                    b.HasIndex(new[] { "Name" }, "IX_MUNICIPIOS_NOME_MUNICIPIO");
 
                     b.ToTable("MUNICIPIOS", (string)null);
                 });
@@ -54,26 +51,27 @@ namespace IbgeBlazor.Infraestructure.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(2)
-                        .HasColumnType("Char")
+                        .HasColumnType("character varying(2)")
                         .HasColumnName("CODIGO_ESTADO");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(80)
-                        .HasColumnType("VarChar")
+                        .HasColumnType("character varying(80)")
                         .HasColumnName("NOME_ESTADO");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Code" }, "IX_ESTADOS_CODIGO_ESTADO");
+                    b.HasIndex(new[] { "Code" }, "IX_ESTADOS_CODIGO_ESTADO")
+                        .IsUnique();
 
                     b.ToTable("ESTADOS", (string)null);
                 });

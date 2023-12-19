@@ -29,7 +29,7 @@ public static class DependencyInjection
     {
 
         services.AddDbContext<AppDbContext>(opt =>
-            opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+            opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
         );
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<AppDbContext>());

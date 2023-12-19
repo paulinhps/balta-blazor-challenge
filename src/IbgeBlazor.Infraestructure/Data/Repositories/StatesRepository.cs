@@ -15,19 +15,23 @@ public sealed class StatesRepository : IStatesRepository
 
     public async Task<State> CreateState(State state)
     {
-        var result = await _applicationDbContext.States.AddAsync(state);
+        try
+        {
+            var result = await _applicationDbContext.States.AddAsync(state);
 
-        using(var transaction = await _applicationDbContext.Database.BeginTransactionAsync()) {
-            _ = await _applicationDbContext.Database.ExecuteSqlAsync($"SET IDENTITY_INSERT [dbo].[ESTADOS] ON");
 
             await _applicationDbContext.SaveChangesAsync(CancellationToken.None);
 
-            _ = await _applicationDbContext.Database.ExecuteSqlAsync($"SET IDENTITY_INSERT [dbo].[ESTADOS]  OFF");
-        
-            transaction.Commit();
-        }
 
-        return result.Entity;
+
+            return result.Entity;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+        
     }
 
     public async Task<bool> RemoveState(State state)
@@ -76,10 +80,9 @@ public sealed class StatesRepository : IStatesRepository
     .AsNoTracking()
     .Include(c => c.Cities)
     .AnyAsync(state => state.Id == id && state.Cities.Any());
-    
+
     public async Task<bool> IsExistsStateById(int id)
     => await _applicationDbContext.States
     .AsNoTracking()
-    .Include(c => c.Cities)
-    .AnyAsync(state => state.Id == id && state.Cities.Any());
+    .AnyAsync(state => state.Id == id);
 }

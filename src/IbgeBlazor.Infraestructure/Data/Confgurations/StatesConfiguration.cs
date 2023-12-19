@@ -21,16 +21,15 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
             builder.Property(state => state.Code)
                 .IsRequired()
                 .HasColumnName("CODIGO_ESTADO")
-                .HasColumnType(nameof(SqlDbType.Char))
                 .HasMaxLength(2)
                 .HasConversion(code => code.CodeNumber, str => str);
 
             builder.Ignore(state => state.Notifications);
+            builder.Ignore(state => state.IsValid);
 
             builder.Property(state => state.Name)
                 .IsRequired()
                 .HasColumnName("NOME_ESTADO")
-                .HasColumnType(nameof(SqlDbType.VarChar))
                 .HasMaxLength(80);
 
 

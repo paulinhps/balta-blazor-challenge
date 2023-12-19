@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace IbgeBlazor.Infraestructure.Data.Migrations
+namespace IbgeBlazor.Infraestructure.Migrations
 {
     /// <inheritdoc />
-    public partial class MapCities : Migration
+    public partial class UpdateStateIdentityV4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,10 +15,10 @@ namespace IbgeBlazor.Infraestructure.Data.Migrations
                 name: "ESTADOS",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CODIGO_ESTADO = table.Column<string>(type: "Char(2)", maxLength: 2, nullable: false),
-                    NOME_ESTADO = table.Column<string>(type: "VarChar(80)", maxLength: 80, nullable: false)
+                    ID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CODIGO_ESTADO = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false),
+                    NOME_ESTADO = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,9 +29,9 @@ namespace IbgeBlazor.Infraestructure.Data.Migrations
                 name: "MUNICIPIOS",
                 columns: table => new
                 {
-                    CODIGO_MUNICIPIO = table.Column<string>(type: "Char(7)", maxLength: 7, nullable: false),
-                    NOME_MUNICIPIO = table.Column<string>(type: "VarChar(80)", maxLength: 80, nullable: false),
-                    CODIGO_UF = table.Column<int>(type: "Int", nullable: false)
+                    CODIGO_MUNICIPIO = table.Column<string>(type: "jsonb", maxLength: 7, nullable: false),
+                    NOME_MUNICIPIO = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    CODIGO_UF = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,7 +47,8 @@ namespace IbgeBlazor.Infraestructure.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ESTADOS_CODIGO_ESTADO",
                 table: "ESTADOS",
-                column: "CODIGO_ESTADO");
+                column: "CODIGO_ESTADO",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MUNICIPIOS_CODIGO_UF",
