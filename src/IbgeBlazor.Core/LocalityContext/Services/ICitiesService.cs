@@ -5,7 +5,7 @@ using IbgeBlazor.Core.LocalityContext.DataModels.Cities;
 
 namespace IbgeBlazor.Core.LocalityContext.Services
 {
-
+    
     public interface ICitiesService : IHttpService
     {
         Task<ModelResult<CityModel>?> CreateCity(CreateCityModel updateCityModel);

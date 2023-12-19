@@ -24,21 +24,45 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
 
                 return await response.Content.ReadFromJsonAsync<ModelResult<CityModel>>();
             }
-            catch
+            catch (Exception ex)
             {
-                return null;
+                IErrorModel error = new ErrorModel("CreateCityRequest", ex.Message);
+
+                return new ModelResult<CityModel>("Erro ao tentar criar a cidade", error);
             }
 
         }
 
-        public Task<ModelResultBase?> DeleteCity(string ibgeCode)
+        public async Task<ModelResultBase?> DeleteCity(string ibgeCode)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _client.DeleteAsync($"{ApiEndpointsPaths.Cities}/{ibgeCode}");
+
+                return await response.Content.ReadFromJsonAsync<ModelResult>();
+            }
+            catch (Exception ex)
+            {
+                IErrorModel error = new ErrorModel("DeleteCityRequest", ex.Message);
+
+                return new ModelResult("Erro ao tentar deletar a cidade", error);
+            }
         }
 
-        public Task<ModelResult<CityModel>?> GetCityDetails(string ibgeCode)
+        public async Task<ModelResult<CityModel>?> GetCityDetails(string ibgeCode)
         {
-            throw new NotImplementedException();
+           try
+            {
+                var response = await _client.GetAsync($"{ApiEndpointsPaths.Cities}/{ibgeCode}");
+
+                return await response.Content.ReadFromJsonAsync<ModelResult<CityModel>>();
+            }
+            catch (Exception ex)
+            {
+                IErrorModel error = new ErrorModel("CityDetailsRequest", ex.Message);
+
+                return new ModelResult<CityModel>("Erro ao tentar recuperar detalhes da cidade", error);
+            }
         }
 
         public async Task<ModelResult<IEnumerable<CityModel>>?> ListCities(PagingDataBase updateCityModel)
@@ -50,15 +74,28 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
 
                 return await response.Content.ReadFromJsonAsync<ModelResult<IEnumerable<CityModel>>>();
             }
-            catch
+             catch (Exception ex)
             {
-                return null;
+                  IErrorModel error = new ErrorModel("CityListRequest", ex.Message);
+
+                return new ModelResult<IEnumerable<CityModel>>("Erro ao tentar recuperar lista de cidades", error);
             }
         }
 
-        public Task<ModelResult<CityModel>?> UpdateCity(string ibgeCode, UpdateCityModel updateCityModel)
+        public async Task<ModelResult<CityModel>?> UpdateCity(string ibgeCode, UpdateCityModel updateCityModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _client.PutAsJsonAsync($"{ApiEndpointsPaths.Cities}/{ibgeCode}", updateCityModel);
+
+                return await response.Content.ReadFromJsonAsync<ModelResult<CityModel>>();
+            }
+            catch (Exception ex)
+            {
+                IErrorModel error = new ErrorModel("UpdateCityRequest", ex.Message);
+
+                return new ModelResult<CityModel>("Erro ao tentar deletar a cidade", error);
+            }
         }
     }
 }
