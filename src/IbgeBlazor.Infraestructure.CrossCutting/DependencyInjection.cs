@@ -43,12 +43,18 @@ public static class DependencyInjection
 
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
-
+        var apiUrl = "https://localhost:7033";
         services.AddSingleton<ApiConfigureHandler>();
 
         services.AddHttpClient<ICitiesService, ApiCitiesServices>((IServiceProvider serviceProvider, HttpClient client) =>
         {
-            client.BaseAddress = new Uri("https://localhost:7033");
+            client.BaseAddress = new Uri(apiUrl);
+        });
+       // .AddHttpMessageHandler(provider => provider.GetService<ApiConfigureHandler>()!);
+        
+        services.AddHttpClient<IStatesService, ApiStatesServices>((IServiceProvider serviceProvider, HttpClient client) =>
+        {
+            client.BaseAddress = new Uri(apiUrl);
         });
        // .AddHttpMessageHandler(provider => provider.GetService<ApiConfigureHandler>()!);
 
