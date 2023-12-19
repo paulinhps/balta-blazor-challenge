@@ -1,4 +1,8 @@
 ﻿@page "/cities"
+@using IbgeBlazor.Api.Endpoints.Localities
+@using IbgeBlazor.Core.LocalityContext.DataModels.Cities
+@using IbgeBlazor.Core.LocalityContext.Services
+@inject ICitiesService _citiesService
 @attribute [StreamRendering]
 
 <PageTitle>Weather</PageTitle>
@@ -16,20 +20,16 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>IbgeCode</th>
+                <th>Name</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var forecast in forecasts)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@forecast.IbgeCode</td>
+                    <td>@forecast.Name</td>
                 </tr>
             }
         </tbody>
@@ -37,21 +37,17 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private CityModel[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
         // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
+        var  modelResult = await _citiesService.ListCities(new PagingDataModel());
 
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        if(modelResult?.Success is true)
         {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+            forecasts = modelResult.Data!.ToArray();
+        }
     }
 
     private class WeatherForecast

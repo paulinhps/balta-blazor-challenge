@@ -7,8 +7,7 @@ using IbgeBlazor.Application.LocalityContext.Extensions;
 using MediatR;
 using IbgeBlazor.Application.LocalityContext.Cities.GetCityList;
 using IbgeBlazor.Application.LocalityContext.Cities.GetCityDetails;
-using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
+using IbgeBlazor.Api.Common.DataModels;
 
 namespace IbgeBlazor.Api.Endpoints.Localities;
 
@@ -106,18 +105,5 @@ public static class CitiesEndpoints
             .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
 
         return app;
-    }
-}
-
-public record PagingData([FromQuery] int Page = 1, [FromQuery] int PageSize = 10)
-{
-
-    public static ValueTask<PagingData?> BindAsync(HttpContext context,
-                                                   ParameterInfo parameter)
-    {
-        int page = int.TryParse(context.Request.Query["page"], out int pageParameter) ? pageParameter : 1;
-        int pageSize = int.TryParse(context.Request.Query["page"], out int pageSizeParameter) ? pageSizeParameter : 10;
-
-        return ValueTask.FromResult<PagingData?>(new(page, pageSize));
     }
 }

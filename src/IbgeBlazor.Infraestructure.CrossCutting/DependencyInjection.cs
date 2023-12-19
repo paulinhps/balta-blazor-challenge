@@ -1,7 +1,10 @@
 ﻿using IbgeBlazor.Application;
 using IbgeBlazor.Core.LocalityContext.Repositories;
+using IbgeBlazor.Core.LocalityContext.Services;
 using IbgeBlazor.Infraestructure.Data;
 using IbgeBlazor.Infraestructure.Data.Repositories;
+using IbgeBlazor.Infraestructure.Handlers;
+using IbgeBlazor.Infraestructure.Services.Localities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,15 +44,13 @@ public static class DependencyInjection
     public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
     {
 
+        services.AddSingleton<ApiConfigureHandler>();
 
-        //services.AddHttpClient<ILocalityService, LocalityApiService>((IServiceProvider serviceProvider, client) =>
-        //{
-        // Aqui eu preciso pegar o Usuario corrente para pegar um claim que vai ter o JWT.
-        // Essa Claim vai ser injetsado dentro do services.AddAutentication na configuração 
-        // da Autenticação do Blazor. 
-        // Isso porque o projeto de front ele usar cookies e a api usar Bearer Token
-        // O mesmo token autenticado do front vai ser passado para a API
-        //});
+        services.AddHttpClient<ICitiesService, ApiCitiesServices>((IServiceProvider serviceProvider, HttpClient client) =>
+        {
+            client.BaseAddress = new Uri("https://localhost:7033");
+        });
+       // .AddHttpMessageHandler(provider => provider.GetService<ApiConfigureHandler>()!);
 
 
         return services;
