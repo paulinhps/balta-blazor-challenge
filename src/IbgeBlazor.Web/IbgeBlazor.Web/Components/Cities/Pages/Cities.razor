@@ -1,0 +1,72 @@
+﻿@page "/cities"
+@using IbgeBlazor.Core.LocalityContext.Services
+@using IbgeBlazor.Api.Endpoints.Localities
+@using IbgeBlazor.Core.LocalityContext.DataModels.Cities
+@inject ICitiesService _citiesService
+@inject NavigationManager NavigationManager
+
+@attribute [StreamRendering]
+
+<PageTitle>Cities</PageTitle>
+
+<h1>Cidades</h1>
+
+<div>
+    @if (cities == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <a class="btn btn-primary float-end" href="/city/create">Nova Cidade</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>IBGE</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var city in cities)
+                {
+                    <tr>
+                        <td>@city.IbgeCode</td>
+                        <td>@city.Name</td>
+                        <td>@city.State</td>
+                        <td>
+                            <a class="btn btn-info" href="/city/details/@city.IbgeCode">Visualizar</a>
+                            <a class="btn btn-warning" href="/city/edit/@city.IbgeCode">Editar</a>
+                            <button class="btn btn-danger" @onclick="() => DeleteCity(city.IbgeCode)">Deletar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @code {
+
+        private List<CityModel>? cities;
+        protected override async Task OnInitializedAsync()
+        {
+            var  modelResult = await _citiesService.ListCities(new PagingDataModel());
+
+            if(modelResult?.Success is true)
+            {
+                cities = modelResult.Data!.ToArray();
+            }
+
+        }
+
+        private void DeleteCity(int cityId)
+        {
+            var cityToRemove = cities.FirstOrDefault(c => c.IbgeCode == cityId);
+            if (cityToRemove != null)
+            {
+                cities.Remove(cityToRemove);
+            }
+        }
+    }
+</div>
+
