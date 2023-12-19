@@ -4,21 +4,22 @@
 @using IbgeBlazor.Core.LocalityContext.DataModels.Cities
 @inject ICitiesService _citiesService
 @inject NavigationManager NavigationManager
-
 @attribute [StreamRendering]
+@rendermode InteractiveServer
 
 <PageTitle>Cities</PageTitle>
 
 <h1>Cidades</h1>
 
 <div>
+    
+    <a class="btn btn-primary float-end" href="/cities/create">Nova Cidade</a>
     @if (cities == null)
     {
         <p><em>Loading...</em></p>
     }
     else
     {
-        <a class="btn btn-primary float-end" href="/city/create">Nova Cidade</a>
         <table class="table">
             <thead>
                 <tr>
@@ -33,11 +34,11 @@
                     <tr>
                         <td>@city.IbgeCode</td>
                         <td>@city.Name</td>
-                        <td>@city.State</td>
+                        <td>@city.State?.Uf - @city.State?.Description</td>
                         <td>
-                            <a class="btn btn-info" href="/city/details/@city.IbgeCode">Visualizar</a>
-                            <a class="btn btn-warning" href="/city/edit/@city.IbgeCode">Editar</a>
-                            <button class="btn btn-danger" @onclick="() => DeleteCity(city.IbgeCode)">Deletar</button>
+                            <a class="btn btn-info" href="/cities/details/@city.IbgeCode">Visualizar</a>
+                            <a class="btn btn-warning" href="/cities/edit/@city.IbgeCode">Editar</a>
+                            <button class="btn btn-danger" @onclick="() => DeleteCity(city!.IbgeCode!)">Deletar</button>
                         </td>
                     </tr>
                 }
@@ -50,21 +51,23 @@
         private List<CityModel>? cities;
         protected override async Task OnInitializedAsync()
         {
-            var  modelResult = await _citiesService.ListCities(new PagingDataModel());
+            var  modelResult = await _citiesService.ListCities();
 
             if(modelResult?.Success is true)
             {
-                cities = modelResult.Data!.ToArray();
+                cities = modelResult.Data!.ToList<CityModel>();
             }
 
         }
 
-        private void DeleteCity(int cityId)
+        private async Task DeleteCity(string ibgeCode)
         {
-            var cityToRemove = cities.FirstOrDefault(c => c.IbgeCode == cityId);
-            if (cityToRemove != null)
+            var cityToRemove = cities!.FirstOrDefault(c => c.IbgeCode == ibgeCode);
+            var result = await _citiesService.DeleteCity(ibgeCode);
+            
+            if (result?.Success is true)
             {
-                cities.Remove(cityToRemove);
+                cities!.Remove(cityToRemove!);
             }
         }
     }
