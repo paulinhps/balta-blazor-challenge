@@ -1,4 +1,6 @@
 ﻿@page "/states"
+@using IbgeBlazor.Core.LocalityContext.Services
+@inject IStatesService _statesService
 @attribute [StreamRendering]
 
 <PageTitle>Estado</PageTitle>
@@ -22,15 +24,15 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (var state in states)
+        @foreach (var state in states!)
         {
             <tr>
-                <td>@state.StateCode</td>
-                <td>@state.Descriptions</td>
+                <td>@state.Uf</td>
+                <td>@state.Description</td>
                 <td>
                     <a class="btn btn-info" href="/states/details/@state.Id">Visualizar</a>
                     <a class="btn btn-warning" href="/states/edit/@state.Id">Editar</a>
-                    <button class="btn btn-danger" @onclick="() => DeleteCity(state.Id)">Deletar</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteCity(state.Id ?? 0)">Deletar</button>
                 </td>
             </tr>
         }
@@ -39,38 +41,31 @@ else
 }
 
 @code {
-    private List<StateData> states;
+    private List<StateModel>? states;
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(500);
-        states = new List<StateData>
+        var results = await _statesService.ListStates();
+
+        if(results?.Success is true)
         {
-            new StateData {Id=1, StateCode = "MT", Descriptions = "Estado A" },
-            new StateData {Id=1, StateCode = "MT", Descriptions = "Estado A" },
-            new StateData {Id=1, StateCode = "MS", Descriptions = "Estado B" },
-            new StateData {Id=1, StateCode = "MG", Descriptions = "Estado C" },
-            new StateData {Id=1, StateCode = "PR", Descriptions = "Estado D" },
-            new StateData {Id=1, StateCode = "PR", Descriptions = "Estado D" },
-            new StateData {Id=1, StateCode = "RO", Descriptions = "Estado E" },
-            new StateData {Id=1, StateCode = "RO", Descriptions = "Estado E" },
-            new StateData {Id=1, StateCode = "AM", Descriptions = "Estado F" },
-        };
+            states = results.Data!.ToList();
+        }
     }
 
-    private class StateData
-    {
-        public int Id { get; set; }
-        public string StateCode { get; set; }
-        public string Descriptions { get; set; }
-    }
 
-    private void DeleteCity(int stateId)
+
+    private async Task DeleteCity(int stateId)
     {
-        var cityToRemove = states.FirstOrDefault(c => c.Id == stateId);
-        if (cityToRemove != null)
+        var cityToRemove = states!.FirstOrDefault(c => c.Id == stateId);
+
+        if (cityToRemove == null) return;
+
+        var removeResult = await _statesService.DeleteState(stateId);
+
+        if (removeResult?.Success is true)
         {
-            states.Remove(cityToRemove);
+            states!.Remove(cityToRemove!);
         }
     }
 }
