@@ -16,11 +16,11 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             _client = client;
         }
 
-        public async Task<ModelResult<CityModel>?> CreateCity(CreateCityModel updateCityModel)
+        public async Task<ModelResult<CityModel>?> CreateCity(CreateCityModel createCityModel)
         {
             try
             {
-                var response = await _client.PostAsJsonAsync(ApiEndpointsPaths.Cities, updateCityModel);
+                var response = await _client.PostAsJsonAsync(ApiEndpointsPaths.Cities, createCityModel);
 
                 return await response.Content.ReadFromJsonAsync<ModelResult<CityModel>>();
             }
@@ -51,7 +51,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
 
         public async Task<ModelResult<CityModel>?> GetCityDetails(string ibgeCode)
         {
-           try
+            try
             {
                 var response = await _client.GetAsync($"{ApiEndpointsPaths.Cities}/{ibgeCode}");
 
@@ -65,18 +65,17 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
         }
 
-        public async Task<ModelResult<IEnumerable<CityModel>>?> ListCities(PagingDataBase updateCityModel)
+        public async Task<ModelResult<IEnumerable<CityModel>>?> ListCities(PagingDataBase? paginationModel = null)
         {
-
             try
             {
-                var response = await _client.GetAsync(ApiEndpointsPaths.Cities);
+                var response = await _client.GetAsync($"{ApiEndpointsPaths.Cities}{paginationModel?.GetQueryString()}");
 
                 return await response.Content.ReadFromJsonAsync<ModelResult<IEnumerable<CityModel>>>();
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
-                  IErrorModel error = new ErrorModel("CityListRequest", ex.Message);
+                IErrorModel error = new ErrorModel("CityListRequest", ex.Message);
 
                 return new ModelResult<IEnumerable<CityModel>>("Erro ao tentar recuperar lista de cidades", error);
             }
@@ -94,7 +93,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             {
                 IErrorModel error = new ErrorModel("UpdateCityRequest", ex.Message);
 
-                return new ModelResult<CityModel>("Erro ao tentar deletar a cidade", error);
+                return new ModelResult<CityModel>("Erro ao tentar atualisar a cidade", error);
             }
         }
     }
