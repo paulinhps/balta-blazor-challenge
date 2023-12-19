@@ -9,6 +9,7 @@ using IbgeBlazor.Core.Constants;
 using IbgeBlazor.Core.LocalityContext.DataModels.States;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using IbgeBlazor.Api.Common.DataModels;
 
 public static class StateEndpoints
 {
@@ -33,13 +34,13 @@ public static class StateEndpoints
         .Produces<ModelResult<StateModel>>(StatusCodes.Status201Created)
         .Produces<ModelResultBase>(StatusCodes.Status422UnprocessableEntity);
 
-        app.MapGet(ApiEndpointsPaths.States, async (IMediator mediator, int page = 1, int pageSize = 10 ) =>
+        app.MapGet(ApiEndpointsPaths.States, async (PagingData queryModel, IMediator mediator ) =>
         {
 
             var query = new GetStateWithPaginationQuery()
             {
-                PageNumber = page,
-                PageSize = pageSize
+                PageNumber = queryModel.Page,
+                PageSize = queryModel.PageSize
             };
 
             var result = await mediator.Send(query);

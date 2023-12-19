@@ -22,10 +22,18 @@ namespace IbgeBlazor.Core.Common.DataModels
             Data = data;
         }
 
+        public ModelResult() : base()
+        {
+            
+        }
+
     }
     public class ModelResult : ModelResultBase
     {
-
+        public ModelResult() : base(null!, [])
+        {
+            
+        }
         public ModelResult(string message, params IErrorModel[] errors) : base(message, errors)
         {
 

@@ -1,3 +1,4 @@
+using IbgeBlazor.Infraestructure.CrossCutting;
 using IbgeBlazor.Web.Client.Pages;
 using IbgeBlazor.Web.Components;
 using IbgeBlazor.Web.Components.Account;
@@ -17,6 +18,11 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingRevalidatingAuthenticationStateProvider>();
+
+builder.Services.AddApiServices(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
+
 
 builder.Services.AddAuthentication(options =>
     {
@@ -66,3 +72,4 @@ app.MapRazorComponents<App>()
 app.MapAdditionalIdentityEndpoints();
 
 app.Run();
+
