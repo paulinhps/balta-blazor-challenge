@@ -1,7 +1,9 @@
 ﻿@page "/cities/create"
+@using IbgeBlazor.Api.Endpoints.Localities
 @using IbgeBlazor.Core.LocalityContext.DataModels.Cities
 @using IbgeBlazor.Core.LocalityContext.Services
 @inject ICitiesService _citiesService
+@inject IStatesService _stateServices
 @inject NavigationManager NavigationManager
 
 <h2>Criar nova Cidade</h2>
@@ -61,20 +63,16 @@
 
         else
         {
-            
+
         }
 
     }
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(500);
+        var results = await _stateServices.ListStates(new PagingDataModel(1, 100));
 
-        states = Enumerable.Range(1, 5).Select(index => new StateModel
-        {
-            Id = index + 1,
-            Uf = "XX",
-            Description = "Descritipon"
-        }).ToArray();
+        if (results?.Success is true)
+            states = results.Data!.ToArray();
     }
 }

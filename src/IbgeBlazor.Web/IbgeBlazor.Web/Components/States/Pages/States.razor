@@ -1,0 +1,71 @@
+﻿@page "/states"
+@using IbgeBlazor.Core.LocalityContext.Services
+@inject IStatesService _statesService
+@attribute [StreamRendering]
+
+<PageTitle>Estado</PageTitle>
+
+<h1>Estados</h1>
+
+
+
+@if (states == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a class="btn btn-primary float-end" href="/states/create" style="">Nova Estado</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Estadir UF</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var state in states!)
+        {
+            <tr>
+                <td>@state.Uf</td>
+                <td>@state.Description</td>
+                <td>
+                    <a class="btn btn-info" href="/states/details/@state.Id">Visualizar</a>
+                    <a class="btn btn-warning" href="/states/edit/@state.Id">Editar</a>
+                    <button class="btn btn-danger" @onclick="() => DeleteCity(state.Id ?? 0)">Deletar</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<StateModel>? states;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var results = await _statesService.ListStates();
+
+        if(results?.Success is true)
+        {
+            states = results.Data!.ToList();
+        }
+    }
+
+
+
+    private async Task DeleteCity(int stateId)
+    {
+        var cityToRemove = states!.FirstOrDefault(c => c.Id == stateId);
+
+        if (cityToRemove == null) return;
+
+        var removeResult = await _statesService.DeleteState(stateId);
+
+        if (removeResult?.Success is true)
+        {
+            states!.Remove(cityToRemove!);
+        }
+    }
+}
