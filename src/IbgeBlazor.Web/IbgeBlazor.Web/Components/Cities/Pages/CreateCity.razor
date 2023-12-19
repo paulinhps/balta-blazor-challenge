@@ -1,12 +1,15 @@
 ﻿@page "/cities/create"
 @using IbgeBlazor.Core.LocalityContext.DataModels.Cities
+@using IbgeBlazor.Core.LocalityContext.Services
+@inject ICitiesService _citiesService
+@inject NavigationManager NavigationManager
 
-@attribute [StreamRendering]
 <h2>Criar nova Cidade</h2>
 
 <EditForm Model="Input" method="post" asp-route-returnUrl="/cities" OnValidSubmit="PostCreateCity" FormName="createCity">
     <div class="row">
         <div class="col-md-8 px-2 d-flex flex-column">
+
                 <DataAnnotationsValidator />
 
                 <div class="form-floating mb-3">
@@ -48,9 +51,18 @@
 
     public async Task PostCreateCity(EditContext editContext)
     {
-        await Task.Delay(500);
 
-        
+        var result = await _citiesService.CreateCity(Input);
+
+        if(result?.Success is true)
+        {
+            NavigationManager.NavigateTo("/cities");
+        }
+
+        else
+        {
+            
+        }
 
     }
 
