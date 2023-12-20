@@ -91,7 +91,9 @@ public static class CitiesEndpoints
 
             var response = result.Results?.FromCityModel();
 
-            return result.Results is not null ? Results.Ok(response) : Results.NotFound(response);
+            var modelResult = new ModelResult<CityModel>(response);
+
+            return result.Results is not null ? Results.Ok(modelResult) : Results.NotFound(modelResult);
 
 
         })

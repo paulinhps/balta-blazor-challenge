@@ -20,12 +20,13 @@
     }
     else
     {
-        <table class="table">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
                 <tr>
                     <th>IBGE</th>
                     <th>Cidade</th>
                     <th>Estado</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,11 +35,11 @@
                     <tr>
                         <td>@city.IbgeCode</td>
                         <td>@city.Name</td>
-                        <td>@city.State?.Uf - @city.State?.Description</td>
+                        <td>@city.State?.Description - @city.State?.Uf</td>
                         <td>
-                            <a class="btn btn-info" href="/cities/details/@city.IbgeCode">Visualizar</a>
-                            <a class="btn btn-warning" href="/cities/edit/@city.IbgeCode">Editar</a>
-                            <button class="btn btn-danger" @onclick="() => DeleteCity(city!.IbgeCode!)">Deletar</button>
+                            <a class="btn btn-info btn-sm" href="/cities/details/@city.IbgeCode">Visualizar</a>
+                            <a class="btn btn-primary btn-sm" href="/cities/edit/@city.IbgeCode">Editar</a>
+                            <button class="btn btn-danger btn-sm" @onclick="() => DeleteCity(city!.IbgeCode!)">Deletar</button>
                         </td>
                     </tr>
                 }

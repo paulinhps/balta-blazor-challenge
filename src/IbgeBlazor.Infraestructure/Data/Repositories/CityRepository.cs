@@ -54,7 +54,7 @@ public sealed class CityRepository : ICitiesRepository
         return result.Entity;
     }
     public async Task<City?> GetCityByIbeCode(IbgeCode ibgeCode)
-    => await _applicationDbContext.Cities.FirstOrDefaultAsync(city => city.Id.Equals(ibgeCode));
+    => await _applicationDbContext.Cities.Include(city => city.State).FirstOrDefaultAsync(city => city.Id.Equals(ibgeCode));
 
     public async Task<IEnumerable<City>> ListCities(PaginationQuery pagination)
     => await _applicationDbContext.Cities
