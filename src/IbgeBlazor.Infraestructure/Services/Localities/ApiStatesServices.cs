@@ -25,7 +25,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("CreateStateRequest", ex.Message);
+                ErrorModel error = new ErrorModel("CreateStateRequest", ex.Message);
                 return new ModelResult<StateModel>("Erro ao tentar criar o estado!", error);
             }
         }
@@ -40,7 +40,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("DeleteStateRequest", ex.Message);
+                ErrorModel error = new ErrorModel("DeleteStateRequest", ex.Message);
 
                 return new ModelResult("Erro ao tentar deletar o estado!", error);
             }
@@ -55,7 +55,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("StateDetailsRequest", ex.Message);
+                ErrorModel error = new ErrorModel("StateDetailsRequest", ex.Message);
                 return new ModelResult<StateModel>("Erro ao tentar recuperar detalhes do estado!", error);
             }
         }
@@ -69,7 +69,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("StateListRequest", ex.Message);
+                ErrorModel error = new ErrorModel("StateListRequest", ex.Message);
                 return new ModelResult<IEnumerable<StateModel>>("Erro ao tentar recuperar lista de estados", error);
             }
         }
@@ -78,13 +78,13 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
         {
             try
             {
-                var response = await _client.PutAsJsonAsync($"{ApiEndpointsPaths.Cities}/{statiId}", updateStateModel);
+                var response = await _client.PutAsJsonAsync($"{ApiEndpointsPaths.States}/{statiId}", updateStateModel);
 
                 return await response.Content.ReadFromJsonAsync<ModelResult<StateModel>>();
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("UpdateStateRequest", ex.Message);
+                ErrorModel error = new ErrorModel("UpdateStateRequest", ex.Message);
 
                 return new ModelResult<StateModel>("Erro ao tentar atualizar o estado", error);
             }

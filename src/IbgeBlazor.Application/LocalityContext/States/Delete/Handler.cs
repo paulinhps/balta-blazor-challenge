@@ -59,7 +59,6 @@ IRequestHandler<DeleteStateCommand, ICommandResult>
             if(await _repository.IsExistsStateLinkedCity(command.Id))
             {
                 AddNotification("StateWithLocaties", "Estado possui relação com Cidades");
-                return result;
             }
             
         }

@@ -26,7 +26,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("CreateCityRequest", ex.Message);
+                ErrorModel error = new ErrorModel("CreateCityRequest", ex.Message);
 
                 return new ModelResult<CityModel>("Erro ao tentar criar a cidade", error);
             }
@@ -43,7 +43,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("DeleteCityRequest", ex.Message);
+                ErrorModel error = new ErrorModel("DeleteCityRequest", ex.Message);
 
                 return new ModelResult("Erro ao tentar deletar a cidade", error);
             }
@@ -59,7 +59,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("CityDetailsRequest", ex.Message);
+                ErrorModel error = new ErrorModel("CityDetailsRequest", ex.Message);
 
                 return new ModelResult<CityModel>("Erro ao tentar recuperar detalhes da cidade", error);
             }
@@ -75,7 +75,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("CityListRequest", ex.Message);
+                ErrorModel error = new ErrorModel("CityListRequest", ex.Message);
 
                 return new ModelResult<IEnumerable<CityModel>>("Erro ao tentar recuperar lista de cidades", error);
             }
@@ -91,7 +91,7 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
             }
             catch (Exception ex)
             {
-                IErrorModel error = new ErrorModel("UpdateCityRequest", ex.Message);
+                ErrorModel error = new ErrorModel("UpdateCityRequest", ex.Message);
 
                 return new ModelResult<CityModel>("Erro ao tentar atualisar a cidade", error);
             }

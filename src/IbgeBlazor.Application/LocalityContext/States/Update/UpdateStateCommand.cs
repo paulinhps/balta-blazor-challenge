@@ -10,9 +10,6 @@ public class UpdateStateCommand : CommandBase, IRequest<ICommandResult<State>>
 {
     public int Id { get; set; } = 0;
     public string Description { get; set; } = null!;
-    public string StateName { get; set; } = null!;
-    public string Uf { get; set; } = null!;
-
     public UpdateStateCommand(int id, string description)
     {
         Id = id;
@@ -27,9 +24,7 @@ public class UpdateStateCommand : CommandBase, IRequest<ICommandResult<State>>
         {
             contract.Requires()
             .IsGreaterThan(Id, 0, nameof(Id), $"{nameof(Id)} is Required")
-            .IsNotNullOrWhiteSpace(Description, nameof(Description), $"{nameof(Description)} is Required")
-            .IsNotNullOrWhiteSpace(StateName, nameof(StateName), $"{nameof(StateName)} is Required")
-            .IsNotNullOrWhiteSpace(Uf, nameof(Uf), $"{nameof(Uf)} is Required");
+            .IsNotNullOrWhiteSpace(Description, nameof(Description), $"{nameof(Description)} is Required");
         }));
     }
 }

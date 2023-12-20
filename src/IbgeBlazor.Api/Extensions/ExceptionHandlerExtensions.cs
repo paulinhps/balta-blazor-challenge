@@ -30,7 +30,7 @@ public static class ExceptionHandlerExtensions
                     var errorKey = isBadRequest ? nameof(HttpStatusCode.BadRequest) : nameof(HttpStatusCode.InternalServerError);
                     var errorMessage = isBadRequest ? "Erro ao processar a requisição" : "Erro Interno do Servidor";
 
-                    IErrorModel error = new ErrorModel(errorKey, errorMessage);
+                    ErrorModel error = new ErrorModel(errorKey, errorMessage);
 
                     var json = JsonSerializer.Serialize(new ModelResult("Falha da requisição", error), new JsonSerializerOptions
                     {

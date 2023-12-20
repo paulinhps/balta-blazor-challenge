@@ -21,7 +21,7 @@ public interface ICommandResult
 
     CommandResultType ResultCode { get; }
 
-    IEnumerable<IErrorModel> Errors { get; }
+    IEnumerable<ErrorModel> Errors { get; }
 
     ICommandResult AddErrors(params Notifiable<Notification>[] items);
     ICommandResult AddMessageWhenInvalid(string message);

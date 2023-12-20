@@ -2,6 +2,7 @@
 @using IbgeBlazor.Core.LocalityContext.Services
 @inject IStatesService _statesService
 @attribute [StreamRendering]
+@rendermode InteractiveServer
 
 <PageTitle>Estado</PageTitle>
 
@@ -16,11 +17,12 @@
 else
 {
     <a class="btn btn-primary float-end" href="/states/create" style="">Nova Estado</a>
-    <table class="table">
-        <thead>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
             <tr>
                 <th>Estadir UF</th>
                 <th>Estado</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -30,9 +32,9 @@ else
                     <td>@state.Uf</td>
                     <td>@state.Description</td>
                     <td>
-                        <a class="btn btn-info" href="/states/details/@state.Id">Visualizar</a>
-                        <a class="btn btn-warning" href="/states/edit/@state.Id">Editar</a>
-                        <button class="btn btn-danger" @onclick="() => DeleteCity(state.Id ?? 0)">Deletar</button>
+                        <a class="btn btn-info btn-sm" href="/states/details/@state.Id">Visualizar</a>
+                        <a class="btn btn-warning btn-sm" href="/states/edit/@state.Id">Editar</a>
+                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteCity(state!.Id)">Deletar</button>
                     </td>
                 </tr>
             }
@@ -55,13 +57,13 @@ else
 
 
 
-    private async Task DeleteCity(int stateId)
+    private async Task DeleteCity(int? stateId)
     {
         var cityToRemove = states!.FirstOrDefault(c => c.Id == stateId);
 
         if (cityToRemove == null) return;
 
-        var removeResult = await _statesService.DeleteState(stateId);
+        var removeResult = await _statesService.DeleteState(stateId!.Value);
 
         if (removeResult?.Success is true)
         {

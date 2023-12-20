@@ -81,7 +81,7 @@ public static class StateEndpoints
         .Produces<ModelResultBase>(StatusCodes.Status404NotFound)
         .Produces<ModelResultBase>(StatusCodes.Status500InternalServerError);
 
-        app.MapPatch($"{ApiEndpointsPaths.States}/{{id:int}}", async (int id, UpdateStateModel model, IMediator mediator) =>
+        app.MapPut($"{ApiEndpointsPaths.States}/{{id:int}}", async (int id, UpdateStateModel model, IMediator mediator) =>
         {
 
             var result = await mediator.Send(model.FromCommand(id));

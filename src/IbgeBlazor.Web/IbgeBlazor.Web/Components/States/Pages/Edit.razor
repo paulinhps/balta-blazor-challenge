@@ -1,0 +1,60 @@
+﻿@page "/states/edit/{stateId:int}"
+@using IbgeBlazor.Api.Endpoints.Localities
+@using IbgeBlazor.Core.LocalityContext.DataModels.Cities
+@using IbgeBlazor.Core.LocalityContext.Services
+@inject IStatesService _stateServices
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<h2>Criar nova Cidade</h2>
+
+<EditForm Model="Input" OnValidSubmit="PutUpdateState" FormName="updateState">
+    <div class="row">
+        <div class="col-md-8 px-2 d-flex flex-column">
+            <DataAnnotationsValidator />
+            
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.Description" class="form-control" aria-required="true" />
+                <label asp-for="Input.Description">Nome do Estado</label>
+                <ValidationMessage For="() => Input.Description" class="text-danger" />
+            </div>
+            <div class="d-flex justify-content-end py-2">
+                <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Atualizar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+
+@code {
+
+    [SupplyParameterFromForm]
+    private UpdateStateModel Input { get; set; } = new();
+
+    [Parameter]
+    public int StateId { get; set; }
+
+
+    public async Task PutUpdateState(EditContext editContext)
+    {
+
+        var modelResult = await _stateServices.UpdateState(StateId, Input);
+
+        if (modelResult?.Success is true)
+        {
+            NavigationManager.NavigateTo("/states");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var results = await _stateServices.GetStateDetails(StateId);
+
+        if (results?.Success is true)
+            Input = new UpdateStateModel()
+            {
+                Description = results.Data?.Description ?? string.Empty
+            };
+    }
+}

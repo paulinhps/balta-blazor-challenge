@@ -11,7 +11,7 @@ public class CommandResult : Notifiable<Notification>, ICommandResult
 
     public virtual bool Success => IsValid;
 
-    public IEnumerable<IErrorModel> Errors => this.GetErrors();
+    public IEnumerable<ErrorModel> Errors => this.GetErrors();
 
     public CommandResultType ResultCode { get; protected set; } = CommandResultType.InputedError;
     public CommandResult(string message) : this()
