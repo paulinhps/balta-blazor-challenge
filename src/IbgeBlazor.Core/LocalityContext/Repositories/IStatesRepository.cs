@@ -12,6 +12,6 @@ public interface IStatesRepository
     Task<State> CreateState(State state);
     Task<bool> UpdateState(State state);
     Task<bool> RemoveState(State state);
-    Task<IEnumerable<State>> ListStates(int pageNumber, int pageSize);
+    Task<IEnumerable<State>> ListStates(PaginationQuery pagination);
     
 }

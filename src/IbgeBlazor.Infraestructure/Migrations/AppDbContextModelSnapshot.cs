@@ -25,7 +25,7 @@ namespace IbgeBlazor.Infraestructure.Migrations
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(7)
-                        .HasColumnType("jsonb")
+                        .HasColumnType("char")
                         .HasColumnName("CODIGO_MUNICIPIO");
 
                     b.Property<string>("Name")
@@ -36,7 +36,7 @@ namespace IbgeBlazor.Infraestructure.Migrations
 
                     b.Property<int>("StateId")
                         .HasColumnType("integer")
-                        .HasColumnName("CODIGO_UF");
+                        .HasColumnName("UF_ID");
 
                     b.HasKey("Id");
 
@@ -50,11 +50,8 @@ namespace IbgeBlazor.Infraestructure.Migrations
             modelBuilder.Entity("IbgeBlazor.Core.LocalityContext.Entities.State", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("ID");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()

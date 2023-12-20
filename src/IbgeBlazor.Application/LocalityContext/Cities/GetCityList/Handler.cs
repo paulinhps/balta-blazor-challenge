@@ -1,6 +1,7 @@
 using IbgeBlazor.Core.Common.Queries;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
+using IbgeBlazor.Core.LocalityContext.ValueObjects;
 using MediatR;
 
 namespace IbgeBlazor.Application.LocalityContext.Cities.GetCityList;
@@ -21,7 +22,7 @@ public class Handler : IRequestHandler<GetCitiesWithPaginationQuery, IQueryResul
 
         try
         {
-            IEnumerable<City> items = await _statesRepository.ListCities(request.PageNumber, request.PageSize);
+            IEnumerable<City> items = await _statesRepository.ListCities(new PaginationQuery(request.PageNumber, request.PageSize));
 
             return new QueryResult<IEnumerable<City>>(items);
         }

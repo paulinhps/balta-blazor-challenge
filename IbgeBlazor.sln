@@ -29,7 +29,12 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7180485D-8FA1-4DF4-B3C1-2C888F3374EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbgeBlazor.Tests", "tests\IbgeBlazor.Tests\IbgeBlazor.Tests.csproj", "{9D1216D7-B1AD-44A0-9F9B-15F9FA6BFC58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IbgeBlazor.Tests", "tests\IbgeBlazor.Tests\IbgeBlazor.Tests.csproj", "{9D1216D7-B1AD-44A0-9F9B-15F9FA6BFC58}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostgreSQL", "PostgreSQL", "{AD5E768D-F7F4-4470-AEF6-DC563FB68D5F}"
+	ProjectSection(SolutionItems) = preProject
+		PostgreSQL\docker-compose.yml = PostgreSQL\docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,6 +167,7 @@ Global
 		{700DD24F-7C77-44F4-8F77-22FF9DAE9C05} = {98F69487-3B32-4B24-8088-8C6813D4751E}
 		{C00B7628-65B1-44D7-86F5-000B75C407EA} = {98F69487-3B32-4B24-8088-8C6813D4751E}
 		{9D1216D7-B1AD-44A0-9F9B-15F9FA6BFC58} = {7180485D-8FA1-4DF4-B3C1-2C888F3374EA}
+		{AD5E768D-F7F4-4470-AEF6-DC563FB68D5F} = {A19899C3-FDAD-490C-B2DB-72F270F50F82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9BAA9FC-5E33-4A67-A762-3AB7D2FBEE73}

@@ -17,7 +17,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
             builder.Property(city => city.Id)
                 .IsRequired()
                 .HasColumnName("CODIGO_MUNICIPIO")
-                .HasColumnType("jsonb")
+                .HasColumnType("char")
                 .HasMaxLength(7)
                 .HasConversion(code => code.Code, str => new IbgeCode(str));
 
@@ -28,7 +28,7 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
 
             builder.Property(city => city.StateId)
                 .IsRequired()
-                .HasColumnName("CODIGO_UF");
+                .HasColumnName("UF_ID");
 
             builder.HasIndex(state => state.Name, "IX_MUNICIPIOS_NOME_MUNICIPIO");
 

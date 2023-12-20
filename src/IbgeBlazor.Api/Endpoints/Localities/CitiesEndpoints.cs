@@ -8,6 +8,7 @@ using MediatR;
 using IbgeBlazor.Application.LocalityContext.Cities.GetCityList;
 using IbgeBlazor.Application.LocalityContext.Cities.GetCityDetails;
 using IbgeBlazor.Api.Common.DataModels;
+using IbgeBlazor.Application.LocalityContext.Cities.SearchCities;
 
 namespace IbgeBlazor.Api.Endpoints.Localities;
 
@@ -54,6 +55,29 @@ public static class CitiesEndpoints
 
         })
             .WithName("ListCities")
+            .WithTags(Tags)
+            .Produces<ModelResult<IEnumerable<CityModel>>>(StatusCodes.Status200OK)
+            .Produces<ModelResultBase>(StatusCodes.Status500InternalServerError);
+        
+        app.MapGet($"{ApiEndpointsPaths.Cities}/search", async (string? term, PagingData queryModel, IMediator mediator) =>
+        {
+            var query = new SearchCitiesParametersQuery()
+            {
+                Term = term,
+                PageNumber = queryModel.Page,
+                PageSize = queryModel.PageSize
+            };
+
+            var result = await mediator.Send(query);
+
+            var dataResult = result.Results?
+            .Select(CitiesDataModelsExtensions.FromCityModel)
+            .ToArray();
+
+            return new ModelResult<IEnumerable<CityModel>>(dataResult!);
+
+        })
+            .WithName("SearhCities")
             .WithTags(Tags)
             .Produces<ModelResult<IEnumerable<CityModel>>>(StatusCodes.Status200OK)
             .Produces<ModelResultBase>(StatusCodes.Status500InternalServerError);

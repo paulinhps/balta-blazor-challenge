@@ -1,6 +1,7 @@
 using IbgeBlazor.Core.Common.Queries;
 using IbgeBlazor.Core.LocalityContext.Entities;
 using IbgeBlazor.Core.LocalityContext.Repositories;
+using IbgeBlazor.Core.LocalityContext.ValueObjects;
 using MediatR;
 
 namespace IbgeBlazor.Application.LocalityContext.States.GetStatesList
@@ -21,7 +22,7 @@ namespace IbgeBlazor.Application.LocalityContext.States.GetStatesList
 
             try
             {
-                IEnumerable<State> items = await _statesRepository.ListStates(request.PageNumber, request.PageSize);
+                IEnumerable<State> items = await _statesRepository.ListStates(new PaginationQuery(request.PageNumber, request.PageSize));
 
                 return new QueryResult<IEnumerable<State>>(items);
             }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Data;
 
 
-namespace IbgeBlazor.Infraestructure.Data.Confgurations
+namespace IbgeBlazor.Infraestructure.Data.Configurations
 {
     internal class StatesConfiguration : IEntityTypeConfiguration<State>
     {
@@ -16,7 +16,8 @@ namespace IbgeBlazor.Infraestructure.Data.Confgurations
 
             builder.Property(state => state.Id)
                 .IsRequired()
-                .HasColumnName("ID");
+                .HasColumnName("ID")
+                .ValueGeneratedNever();
 
             builder.Property(state => state.Code)
                 .IsRequired()

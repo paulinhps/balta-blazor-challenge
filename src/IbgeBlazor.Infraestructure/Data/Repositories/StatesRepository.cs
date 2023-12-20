@@ -63,16 +63,14 @@ public sealed class StatesRepository : IStatesRepository
         return true;
     }
 
-    public async Task<IEnumerable<State>> ListStates(int pageNumber, int pageSize)
+    public async Task<IEnumerable<State>> ListStates(PaginationQuery pagination)
     {
-        var take = pageSize;
-        var skip = pageNumber > 1 ? take * (pageNumber - 1) : 0;
-
         return await _applicationDbContext.States
             .AsNoTracking()
-            .Skip(skip)
-            .Take(take)
+            .Skip(pagination.Skip())
+            .Take(pagination.Take())
             .ToListAsync();
+
     }
 
     public async Task<bool> IsExistsStateLinkedCity(int id)
