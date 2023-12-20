@@ -10,12 +10,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/IbgeBlazor.Web/IbgeBlazor.Web/IbgeBlazor.Web.csproj", "src/IbgeBlazor.Web/IbgeBlazor.Web/"]
+COPY ["src/IbgeBlazor.Application/IbgeBlazor.Application.csproj", "src/IbgeBlazor.Application/"]
 COPY ["src/IbgeBlazor.Core/IbgeBlazor.Core.csproj", "src/IbgeBlazor.Core/"]
 COPY ["src/IbgeBlazor.Infraestructure.CrossCutting/IbgeBlazor.Infraestructure.CrossCutting.csproj", "src/IbgeBlazor.Infraestructure.CrossCutting/"]
-COPY ["src/IbgeBlazor.Application/IbgeBlazor.Application.csproj", "src/IbgeBlazor.Application/"]
 COPY ["src/IbgeBlazor.Infraestructure/IbgeBlazor.Infraestructure.csproj", "src/IbgeBlazor.Infraestructure/"]
 COPY ["src/IbgeBlazor.Web/IbgeBlazor.Web.Client/IbgeBlazor.Web.Client.csproj", "src/IbgeBlazor.Web/IbgeBlazor.Web.Client/"]
-RUN dotnet restore "./src/IbgeBlazor.Web/IbgeBlazor.Web/./IbgeBlazor.Web.csproj"
+RUN dotnet restore "./src/IbgeBlazor.Web/IbgeBlazor.Web/IbgeBlazor.Web.csproj"
 COPY . .
 WORKDIR "/src/src/IbgeBlazor.Web/IbgeBlazor.Web"
 RUN dotnet build "./IbgeBlazor.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
