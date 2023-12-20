@@ -2,6 +2,8 @@
 @using IbgeBlazor.Api.Endpoints.Localities
 @using IbgeBlazor.Core.LocalityContext.DataModels.Cities
 @using IbgeBlazor.Core.LocalityContext.Services
+@using System.ComponentModel.DataAnnotations;
+@using IbgeBlazor.Core.Common.DataModels;
 @inject ICitiesService _citiesService
 @inject IStatesService _stateServices
 @inject NavigationManager NavigationManager
@@ -9,12 +11,12 @@
 
 <h2>Criar nova Cidade</h2>
 
-<EditForm Model="Input" OnValidSubmit="PostCreateCity" FormName="createCity">
+<EditForm OnValidSubmit="OnSubmitAsync" FormName="createCity" EditContext="_editContext">
     <div class="row">
         <div class="col-md-8 px-2 d-flex flex-column">
 
                 <DataAnnotationsValidator />
-
+                
                 <div class="form-floating mb-3">
                     <InputText @bind-Value="Input.IbgeCode" class="form-control" aria-required="true"/> 
                     <label class="form-label" asp-for="Input.IbgeCode">Codigo de cadastro do IBGE</label>
@@ -26,15 +28,19 @@
                     <ValidationMessage For="() => Input.CityName" class="text-danger" />
                 </div>
                 <div class="form-floating mb-3">
-                    <InputSelect id="StateId" @bind-Value="Input.StateId" class="form-control" aria-required="true">
+                <InputSelect id="StateId" @bind-Value="IbgeCode" class="form-control" aria-required="true">
                         <option value="0">Selecione...</option>
                         @foreach (var state in states)
                         {
                             <option value="@state.Id">@state.Uf</option>
                         }
                         </InputSelect>
-                    <label asp-for="Input.StateId">Estado</label>
+                <label asp-for="IbgeCode">Estado</label>
                     <ValidationMessage For="() => Input.StateId" class="text-danger" />
+                <ValidationMessage For="() => IbgeCode" class="text-danger" />
+                </div>
+                <div class="form-floating mb-3">
+                    <ValidationMessage For="() => ModelResult" class="text-danger" />
                 </div>
                 <div class="d-flex justify-content-end py-2">
                 <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Incluir Cidade</button>
@@ -43,37 +49,74 @@
     </div>
 </EditForm>
 
-        
-
 @code {
+
+    private ValidationMessageStore _validationMessageStore = default!;
+    private EditContext _editContext = default!;
 
     [SupplyParameterFromForm]
     private CreateCityModel Input { get; set; } = new();
 
     private StateModel[] states = [];
 
-    public async Task PostCreateCity(EditContext editContext)
+    private ModelResultBase? ModelResult = default!;
+
+    [Required(ErrorMessage = "Estado é obrigatório")]
+    [RegularExpression(@"^\dd{2}$", ErrorMessage = "Request um número de Estado Válido")]
+    private string? IbgeCode { get
+        {
+            return Input.StateId == default(int) ? String.Empty : Input.StateId.ToString();
+        } set
+        {
+            Input.StateId = int.TryParse(value, out int stateId) ? stateId : default(int);
+
+        } }
+
+    public async Task OnSubmitAsync(EditContext editContext)
     {
 
-        var result = await _citiesService.CreateCity(Input);
+        ModelResult = await _citiesService.CreateCity(Input);
 
-        if(result?.Success is true)
+
+        if(Validate())
         {
             NavigationManager.NavigateTo("/cities");
         }
 
-        else
-        {
-
-        }
-
     }
+
 
     protected override async Task OnInitializedAsync()
     {
+        _editContext = new EditContext(Input);
+        _validationMessageStore = new ValidationMessageStore(_editContext);
         var results = await _stateServices.ListStates(new PagingDataModel(1, 100));
 
         if (results?.Success is true)
             states = results.Data!.ToArray();
     }
+
+    private bool Validate()
+    {
+        if(ModelResult == null)
+        {
+            _validationMessageStore.Add(() => ModelResult!,"Houve erro na execução");
+            return false;
+        }
+
+
+        if (ModelResult?.Success is false)
+        {
+            foreach(var error in ModelResult.Errors)
+            {
+                _validationMessageStore.Add(() => ModelResult, error!.Message!);
+
+            }
+            _editContext.NotifyValidationStateChanged();
+
+        }
+        return ModelResult?.Success is true;
+    }
+
+    
 }

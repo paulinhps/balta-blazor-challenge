@@ -16,5 +16,6 @@ public record CreateCityModel : RequestModel
 
     [DisplayName("UF")]
     [Required(ErrorMessage = "UF é obrigatório")]
-    public int StateId { get; set; }
+    [Range(1, 99,ErrorMessage = "Requer um número válido de 2 dígitos")]
+    public int? StateId { get; set; }
 }

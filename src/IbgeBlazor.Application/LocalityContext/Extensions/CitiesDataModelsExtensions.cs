@@ -10,7 +10,7 @@ namespace IbgeBlazor.Application.LocalityContext.Extensions;
 public static class CitiesDataModelsExtensions
 {
     public static CreateCityCommand FromCommand(this CreateCityModel model)
-    => new(model.IbgeCode, model.CityName, model.StateId);
+    => new(model.IbgeCode, model.CityName, model.StateId ?? 0);
 
     public static UpdateCityCommand FromCommand(this UpdateCityModel model, string ibgeCode)
     => new(ibgeCode, model.CityName);
