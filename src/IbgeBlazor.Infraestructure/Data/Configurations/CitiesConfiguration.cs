@@ -2,9 +2,8 @@
 using IbgeBlazor.Core.LocalityContext.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Data;
 
-namespace IbgeBlazor.Infraestructure.Data.Confgurations
+namespace IbgeBlazor.Infraestructure.Data.Configurations
 {
     internal class CitiesConfiguration : IEntityTypeConfiguration<City>
     {
