@@ -18,24 +18,24 @@ else
     <a class="btn btn-primary float-end" href="/states/create" style="">Nova Estado</a>
     <table class="table">
         <thead>
-        <tr>
-            <th>Estadir UF</th>
-            <th>Estado</th>
-        </tr>
+            <tr>
+                <th>Estadir UF</th>
+                <th>Estado</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var state in states!)
-        {
-            <tr>
-                <td>@state.Uf</td>
-                <td>@state.Description</td>
-                <td>
-                    <a class="btn btn-info" href="/states/details/@state.Id">Visualizar</a>
-                    <a class="btn btn-warning" href="/states/edit/@state.Id">Editar</a>
-                    <button class="btn btn-danger" @onclick="() => DeleteCity(state.Id ?? 0)">Deletar</button>
-                </td>
-            </tr>
-        }
+            @foreach (var state in states!)
+            {
+                <tr>
+                    <td>@state.Uf</td>
+                    <td>@state.Description</td>
+                    <td>
+                        <a class="btn btn-info" href="/states/details/@state.Id">Visualizar</a>
+                        <a class="btn btn-warning" href="/states/edit/@state.Id">Editar</a>
+                        <button class="btn btn-danger" @onclick="() => DeleteCity(state.Id ?? 0)">Deletar</button>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -47,7 +47,7 @@ else
     {
         var results = await _statesService.ListStates();
 
-        if(results?.Success is true)
+        if (results?.Success is true)
         {
             states = results.Data!.ToList();
         }
