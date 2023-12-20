@@ -1,100 +1,75 @@
 using IbgeBlazor.Api.Endpoints.Localities;
 using IbgeBlazor.Core.Common.DataModels;
-using IbgeBlazor.Core.Constants;
 using IbgeBlazor.Core.LocalityContext.DataModels.Cities;
 using IbgeBlazor.Core.LocalityContext.Services;
-using System.Net.Http.Json;
+using IbgeBlazor.Application.LocalityContext.Extensions;
+using IbgeBlazor.Application.Common.Extensions;
+using MediatR;
+using IbgeBlazor.Application.LocalityContext.Cities.GetCityList;
+using IbgeBlazor.Application.LocalityContext.Cities.GetCityDetails;
 
 namespace IbgeBlazor.Infraestructure.Services.Localities
 {
     public class ApiCitiesServices : ICitiesService
     {
-        private readonly HttpClient _client;
+        private readonly IMediator _mediator;
 
-        public ApiCitiesServices(HttpClient client)
+        public ApiCitiesServices(IMediator mediator)
         {
-            _client = client;
+            _mediator = mediator;
         }
 
-        public async Task<ModelResult<CityModel>?> CreateCity(CreateCityModel createCityModel)
+        public async Task<ModelResult<CityModel>?> CreateCity(CreateCityModel model)
         {
-            try
-            {
-                var response = await _client.PostAsJsonAsync(ApiEndpointsPaths.Cities, createCityModel);
+            var result = await _mediator.Send(model.FromCommand());
 
-                return await response.Content.ReadFromJsonAsync<ModelResult<CityModel>>();
-            }
-            catch (Exception ex)
-            {
-                ErrorModel error = new ErrorModel("CreateCityRequest", ex.Message);
+            ModelResult<CityModel> response = result.FromModel();
 
-                return new ModelResult<CityModel>("Erro ao tentar criar a cidade", error);
-            }
+            return response;
 
         }
 
         public async Task<ModelResultBase?> DeleteCity(string ibgeCode)
         {
-            try
-            {
-                var response = await _client.DeleteAsync($"{ApiEndpointsPaths.Cities}/{ibgeCode}");
+            var result = await _mediator.Send(ibgeCode.FromCommand());
 
-                return await response.Content.ReadFromJsonAsync<ModelResult>();
-            }
-            catch (Exception ex)
-            {
-                ErrorModel error = new ErrorModel("DeleteCityRequest", ex.Message);
-
-                return new ModelResult("Erro ao tentar deletar a cidade", error);
-            }
+            return result.FromModel();
         }
 
         public async Task<ModelResult<CityModel>?> GetCityDetails(string ibgeCode)
         {
-            try
-            {
-                var response = await _client.GetAsync($"{ApiEndpointsPaths.Cities}/{ibgeCode}");
+            var query = new GetCityDetailByIbgeCodeQuery(ibgeCode);
 
-                return await response.Content.ReadFromJsonAsync<ModelResult<CityModel>>();
-            }
-            catch (Exception ex)
-            {
-                ErrorModel error = new ErrorModel("CityDetailsRequest", ex.Message);
+            var result = await _mediator.Send(query);
 
-                return new ModelResult<CityModel>("Erro ao tentar recuperar detalhes da cidade", error);
-            }
+            var response = result.Results?.FromCityModel();
+
+            return new ModelResult<CityModel>(response);
+
         }
 
         public async Task<ModelResult<IEnumerable<CityModel>>?> ListCities(PagingDataBase? paginationModel = null)
         {
-            try
+            var query = new GetCitiesWithPaginationQuery()
             {
-                var response = await _client.GetAsync($"{ApiEndpointsPaths.Cities}{paginationModel?.GetQueryString()}");
+                PageNumber = paginationModel?.Page ?? 1,
+                PageSize = paginationModel?.PageSize ?? 10
+            };
 
-                return await response.Content.ReadFromJsonAsync<ModelResult<IEnumerable<CityModel>>>();
-            }
-            catch (Exception ex)
-            {
-                ErrorModel error = new ErrorModel("CityListRequest", ex.Message);
+            var result = await _mediator.Send(query);
 
-                return new ModelResult<IEnumerable<CityModel>>("Erro ao tentar recuperar lista de cidades", error);
-            }
+            var dataResult = result.Results?
+            .Select(CitiesDataModelsExtensions.FromCityModel)
+            .ToArray();
+
+            return new ModelResult<IEnumerable<CityModel>>(dataResult!);
         }
 
         public async Task<ModelResult<CityModel>?> UpdateCity(string ibgeCode, UpdateCityModel updateCityModel)
         {
-            try
-            {
-                var response = await _client.PutAsJsonAsync($"{ApiEndpointsPaths.Cities}/{ibgeCode}", updateCityModel);
+            var result = await _mediator.Send(updateCityModel.FromCommand(ibgeCode));
 
-                return await response.Content.ReadFromJsonAsync<ModelResult<CityModel>>();
-            }
-            catch (Exception ex)
-            {
-                ErrorModel error = new ErrorModel("UpdateCityRequest", ex.Message);
-
-                return new ModelResult<CityModel>("Erro ao tentar atualisar a cidade", error);
-            }
+            return result.FromModel();
         }
     }
 }

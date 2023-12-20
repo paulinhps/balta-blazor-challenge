@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\IbgeBlazor.Application\IbgeBlazor.Application.csproj" />
     <ProjectReference Include="..\IbgeBlazor.Core\IbgeBlazor.Core.csproj" />
   </ItemGroup>
 
@@ -9,7 +10,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
   <PropertyGroup>

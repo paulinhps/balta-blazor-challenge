@@ -1,57 +1,52 @@
-using System.Net.Http.Json;
 using IbgeBlazor.Api.Endpoints.Localities;
 using IbgeBlazor.Core.Common.DataModels;
-using IbgeBlazor.Core.Constants;
 using IbgeBlazor.Core.LocalityContext.DataModels.States;
 using IbgeBlazor.Core.LocalityContext.Services;
+using MediatR;
+using IbgeBlazor.Application.Common.Extensions;
+using IbgeBlazor.Application.LocalityContext.Extensions;
+using IbgeBlazor.Application.LocalityContext.States.Delete;
+using IbgeBlazor.Application.LocalityContext.States.GetStateDetails;
+using IbgeBlazor.Application.LocalityContext.States.GetStatesList;
 
 namespace IbgeBlazor.Infraestructure.Services.Localities
 {
     public class ApiStatesServices : IStatesService
     {
-        private HttpClient _client;
+        private IMediator _mediator;
 
-        public ApiStatesServices(HttpClient client)
+        public ApiStatesServices(IMediator mediator)
         {
-            _client = client;
+            _mediator = mediator;
         }
         public async Task<ModelResult<StateModel>?> CreateState(CreateStateModel createStateModel)
         {
-            try
-            {
-                var response = await _client.PostAsJsonAsync(ApiEndpointsPaths.States, createStateModel);
+            var result = await _mediator.Send(createStateModel.FromCommand());
 
-                return await response.Content.ReadFromJsonAsync<ModelResult<StateModel>>();
-            }
-            catch (Exception ex)
-            {
-                ErrorModel error = new ErrorModel("CreateStateRequest", ex.Message);
-                return new ModelResult<StateModel>("Erro ao tentar criar o estado!", error);
-            }
+            return result.FromModel();
         }
 
         public async Task<ModelResultBase?> DeleteState(int stateId)
         {
-            try
-            {
-                var response = await _client.DeleteAsync($"{ApiEndpointsPaths.States}/{stateId}");
+            var result = await _mediator.Send(new DeleteStateCommand(stateId));
 
-                return await response.Content.ReadFromJsonAsync<ModelResult>();
-            }
-            catch (Exception ex)
-            {
-                ErrorModel error = new ErrorModel("DeleteStateRequest", ex.Message);
-
-                return new ModelResult("Erro ao tentar deletar o estado!", error);
-            }
+            return result.FromModel();
         }
 
         public async Task<ModelResult<StateModel>?> GetStateDetails(int stateId)
         {
             try
             {
-                var response = await _client.GetAsync($"{ApiEndpointsPaths.States}/{stateId}");
-                return await response.Content.ReadFromJsonAsync<ModelResult<StateModel>>();
+                var query = new GetStateDetailByIdQuery(stateId);
+
+                var result = await _mediator.Send(query);
+
+                return new ModelResult<StateModel>(result.Results is not null ? new StateModel()
+                {
+                    Description = result.Results!.Name,
+                    Id = result.Results!.Id,
+                    Uf = result.Results!.Code
+                } : null, message: result.Results is null ? "Estado não encontrado" : null!);
             }
             catch (Exception ex)
             {
@@ -64,8 +59,18 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
         {
             try
             {
-                var response = await _client.GetAsync($"{ApiEndpointsPaths.States}{paginationModel?.GetQueryString()}");
-                return await response.Content.ReadFromJsonAsync<ModelResult<IEnumerable<StateModel>>>();
+                var query = new GetStateWithPaginationQuery()
+                {
+                    PageNumber = paginationModel?.Page ?? 1,
+                    PageSize = paginationModel?.PageSize ?? 10
+                };
+
+                var result = await _mediator.Send(query);
+
+                var dataResult = result.Results?
+                .Select(StatesDataModelsExtensions.FromStateModel)
+                .ToArray();
+                return new ModelResult<IEnumerable<StateModel>>(dataResult!);
             }
             catch (Exception ex)
             {
@@ -78,9 +83,9 @@ namespace IbgeBlazor.Infraestructure.Services.Localities
         {
             try
             {
-                var response = await _client.PutAsJsonAsync($"{ApiEndpointsPaths.States}/{statiId}", updateStateModel);
+                var result = await _mediator.Send(updateStateModel.FromCommand(statiId));
 
-                return await response.Content.ReadFromJsonAsync<ModelResult<StateModel>>();
+                return result.FromModel();
             }
             catch (Exception ex)
             {

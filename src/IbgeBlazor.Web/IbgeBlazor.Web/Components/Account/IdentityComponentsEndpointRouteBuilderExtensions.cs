@@ -1,6 +1,6 @@
+using IbgeBlazor.Application.Data;
 using IbgeBlazor.Web.Components.Account.Pages;
 using IbgeBlazor.Web.Components.Account.Pages.Manage;
-using IbgeBlazor.Web.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;

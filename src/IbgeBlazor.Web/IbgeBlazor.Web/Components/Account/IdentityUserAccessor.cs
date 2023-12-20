@@ -1,4 +1,4 @@
-using IbgeBlazor.Web.Data;
+using IbgeBlazor.Application.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace IbgeBlazor.Web.Components.Account

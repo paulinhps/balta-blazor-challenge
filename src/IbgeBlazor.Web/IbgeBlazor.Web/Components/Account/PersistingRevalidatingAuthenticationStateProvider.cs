@@ -1,5 +1,5 @@
+using IbgeBlazor.Application.Data;
 using IbgeBlazor.Web.Client;
-using IbgeBlazor.Web.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
