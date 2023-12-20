@@ -1,4 +1,4 @@
-﻿@page "/cities/update"
+﻿@page "/cities/edit/{ibgeCode}"
 @using IbgeBlazor.Api.Endpoints.Localities
 @using IbgeBlazor.Core.LocalityContext.DataModels.Cities
 @using IbgeBlazor.Core.LocalityContext.Services
@@ -50,6 +50,9 @@
     private CreateCityModel Input { get; set; } = new();
 
     private StateModel[] states = [];
+
+    [Parameter]
+    public string IbgeCode { get; set; } = null!;
 
     public async Task PostCreateCity(EditContext editContext)
     {
