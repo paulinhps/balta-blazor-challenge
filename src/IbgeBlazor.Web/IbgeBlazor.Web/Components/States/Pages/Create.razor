@@ -1,0 +1,56 @@
+﻿@page "/states/create"
+@using IbgeBlazor.Api.Endpoints.Localities
+@using IbgeBlazor.Core.LocalityContext.DataModels.Cities
+@using IbgeBlazor.Core.LocalityContext.Services
+@inject IStatesService _stateServices
+@inject NavigationManager NavigationManager
+
+<h2>Criar nova Cidade</h2>
+
+<EditForm Model="Input" method="post" asp-route-returnUrl="/states" OnValidSubmit="PostCreateState" FormName="createState">
+    <div class="row">
+        <div class="col-md-8 px-2 d-flex flex-column">
+
+            <DataAnnotationsValidator />
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.Uf" class="form-control" aria-required="true" />
+                <label class="form-label" asp-for="Input.Uf">UF</label>
+                <ValidationMessage For="() => Input.Uf" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.Description" class="form-control" aria-required="true" />
+                <label asp-for="Input.Description">Nome da Estado</label>
+                <ValidationMessage For="() => Input.Description" class="text-danger" />
+            </div>
+
+            <div class="d-flex justify-content-end py-2">
+                <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Incluir Estado</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+
+    [SupplyParameterFromForm]
+    private CreateStateModel Input { get; set; } = new();
+
+
+    public async Task PostCreateState(EditContext editContext)
+    {
+        var result = await _stateServices.CreateState(Input);
+
+        if (result?.Success is true)
+        {
+            NavigationManager.NavigateTo("/states");
+        }
+
+        else
+        {
+
+        }
+
+    }
+}
