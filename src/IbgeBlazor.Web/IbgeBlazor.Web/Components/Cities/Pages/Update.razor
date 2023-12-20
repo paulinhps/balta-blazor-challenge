@@ -1,0 +1,78 @@
+﻿@page "/cities/update"
+@using IbgeBlazor.Api.Endpoints.Localities
+@using IbgeBlazor.Core.LocalityContext.DataModels.Cities
+@using IbgeBlazor.Core.LocalityContext.Services
+@inject ICitiesService _citiesService
+@inject IStatesService _stateServices
+@inject NavigationManager NavigationManager
+
+<h2>Criar nova Cidade</h2>
+
+<EditForm Model="Input" method="post" asp-route-returnUrl="/cities" OnValidSubmit="PostCreateCity" FormName="createCity">
+    <div class="row">
+        <div class="col-md-8 px-2 d-flex flex-column">
+
+                <DataAnnotationsValidator />
+
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="Input.IbgeCode" class="form-control" aria-required="true"/> 
+                    <label class="form-label" asp-for="Input.IbgeCode">Codigo de cadastro do IBGE</label>
+                    <ValidationMessage For="() => Input.IbgeCode" class="text-danger" />
+                </div> 
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="Input.CityName" class="form-control" aria-required="true" />
+                    <label asp-for="Input.CityName">Nome da Cidade</label>
+                    <ValidationMessage For="() => Input.CityName" class="text-danger" />
+                </div>
+                <div class="form-floating mb-3">
+                    <InputSelect id="StateId" @bind-Value="Input.StateId" class="form-control" aria-required="true">
+                        <option value="0">Selecione...</option>
+                        @foreach (var state in states)
+                        {
+                            <option value="@state.Id">@state.Uf</option>
+                        }
+                        </InputSelect>
+                    <label asp-for="Input.StateId">Estado</label>
+                    <ValidationMessage For="() => Input.StateId" class="text-danger" />
+                </div>
+                <div class="d-flex justify-content-end py-2">
+                <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Incluir Cidade</button>
+                </div>
+        </div>
+    </div>
+</EditForm>
+
+        
+
+@code {
+
+    [SupplyParameterFromForm]
+    private CreateCityModel Input { get; set; } = new();
+
+    private StateModel[] states = [];
+
+    public async Task PostCreateCity(EditContext editContext)
+    {
+
+        var result = await _citiesService.CreateCity(Input);
+
+        if(result?.Success is true)
+        {
+            NavigationManager.NavigateTo("/cities");
+        }
+
+        else
+        {
+
+        }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var results = await _stateServices.ListStates(new PagingDataModel(1, 100));
+
+        if (results?.Success is true)
+            states = results.Data!.ToArray();
+    }
+}
