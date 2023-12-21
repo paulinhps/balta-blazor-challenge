@@ -4,9 +4,16 @@
 @inject ICitiesService _citiesService
 @inject NavigationManager NavigationManager
 
-<h2>Criar nova Cidade</h2>
+<h2>
+    Edição
+    @if (!string.IsNullOrEmpty(Input?.CityName))
+    {
+        <span> - Código do IBGE: @IbgeCode</span>
+    }
 
-<EditForm Model="Input" method="put" asp-route-returnUrl="/cities/update/{ibgeCode}" OnValidSubmit="PutUpdateCity" FormName="updateCity">
+</h2>
+
+<EditForm EditContext="_editContext" OnValidSubmit="OnSubmitHandler" FormName="updateCity">
     <div class="row">
         <div class="col-md-8 px-2 d-flex flex-column">
             <DataAnnotationsValidator />
@@ -15,8 +22,11 @@
                 <label asp-for="Input.CityName">Nome da Cidade</label>
                 <ValidationMessage For="() => Input.CityName" class="text-danger" />
             </div>
+            <div class="form-floating mb-3">
+                <ValidationMessage For="() => ModelResult" class="text-danger" />
+            </div>
             <div class="d-flex justify-content-end py-2">
-                <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Incluir Cidade</button>
+                <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Salvar</button>
             </div>
         </div>
     </div>
@@ -29,13 +39,18 @@
     private UpdateCityModel Input { get; set; } = new();
 
     [Parameter]
-    public string ibgeCode { get; set; }
+    public string IbgeCode { get; set; } = null!;
 
+    private ValidationMessageStore _validationMessageStore = default!;
+    private EditContext _editContext = default!;
 
-    public async Task PutUpdateCity(EditContext editContext)
+    private ModelResultBase? ModelResult = default!;
+
+    public async Task OnSubmitHandler()
     {
-        var modelResult = await _citiesService.UpdateCity(ibgeCode, Input);
-        if (modelResult?.Success is true)
+        ModelResult = await _citiesService.UpdateCity(IbgeCode, Input);
+
+        if (Validate())
         {
             NavigationManager.NavigateTo("/cities");
         }
@@ -43,13 +58,42 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var modelResult = await _citiesService.GetCityDetails(ibgeCode);
+        _editContext = new EditContext(Input);
+        _validationMessageStore = new ValidationMessageStore(_editContext);
+        var modelResult = await _citiesService.GetCityDetails(IbgeCode);
         if (modelResult?.Success is true)
         {
             Input = new UpdateCityModel
-            {
-                CityName = modelResult.Data?.Name ?? string.Empty
-            };
+                {
+                    CityName = modelResult.Data?.Name ?? string.Empty
+                };
         }
+        else
+        {
+            _validationMessageStore.Add(() => ModelResult!, "Não foi possível Recuperar os dados para Edição");
+
+            _editContext.NotifyValidationStateChanged();
+        }
+    }
+
+    private bool Validate()
+    {
+        if (ModelResult == null)
+        {
+            _validationMessageStore.Add(() => ModelResult!, "Houve erro na execução");
+            return false;
+        }
+
+        if (ModelResult?.Success is false)
+        {
+            foreach (var error in ModelResult.Errors)
+            {
+                _validationMessageStore.Add(() => ModelResult, error!.Message!);
+
+            }
+            _editContext.NotifyValidationStateChanged();
+
+        }
+        return ModelResult?.Success is true;
     }
 }

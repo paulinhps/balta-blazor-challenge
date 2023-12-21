@@ -7,6 +7,8 @@ namespace IbgeBlazor.Core.Common.DataModels
     {
 
         public TData? Data { get; set; }
+
+        public override bool? Success => Data is { } && base.Success is true; 
         public ModelResult(string message, params ErrorModel[] errors) : base(message, errors)
         {
 
