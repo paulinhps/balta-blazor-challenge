@@ -18,8 +18,9 @@
                 <label asp-for="Input.Description">Nome do Estado</label>
                 <ValidationMessage For="() => Input.Description" class="text-danger" />
             </div>
-            <div class="d-flex justify-content-end py-2">
-                <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Atualizar</button>
+            <div class="card-footer d-flex justify-content-between">
+                <a type="button" class="btn btn-secondary" href="/states">Voltar</a>
+                <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
             </div>
         </div>
     </div>

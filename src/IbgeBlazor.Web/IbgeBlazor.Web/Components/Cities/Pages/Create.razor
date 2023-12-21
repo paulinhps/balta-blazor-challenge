@@ -14,36 +14,37 @@
     <div class="row">
         <div class="col-md-8 px-2 d-flex flex-column">
 
-                <DataAnnotationsValidator />
-                
-                <div class="form-floating mb-3">
-                    <InputText @bind-Value="Input.IbgeCode" class="form-control" aria-required="true"/> 
-                    <label class="form-label" asp-for="Input.IbgeCode">Codigo de cadastro do IBGE</label>
-                    <ValidationMessage For="() => Input.IbgeCode" class="text-danger" />
-                </div> 
-                <div class="form-floating mb-3">
-                    <InputText @bind-Value="Input.CityName" class="form-control" aria-required="true" />
-                    <label asp-for="Input.CityName">Nome da Cidade</label>
-                    <ValidationMessage For="() => Input.CityName" class="text-danger" />
-                </div>
-                <div class="form-floating mb-3">
+            <DataAnnotationsValidator />
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.IbgeCode" class="form-control" aria-required="true" />
+                <label class="form-label" asp-for="Input.IbgeCode">Codigo de cadastro do IBGE</label>
+                <ValidationMessage For="() => Input.IbgeCode" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.CityName" class="form-control" aria-required="true" />
+                <label asp-for="Input.CityName">Nome da Cidade</label>
+                <ValidationMessage For="() => Input.CityName" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
                 <InputSelect id="StateId" @bind-Value="IbgeCode" class="form-control" aria-required="true">
-                        <option value="0">Selecione...</option>
-                        @foreach (var state in states)
-                        {
-                            <option value="@state.Id">@state.Uf</option>
-                        }
-                        </InputSelect>
+                    <option value="0">Selecione...</option>
+                    @foreach (var state in states)
+                    {
+                        <option value="@state.Id">@state.Uf</option>
+                    }
+                </InputSelect>
                 <label asp-for="IbgeCode">Estado</label>
-                    <ValidationMessage For="() => Input.StateId" class="text-danger" />
+                <ValidationMessage For="() => Input.StateId" class="text-danger" />
                 <ValidationMessage For="() => IbgeCode" class="text-danger" />
-                </div>
-                <div class="form-floating mb-3">
-                    <ValidationMessage For="() => ModelResult" class="text-danger" />
-                </div>
-                <div class="d-flex justify-content-end py-2">
-                <button type="submit" class="btn btn-sm btn-primary ml-auto align-self-end mr-auto px-2">Incluir Cidade</button>
-                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <ValidationMessage For="() => ModelResult" class="text-danger" />
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a type="button" class="btn btn-secondary" href="/cities">Voltar</a>
+                <button type="submit" class="btn btn-sm btn-primary">Incluir Cidade</button>
+            </div>
         </div>
     </div>
 </EditForm>
@@ -62,14 +63,18 @@
 
     [Required(ErrorMessage = "Estado é obrigatório")]
     [RegularExpression(@"^\dd{2}$", ErrorMessage = "Request um número de Estado Válido")]
-    private string? IbgeCode { get
+    private string? IbgeCode
+    {
+        get
         {
             return Input.StateId == default(int) ? String.Empty : Input.StateId.ToString();
-        } set
+        }
+        set
         {
             Input.StateId = int.TryParse(value, out int stateId) ? stateId : default(int);
 
-        } }
+        }
+    }
 
     public async Task OnSubmitAsync(EditContext editContext)
     {
@@ -77,7 +82,7 @@
         ModelResult = await _citiesService.CreateCity(Input);
 
 
-        if(Validate())
+        if (Validate())
         {
             NavigationManager.NavigateTo("/cities");
         }
@@ -97,16 +102,16 @@
 
     private bool Validate()
     {
-        if(ModelResult == null)
+        if (ModelResult == null)
         {
-            _validationMessageStore.Add(() => ModelResult!,"Houve erro na execução");
+            _validationMessageStore.Add(() => ModelResult!, "Houve erro na execução");
             return false;
         }
 
 
         if (ModelResult?.Success is false)
         {
-            foreach(var error in ModelResult.Errors)
+            foreach (var error in ModelResult.Errors)
             {
                 _validationMessageStore.Add(() => ModelResult, error!.Message!);
 
@@ -117,5 +122,5 @@
         return ModelResult?.Success is true;
     }
 
-    
+
 }

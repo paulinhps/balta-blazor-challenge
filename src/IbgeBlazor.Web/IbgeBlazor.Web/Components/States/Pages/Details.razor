@@ -1,4 +1,4 @@
-﻿@page "/states/details/{id}"
+﻿@page "/states/details/{id:int}"
 @using IbgeBlazor.Core.LocalityContext.Services
 @inject IStatesService _statesService
 @inject NavigationManager NavigationManager
@@ -7,20 +7,20 @@
 <div class="card">
     <h2 class="card-header">Detalhes da Estado</h2>
     @if (@StateDetails == null)
-        {
-            <p>Loading...</p>
-        }
-        else
-        {
-    <div class="card-body">
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div class="card-body">
             <h5 class="card-title">@StateDetails?.Id</h5>
             <p class="card-text"><strong>Nome da Estado:</strong> @StateDetails?.Description - @StateDetails?.Uf </p>
-    </div>
-    <div class="card-footer d-flex justify-content-between">
-        <a type="button" class="btn btn-secondary" href="/states">Voltar</a>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a type="button" class="btn btn-secondary" href="/states">Voltar</a>
             <a type="button" class="btn btn-primary" href="/states/edit/@StateDetails.Id">Editar</a>
-    </div>
-        }
+        </div>
+    }
 </div>
 
 @code {
@@ -28,7 +28,7 @@
     private StateModel? StateDetails { get; set; } = null!;
 
     [Parameter]
-    public int id { get; set; } 
+    public int id { get; set; }
 
 
     protected override async Task OnInitializedAsync()
